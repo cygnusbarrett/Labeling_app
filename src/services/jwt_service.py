@@ -3,7 +3,7 @@ Servicio de autenticación JWT para mayor seguridad
 """
 import jwt
 import logging
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from functools import wraps
 from flask import request, jsonify, current_app, render_template
 import os
@@ -38,12 +38,13 @@ class JWTService:
     
     def create_access_token(self, user_id: int, username: str, role: str) -> str:
         """Crea un token de acceso JWT"""
+        now = datetime.now(timezone.utc)
         payload = {
             'user_id': user_id,
             'username': username,
             'role': role,
-            'exp': datetime.now() + timedelta(minutes=self.access_token_expire_minutes),
-            'iat': datetime.now(),
+            'exp': now + timedelta(minutes=self.access_token_expire_minutes),
+            'iat': now,
             'type': 'access'
         }
         token = jwt.encode(payload, self.secret_key, algorithm=self.algorithm)
@@ -52,10 +53,11 @@ class JWTService:
     
     def create_refresh_token(self, user_id: int) -> str:
         """Crea un token de refresh JWT"""
+        now = datetime.now(timezone.utc)
         payload = {
             'user_id': user_id,
-            'exp': datetime.now() + timedelta(days=self.refresh_token_expire_days),
-            'iat': datetime.now(),
+            'exp': now + timedelta(days=self.refresh_token_expire_days),
+            'iat': now,
             'type': 'refresh'
         }
         token = jwt.encode(payload, self.secret_key, algorithm=self.algorithm)
