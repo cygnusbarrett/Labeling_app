@@ -1,0 +1,6 @@
+# Configuracion de la Aplicacion Web
+JWT_SECRET_KEY=PdFT993Xjdqp0z5iKxeGtWMpIdT-f4vWRi3aZ_9ueLRqyret8dAkbf0rqlmCP-Y3ZahQx2GhX9Dml-F87VkrJA
+SECRET_KEY=4f521c124590c9300bb5fc2a95204900a4301805f4d891195f7e3d5e1d38421c
+DATABASE_URL=sqlite:///labeling_app.db
+FLASK_ENV=development
+PORT=8080

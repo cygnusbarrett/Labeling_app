@@ -5,7 +5,7 @@ import os
 import logging
 from datetime import datetime
 from flask import Blueprint, request, jsonify
-from services.database_service import DatabaseService
+from models.database import DatabaseManager
 from services.jwt_service import jwt_required, admin_required, jwt_service
 from services.security_utils import rate_limit, validate_json_input, SecurityUtils
 from services.notification_service import notification_service

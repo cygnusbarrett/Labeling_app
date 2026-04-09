@@ -11,6 +11,10 @@ function withTimeout(promise, ms) {
 }
 
 function buildUrl(url) {
+  // Rutas de autenticación NO llevan el prefijo de API
+  if (url === '/login' || url === '/logout' || url === '/me') {
+    return url;
+  }
   if (url.startsWith('/')) return `${API_PREFIX}${url.replace(/^\/api\/v2/, '')}`; // avoid double prefixes if caller passes full path
   return url;
 }

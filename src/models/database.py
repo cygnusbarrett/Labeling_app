@@ -2,7 +2,7 @@
 Modelos de base de datos SQLite para la aplicación de anotación colaborativa
 """
 from datetime import datetime, timezone
-from sqlalchemy import create_engine, Column, Integer, String, Text, DateTime, ForeignKey, Index
+from sqlalchemy import create_engine, Column, Integer, String, Text, DateTime, ForeignKey, Index, Float, Boolean
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker, relationship
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -20,7 +20,7 @@ class User(Base):
     role = Column(String(20), nullable=False, default='annotator')  # 'annotator' o 'admin'
     
     # Relaciones
-    annotations = relationship('Annotation', back_populates='user')
+    words = relationship('Word', back_populates='annotator')
     
     # Índices para mejorar rendimiento
     __table_args__ = (
@@ -51,82 +51,6 @@ class User(Base):
     
     def __repr__(self):
         return f'<User {self.username}>'
-
-class Image(Base):
-    """Modelo de imagen"""
-    __tablename__ = 'images'
-    
-    id = Column(Integer, primary_key=True)
-    image_path = Column(String(255), nullable=False)
-    initial_ocr_text = Column(Text, nullable=False)
-    
-    # Relaciones
-    annotations = relationship('Annotation', back_populates='image')
-    
-    def to_dict(self):
-        """Convierte la imagen a diccionario"""
-        return {
-            'id': self.id,
-            'image_path': self.image_path,
-            'initial_ocr_text': self.initial_ocr_text
-        }
-    
-    def __repr__(self):
-        return f'<Image {self.image_path}>'
-
-class Annotation(Base):
-    """Modelo de anotación/tarea"""
-    __tablename__ = 'annotations'
-    
-    id = Column(Integer, primary_key=True)
-    image_id = Column(Integer, ForeignKey('images.id'), nullable=False)
-    user_id = Column(Integer, ForeignKey('users.id'), nullable=False)
-    corrected_text = Column(Text, nullable=True)
-    status = Column(String(20), nullable=False, default='pending')  # 'pending', 'corrected', 'approved', 'discarded'
-    updated_at = Column(DateTime(timezone=True), nullable=False, default=datetime.now(timezone.utc))
-
-
-    # Relaciones
-    image = relationship('Image', back_populates='annotations')
-    user = relationship('User', back_populates='annotations')
-    
-    # Índices para mejorar rendimiento
-    __table_args__ = (
-        Index('idx_annotation_user_id', 'user_id'),
-        Index('idx_annotation_status', 'status'),
-        Index('idx_annotation_image_id', 'image_id'),
-        Index('idx_annotation_user_status', 'user_id', 'status'),
-        Index('idx_annotation_status_image', 'status', 'image_id'),
-        Index('idx_annotation_updated_at', 'updated_at'),
-    )
-    
-    def update_status(self, status, corrected_text=None):
-        """Actualiza el estado y texto de la anotación"""
-        self.status = status
-        if corrected_text is not None:
-            self.corrected_text = corrected_text
-        self.updated_at = datetime.now(timezone.utc)
-    
-    def to_dict(self):
-        """Convierte la anotación a diccionario"""
-        return {
-            'id': self.id,
-            'image_id': self.image_id,
-            'user_id': self.user_id,
-            'corrected_text': self.corrected_text,
-            'status': self.status,
-            'updated_at': self.updated_at.isoformat() if self.updated_at else None
-
-        }
-    
-    def to_dict_with_relations(self, user_dict=None, image_dict=None):
-        """Convierte la anotación a diccionario incluyendo relaciones de forma segura"""
-        result = self.to_dict()
-        if user_dict:
-            result['user'] = user_dict
-        if image_dict:
-            result['image'] = image_dict
-        return result
 
 class DatabaseManager:
     """Manejador de la base de datos"""
@@ -160,3 +84,114 @@ class DatabaseManager:
                 print(f"Usuario administrador ya existe: {username}")
         finally:
             session.close()
+
+class TranscriptionProject(Base):
+    """Modelo de proyecto de transcripción de audio"""
+    __tablename__ = 'transcription_projects'
+    
+    id = Column(String(100), primary_key=True)  # 'memoria_1970_1990'
+    name = Column(String(255), nullable=False)
+    description = Column(Text, nullable=True)
+    status = Column(String(20), nullable=False, default='active')  # 'active', 'completed', 'archived'
+    total_words = Column(Integer, nullable=False, default=0)  # Total de palabras en el proyecto
+    words_to_review = Column(Integer, nullable=False, default=0)  # Palabras con probability < 0.95
+    words_completed = Column(Integer, nullable=False, default=0)  # Palabras anotadas
+    created_at = Column(DateTime(timezone=True), nullable=False, default=datetime.now(timezone.utc))
+    updated_at = Column(DateTime(timezone=True), nullable=False, default=datetime.now(timezone.utc))
+    completed_at = Column(DateTime(timezone=True), nullable=True)
+    
+    # Relaciones
+    words = relationship('Word', back_populates='project', cascade='all, delete-orphan')
+    
+    # Índices
+    __table_args__ = (
+        Index('idx_project_status', 'status'),
+        Index('idx_project_created_at', 'created_at'),
+    )
+    
+    def to_dict(self):
+        """Convierte el proyecto a diccionario"""
+        return {
+            'id': self.id,
+            'name': self.name,
+            'description': self.description,
+            'status': self.status,
+            'total_words': self.total_words,
+            'words_to_review': self.words_to_review,
+            'words_completed': self.words_completed,
+            'progress': round((self.words_completed / self.words_to_review * 100), 2) if self.words_to_review > 0 else 0,
+            'created_at': self.created_at.isoformat() if self.created_at else None,
+            'updated_at': self.updated_at.isoformat() if self.updated_at else None,
+            'completed_at': self.completed_at.isoformat() if self.completed_at else None
+        }
+    
+    def __repr__(self):
+        return f'<TranscriptionProject {self.id}>'
+
+class Word(Base):
+    """Modelo de palabra en transcripción de audio para validación"""
+    __tablename__ = 'words'
+    
+    id = Column(Integer, primary_key=True)
+    project_id = Column(String(100), ForeignKey('transcription_projects.id'), nullable=False)
+    audio_filename = Column(String(255), nullable=False)  # "D 394 caja 6 cinta 1 Osvaldo Muray lado B-01_short_full.wav"
+    word_index = Column(Integer, nullable=False)  # Posición en el JSON (0-based)
+    word = Column(String(255), nullable=False)  # Transcripción original
+    speaker = Column(String(50), nullable=False)  # "SPEAKER_01", etc
+    probability = Column(Float, nullable=False)  # 0.0-1.0
+    start_time = Column(Float, nullable=False)  # Segundos
+    end_time = Column(Float, nullable=False)  # Segundos
+    alignment_score = Column(Float, nullable=True)  # Métrica opcional del JSON
+    
+    # Anotación
+    status = Column(String(20), nullable=False, default='pending')  # 'pending', 'approved', 'corrected'
+    annotator_id = Column(Integer, ForeignKey('users.id'), nullable=True)  # Quién anotó
+    corrected_text = Column(Text, nullable=True)  # Corrección si difiere
+    
+    # Timestamps
+    created_at = Column(DateTime(timezone=True), nullable=False, default=datetime.now(timezone.utc))
+    updated_at = Column(DateTime(timezone=True), nullable=False, default=datetime.now(timezone.utc))
+    completed_at = Column(DateTime(timezone=True), nullable=True)
+    
+    # Relaciones
+    project = relationship('TranscriptionProject', back_populates='words')
+    annotator = relationship('User', back_populates='words')
+    
+    # Índices para búsqueda eficiente
+    __table_args__ = (
+        Index('idx_word_project_id', 'project_id'),
+        Index('idx_word_status', 'status'),
+        Index('idx_word_annotator_id', 'annotator_id'),
+        Index('idx_word_project_status', 'project_id', 'status'),
+        Index('idx_word_annotator_status', 'annotator_id', 'status'),
+        Index('idx_word_probability', 'probability'),
+        Index('idx_word_updated_at', 'updated_at'),
+    )
+    
+    def to_dict(self, include_corrected=True):
+        """Convierte la palabra a diccionario"""
+        result = {
+            'id': self.id,
+            'project_id': self.project_id,
+            'audio_filename': self.audio_filename,
+            'word_index': self.word_index,
+            'word': self.word,
+            'speaker': self.speaker,
+            'probability': self.probability,
+            'start_time': self.start_time,
+            'end_time': self.end_time,
+            'alignment_score': self.alignment_score,
+            'status': self.status,
+            'annotator_id': self.annotator_id,
+            'created_at': self.created_at.isoformat() if self.created_at else None,
+            'updated_at': self.updated_at.isoformat() if self.updated_at else None,
+            'completed_at': self.completed_at.isoformat() if self.completed_at else None
+        }
+        
+        if include_corrected:
+            result['corrected_text'] = self.corrected_text
+        
+        return result
+    
+    def __repr__(self):
+        return f'<Word {self.project_id}:{self.word_index} "{self.word}">'

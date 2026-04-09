@@ -1,19 +1,35 @@
 """
-Aplicación Flask con SQLite para anotación colaborativa con JWT Auth
+Aplicación Flask para validación colaborativa de transcripciones de audio con JWT Auth
 """
-from flask import Flask, render_template, send_from_directory, session, redirect, request
+from flask import Flask, render_template, send_from_directory, session, redirect, request, jsonify
 import os
 import logging
+from pathlib import Path
+
+# Cargar variables de entorno desde archivo .env
+env_file = Path(__file__).parent.parent / 'envs' / 'web_app.env'
+if env_file.exists():
+    with open(env_file) as f:
+        for line in f:
+            line = line.strip()
+            if line and not line.startswith('#'):
+                key, value = line.split('=', 1)
+                os.environ[key.strip()] = value.strip()
+
 from config import Config
-from routes.sqlite_api_routes_jwt import api_bp  # Cambiado a JWT
-from models.database import DatabaseManager
+from routes.transcription_api_routes import transcription_bp
+from models.database import DatabaseManager, User
 
 # Configurar logger para este módulo
 logger = logging.getLogger(__name__)
 
 def create_app():
-    """Factory para crear la aplicación Flask con SQLite y JWT"""
-    app = Flask(__name__)
+    """Factory para crear la aplicación Flask de transcripciones de audio con JWT"""
+    # Configurar rutas de templates y static
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+    app = Flask(__name__, 
+                template_folder=os.path.join(current_dir, 'templates'),
+                static_folder=os.path.join(current_dir, 'static'))
     
     # Cargar configuración
     config = Config.from_env()
@@ -61,43 +77,169 @@ def create_app():
     logger.info("Base de datos inicializada correctamente")
     
     # Registrar blueprints
-    app.register_blueprint(api_bp)
-    logger.debug("Blueprint de API registrado")
+    app.register_blueprint(transcription_bp)
+    logger.debug("Blueprint de API de transcripción registrado")
     
     # Importar decoradores de autenticación
-    from services.jwt_service import optional_auth, require_admin, require_auth
+    from services.jwt_service import optional_jwt, require_admin, jwt_service
     
     # Rutas principales
     @app.route('/')
-    @require_auth
     def index():
-        """Página principal - autenticación opcional"""
+        """Página principal - redirige a login si no está autenticado"""
         logger.debug("Acceso a página principal")
+        try:
+            token = jwt_service.get_token_from_cookie_or_header()
+            if token:
+                payload = jwt_service.verify_access_token(token)
+                logger.debug(f"Usuario autenticado: {payload.get('username')}")
+                return redirect('/transcription/validator')
+        except Exception as e:
+            logger.debug(f"Token inválido: {e}")
         
-        if hasattr(request, 'current_user') and request.current_user:
-            logger.debug(f"Usuario autenticado accediendo a index: {request.current_user.get('username')}")
-        else:
-            logger.debug("Acceso a index sin autenticación")
-        
-        return render_template('sqlite_index.html')
+        return redirect('/login')
     
     @app.route('/login')
-    @optional_auth
     def login_page():
-        """Página de login - redirige si ya está autenticado"""
+        """Página de login"""
         logger.debug("Acceso a página de login")
-        
         return render_template('sqlite_login.html')
     
-    @app.route('/admin')
-    @require_admin
-    def admin_page():
-        """Página de administración - REQUIERE AUTENTICACIÓN DE ADMIN"""
-        logger.debug("Acceso a página de administración")
+    @app.route('/transcription/validator')
+    def transcription_validator():
+        """Página de validador de transcripciones"""
+        logger.debug("Acceso a página de validador de transcripciones")
         
-        user = request.current_user
-        logger.info(f"Acceso concedido a panel admin para usuario {user.get('username')}")
-        return render_template('sqlite_admin.html')
+        return render_template('transcription_validator.html')
+    
+    @app.route('/admin')
+    def admin_page():
+        """Página de administración"""
+        logger.debug("Acceso a página de administración")
+        try:
+            token = jwt_service.get_token_from_cookie_or_header()
+            if not token:
+                logger.warning("Admin access denied - no token")
+                return redirect('/login')
+            
+            payload = jwt_service.verify_access_token(token)
+            if payload.get('role') != 'admin':
+                logger.warning(f"Admin access denied - user {payload.get('username')} is not admin")
+                return redirect('/login')
+            
+            logger.info(f"Admin access granted to {payload.get('username')}")
+            return redirect('/transcription/validator')
+            
+        except Exception as e:
+            logger.warning(f"Admin access denied - invalid token: {e}")
+            return redirect('/login')
+    
+    # ==================== RUTAS DE AUTENTICACIÓN ====================
+    
+    @app.route('/login', methods=['POST'])
+    def login():
+        """Autentica usuario y retorna JWT token"""
+        logger.info("=" * 80)
+        logger.info("🔐 POST /login RECIBIDO")
+        logger.info(f"Content-Type: {request.content_type}")
+        logger.info(f"Headers: {dict(request.headers)}")
+        
+        try:
+            logger.info(f"Raw data: {request.data}")
+            
+            data = request.get_json()
+            logger.info(f"JSON parsed: {data}")
+            
+            username = data.get('username', '').strip() if data else ''
+            password = data.get('password', '') if data else ''
+            
+            logger.info(f"Username: '{username}' (len={len(username)})")
+            logger.info(f"Password: {'*' * len(password) if password else 'EMPTY'}")
+            
+            if not username or not password:
+                logger.warning("❌ Login attempt with missing credentials")
+                return jsonify({'error': 'Usuario y contraseña requeridos'}), 400
+            
+            logger.info(f"Buscando usuario en BD: {username}")
+            db_manager = DatabaseManager(config.DATABASE_URL)
+            session = db_manager.get_session()
+            
+            user = session.query(User).filter_by(username=username).first()
+            logger.info(f"Usuario encontrado: {user is not None}")
+            
+            if user:
+                logger.info(f"Verificando contraseña para: {user.username}")
+                pwd_valid = user.check_password(password)
+                logger.info(f"Contraseña válida: {pwd_valid}")
+            
+            session.close()
+            
+            if not user or not user.check_password(password):
+                logger.warning(f"❌ Failed login attempt for user: {username}")
+                return jsonify({'error': 'Usuario o contraseña incorrectos'}), 401
+            
+            # Generar tokens JWT
+            logger.info(f"✅ Generando tokens JWT para: {user.username}")
+            access_token = jwt_service.create_access_token(user.id, user.username, user.role)
+            refresh_token = jwt_service.create_refresh_token(user.id)
+            
+            logger.info(f"✅ User logged in successfully: {username}")
+            logger.info("=" * 80)
+            
+            return jsonify({
+                'access_token': access_token,
+                'refresh_token': refresh_token,
+                'user': {
+                    'id': user.id,
+                    'username': user.username,
+                    'role': user.role
+                }
+            }), 200
+            
+        except Exception as e:
+            logger.error(f"❌ Error en login: {str(e)}", exc_info=True)
+            logger.error("=" * 80)
+            return jsonify({'error': 'Error interno del servidor'}), 500
+    
+    @app.route('/logout', methods=['POST'])
+    def logout():
+        """Cierra sesión del usuario"""
+        logger.info("User logged out")
+        return jsonify({'message': 'Logged out successfully'}), 200
+    
+    @app.route('/me', methods=['GET'])
+    def get_current_user():
+        """Retorna datos del usuario autenticado"""
+        try:
+            token = jwt_service.get_token_from_cookie_or_header()
+            if not token:
+                logger.debug("GET /me - No token provided")
+                return jsonify({'error': 'No token provided'}), 401
+            
+            payload = jwt_service.verify_access_token(token)
+            
+            db_manager = DatabaseManager(config.DATABASE_URL)
+            session = db_manager.get_session()
+            user = session.query(User).filter_by(id=payload.get('user_id')).first()
+            session.close()
+            
+            if not user:
+                logger.warning(f"GET /me - User not found: {payload.get('user_id')}")
+                return jsonify({'error': 'User not found'}), 404
+            
+            logger.debug(f"GET /me - Retrieved user: {user.username}")
+            
+            return jsonify({
+                'user': {
+                    'id': user.id,
+                    'username': user.username,
+                    'role': user.role
+                }
+            }), 200
+            
+        except Exception as e:
+            logger.error(f"Error en GET /me: {str(e)}")
+            return jsonify({'error': 'Authentication failed'}), 401
     
     @app.route('/favicon.ico')
     def favicon():
@@ -108,25 +250,15 @@ def create_app():
             # Fallback: 204 No Content to avoid log noise if file missing
             from flask import Response
             return Response(status=204)
-
-    @app.route('/images/<filename>')
-    def serve_image(filename):
-        """Servir imágenes"""
-        logger.debug(f"Sirviendo imagen: {filename}")
-        try:
-            return send_from_directory(config.IMAGES_FOLDER, filename)
-        except Exception as e:
-            logger.error(f"Error sirviendo imagen {filename}: {e}")
-            return "Image not found", 404
     
     # Información de inicio
-    logger.info("=== Aplicación SQLite con JWT iniciada ===")
+    logger.info("=== Aplicación de Transcripciones de Audio iniciada ===")
     logger.info(f"Servidor: http://localhost:{config.PORT}")
-    logger.info(f"Imágenes: {config.IMAGES_FOLDER}")
     logger.info(f"Base de datos: labeling_app.db")
     logger.info(f"Autenticación: JWT (tokens)")
     logger.info(f"Log Level: {config.LOG_LEVEL}")
     logger.info("Credenciales por defecto: Admin: admin / admin123")
+    logger.info("Accede a: /transcription/validator")
     logger.info("===========================================")
     
     return app, config

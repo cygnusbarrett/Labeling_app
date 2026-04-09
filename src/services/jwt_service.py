@@ -21,8 +21,8 @@ class JWTService:
         # Generar clave secreta segura si no existe
         self.secret_key = config.JWT_SECRET_KEY if config.JWT_SECRET_KEY else self._generate_secret_key()
         self.algorithm = 'HS256'
-        self.access_token_expire_minutes = 480  # 8 horas
-        self.refresh_token_expire_days = 30
+        self.access_token_expire_minutes = config.JWT_ACCESS_TOKEN_EXPIRES
+        self.refresh_token_expire_days = config.JWT_REFRESH_TOKEN_EXPIRES
         
         # Log de configuración
         logger.info("JWT Service inicializado")

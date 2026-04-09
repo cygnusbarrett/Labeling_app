@@ -1,0 +1,60 @@
+[Unit]
+Description=Labeling App - Aplicación de Anotaciones Colaborativas
+Documentation=https://github.com/tu-repo/Labeling_app
+After=network.target postgresql.service
+
+[Service]
+# Usuario y grupo bajo el cual corre el servicio
+User=labeling
+Group=labeling
+
+# Directorio de trabajo
+WorkingDirectory=/opt/labeling_app/src
+
+# Variables de entorno para producción
+Environment="FLASK_ENV=production"
+Environment="LOG_LEVEL=INFO"
+Environment="JWT_SECRET_KEY=YOUR-32-CHAR-RANDOM-KEY-HERE-CHANGE-THIS"
+Environment="SECRET_KEY=YOUR-32-CHAR-RANDOM-KEY-HERE-CHANGE-THIS"
+Environment="DATABASE_URL=postgresql://user:password@localhost:5432/labeling_db"
+EnvironmentFile=-/etc/labeling_app/production.env
+
+# Comando para iniciar el servicio
+ExecStart=/opt/labeling_app/venv/bin/gunicorn \
+    --config /opt/labeling_app/src/gunicorn_config.py \
+    --access-logfile /var/log/labeling_app/access.log \
+    --error-logfile /var/log/labeling_app/error.log \
+    wsgi:app
+
+# Reinicio automático
+Restart=always
+RestartSec=10
+StartLimitInterval=60
+StartLimitBurst=3
+
+# Limpieza y límites
+Type=notify
+NotifyAccess=main
+KillMode=mixed
+KillSignal=SIGTERM
+TimeoutStopSec=30
+
+# Seguridad
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/opt/labeling_app/src/data /opt/labeling_app/src/logs /var/log/labeling_app
+
+# Recursos
+LimitNOFILE=65536
+LimitNPROC=4096
+MemoryMax=2G
+
+# Logging
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=labeling_app
+
+[Install]
+WantedBy=multi-user.target
