@@ -39,6 +39,13 @@ Thumbs.db
 instance/
 .webassets-cache
 
+# Environment files (NUNCA commitear claves reales)
+envs/*.env
+.env
+.env.local
+.env.production
+.env.development
+
 # Data files (opcional - puedes comentar si quieres incluir los datos)
 *.pkl
 
