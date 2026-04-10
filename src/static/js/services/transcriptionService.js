@@ -5,7 +5,8 @@
 class TranscriptionService {
     constructor() {
         this.apiBase = '/api/v2/transcriptions';
-        this.token = localStorage.getItem('token') || null;
+        // Leer token de localStorage con la clave correcta (compatible con JWT service)
+        this.token = localStorage.getItem('access_token') || null;
     }
 
     /**
@@ -13,7 +14,8 @@ class TranscriptionService {
      */
     setToken(token) {
         this.token = token;
-        localStorage.setItem('token', token);
+        // Guardar con la clave correcta para que otros servicios lo encuentren
+        localStorage.setItem('access_token', token);
     }
 
     /**
@@ -155,7 +157,10 @@ class TranscriptionService {
      */
     logout() {
         this.token = null;
-        localStorage.removeItem('token');
+        // Limpiar con la clave correcta
+        localStorage.removeItem('access_token');
+        localStorage.removeItem('refresh_token');
+        localStorage.removeItem('current_user');
     }
 }
 

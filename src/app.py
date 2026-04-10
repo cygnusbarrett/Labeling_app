@@ -81,7 +81,7 @@ def create_app():
     logger.debug("Blueprint de API de transcripción registrado")
     
     # Importar decoradores de autenticación
-    from services.jwt_service import optional_jwt, require_admin, jwt_service
+    from services.jwt_service import optional_jwt, require_admin, require_auth, jwt_service
     
     # Rutas principales
     @app.route('/')
@@ -106,9 +106,11 @@ def create_app():
         return render_template('sqlite_login.html')
     
     @app.route('/transcription/validator')
+    @require_auth
     def transcription_validator():
         """Página de validador de transcripciones"""
         logger.debug("Acceso a página de validador de transcripciones")
+        logger.info(f"Usuario autenticado accediendo a validador: {request.current_user['username']}")
         
         return render_template('transcription_validator.html')
     
@@ -142,64 +144,93 @@ def create_app():
         logger.info("=" * 80)
         logger.info("🔐 POST /login RECIBIDO")
         logger.info(f"Content-Type: {request.content_type}")
-        logger.info(f"Headers: {dict(request.headers)}")
+        logger.info(f"Remote Address: {request.remote_addr}")
+        logger.info(f"User-Agent: {request.headers.get('User-Agent', 'N/A')}")
         
         try:
-            logger.info(f"Raw data: {request.data}")
+            logger.info(f"📦 Raw body data: {request.data[:200]}")
             
-            data = request.get_json()
-            logger.info(f"JSON parsed: {data}")
+            data = request.get_json(force=True, silent=True)
+            logger.info(f"📋 JSON parsed successfully: {data}")
+            
+            if not data:
+                logger.error("❌ No se pudo parsear JSON")
+                return jsonify({'error': 'Invalid JSON format', 'success': False}), 400
             
             username = data.get('username', '').strip() if data else ''
             password = data.get('password', '') if data else ''
             
-            logger.info(f"Username: '{username}' (len={len(username)})")
-            logger.info(f"Password: {'*' * len(password) if password else 'EMPTY'}")
+            logger.info(f"👤 Username recibido: '{username}' (longitud={len(username)})")
+            logger.info(f"🔑 Password recibido: {'*' * min(len(password), 8) if password else 'EMPTY'} (longitud={len(password)})")
             
             if not username or not password:
-                logger.warning("❌ Login attempt with missing credentials")
-                return jsonify({'error': 'Usuario y contraseña requeridos'}), 400
+                logger.warning("⚠️  Credenciales incompletas")
+                return jsonify({
+                    'error': 'Usuario y contraseña requeridos',
+                    'success': False,
+                    'debug': {'username': bool(username), 'password': bool(password)}
+                }), 400
             
-            logger.info(f"Buscando usuario en BD: {username}")
+            logger.info(f"🔍 Buscando usuario en BD: '{username}'")
             db_manager = DatabaseManager(config.DATABASE_URL)
             session = db_manager.get_session()
             
             user = session.query(User).filter_by(username=username).first()
-            logger.info(f"Usuario encontrado: {user is not None}")
+            logger.info(f"📊 Usuario encontrado en BD: {user is not None}")
             
             if user:
-                logger.info(f"Verificando contraseña para: {user.username}")
+                logger.info(f"   └─ ID: {user.id}")
+                logger.info(f"   └─ Username: {user.username}")
+                logger.info(f"   └─ Role: {user.role}")
+                logger.info(f"🔐 Verificando hash de contraseña...")
                 pwd_valid = user.check_password(password)
-                logger.info(f"Contraseña válida: {pwd_valid}")
+                logger.info(f"   └─ Contraseña válida: {pwd_valid}")
+                if not pwd_valid:
+                    logger.warning(f"   └─ ❌ Hash no coincide con password proporcionado")
+            else:
+                logger.warning(f"   └─ ❌ Usuario NO encontrado en BD")
             
             session.close()
             
             if not user or not user.check_password(password):
-                logger.warning(f"❌ Failed login attempt for user: {username}")
-                return jsonify({'error': 'Usuario o contraseña incorrectos'}), 401
+                logger.warning(f"❌ LOGIN FALLIDO para usuario: {username}")
+                return jsonify({
+                    'error': 'Usuario o contraseña incorrectos',
+                    'success': False
+                }), 401
             
             # Generar tokens JWT
-            logger.info(f"✅ Generando tokens JWT para: {user.username}")
+            logger.info(f"✅ LOGIN EXITOSO - Generando tokens JWT para: {user.username} (ID: {user.id})")
             access_token = jwt_service.create_access_token(user.id, user.username, user.role)
             refresh_token = jwt_service.create_refresh_token(user.id)
             
-            logger.info(f"✅ User logged in successfully: {username}")
-            logger.info("=" * 80)
-            
-            return jsonify({
+            response_data = {
+                'success': True,
                 'access_token': access_token,
                 'refresh_token': refresh_token,
                 'user': {
                     'id': user.id,
                     'username': user.username,
                     'role': user.role
-                }
-            }), 200
+                },
+                'expires_in': config.JWT_ACCESS_TOKEN_EXPIRES * 60
+            }
+            
+            logger.info(f"✅ Tokens generados correctamente")
+            logger.info(f"   └─ Access token length: {len(access_token)} chars")
+            logger.info(f"   └─ Refresh token length: {len(refresh_token)} chars")
+            logger.info("=" * 80)
+            
+            return jsonify(response_data), 200
             
         except Exception as e:
-            logger.error(f"❌ Error en login: {str(e)}", exc_info=True)
+            logger.error(f"❌ EXCEPCIÓN en POST /login: {str(e)}", exc_info=True)
+            logger.error(f"   └─ Tipo: {type(e).__name__}")
             logger.error("=" * 80)
-            return jsonify({'error': 'Error interno del servidor'}), 500
+            return jsonify({
+                'error': f'Error interno del servidor: {str(e)}',
+                'success': False
+            }), 500
     
     @app.route('/logout', methods=['POST'])
     def logout():

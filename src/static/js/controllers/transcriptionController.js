@@ -20,11 +20,18 @@ async function initApp() {
     // Si hay token, mostrar validador
     if (transcriptionService.isAuthenticated()) {
         try {
+            // Extraer información del usuario del token
+            const token = transcriptionService.token;
+            const tokenPayload = JSON.parse(atob(token.split('.')[1]));
+            state.user = tokenPayload;
+            state.userRole = tokenPayload.role;
+            
             // Verificar que el token sigue siendo válido
             const projects = await transcriptionService.getProjects();
             showValidatorSection();
             await loadUserData();
         } catch (error) {
+            console.error('Error en initApp:', error);
             // Token inválido, mostrar login
             showLoginSection();
             transcriptionService.logout();
@@ -63,8 +70,8 @@ document.getElementById('loginForm')?.addEventListener('submit', async function(
     errorDiv.textContent = '';
 
     try {
-        // Hacer login a través de la API existente
-        const response = await fetch('/api/v2/login', {
+        // Hacer login a través de la ruta de authentication
+        const response = await fetch('/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
