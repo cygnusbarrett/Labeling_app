@@ -506,6 +506,81 @@
             border-bottom-color: #667eea;
             background: rgba(102,126,234,0.15);
         }
+
+        /* Inline Word Editing */
+        .inline-word-input {
+            font-family: inherit;
+            font-size: inherit;
+            line-height: inherit;
+            border: none;
+            border-bottom: 2px solid #e53e3e;
+            background: #fff5f5;
+            color: #c53030;
+            font-weight: 600;
+            padding: 2px 6px;
+            border-radius: 4px 4px 0 0;
+            outline: none;
+            text-align: center;
+            transition: all 0.2s;
+            min-width: 2.5ch;
+        }
+        .inline-word-input:focus {
+            border-bottom-color: #667eea;
+            background: #ebf4ff;
+            color: #2c5282;
+            box-shadow: 0 2px 8px rgba(102, 126, 234, 0.2);
+        }
+        .inline-word-input.modified {
+            border-bottom-color: #38a169;
+            background: #f0fff4;
+            color: #276749;
+        }
+        .inline-word-static {
+            color: #2d3748;
+        }
+        #highlightedText {
+            font-size: 16px;
+            line-height: 2.2;
+            word-spacing: 2px;
+        }
+        .change-indicator {
+            display: none;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 13px;
+            margin-top: 10px;
+            font-weight: 500;
+        }
+        .change-indicator.has-changes {
+            display: block;
+            background: #f0fff4;
+            color: #276749;
+            border: 1px solid #9ae6b4;
+        }
+        .change-indicator.no-changes {
+            display: block;
+            background: #ebf8ff;
+            color: #2c5282;
+            border: 1px solid #90cdf4;
+        }
+        .full-edit-toggle {
+            display: inline-block;
+            margin-top: 8px;
+            font-size: 12px;
+            color: #667eea;
+            cursor: pointer;
+            text-decoration: underline;
+        }
+        .full-edit-toggle:hover {
+            color: #5568d3;
+        }
+        #fullEditSection {
+            display: none;
+            margin-top: 10px;
+        }
+        #fullEditSection.active {
+            display: block;
+        }
     </style>
 </head>
 <body>
@@ -587,21 +662,25 @@
                     <!-- Correction Form -->
                     <div class="correction-form">
                         <div class="form-group">
-                            <label>Transcripción Original (palabras destacadas en rojo tienen baja confianza):</label>
-                            <div id="highlightedText" style="background: #f7fafc; color: #666; padding: 10px; border: 1px solid #ddd; border-radius: 6px; margin-bottom: 15px; line-height: 1.6; min-height: 60px;"></div>
-                            <textarea id="originalText" readonly style="background: #f7fafc; color: #666; display: none;"></textarea>
+                            <label>📝 Transcripción — edita directamente las palabras resaltadas si es necesario:</label>
+                            <div id="highlightedText" style="background: #f7fafc; padding: 14px 16px; border: 1px solid #e2e8f0; border-radius: 8px; margin-bottom: 8px; min-height: 60px;"></div>
+                            <div id="changeIndicator" class="change-indicator"></div>
+                            <span class="full-edit-toggle" onclick="toggleFullEdit()">✏️ ¿Necesitas editar todo el texto? Click aquí</span>
+                            <textarea id="originalText" readonly style="display: none;"></textarea>
                         </div>
 
-                        <div class="form-group">
-                            <label for="correctedText">Corrección (si es necesaria):</label>
-                            <textarea id="correctedText" placeholder="Se copiará automáticamente el texto original"></textarea>
+                        <div id="fullEditSection">
+                            <div class="form-group">
+                                <label for="correctedText">Edición completa del texto:</label>
+                                <textarea id="correctedText" placeholder="Texto completo para editar libremente"></textarea>
+                            </div>
                         </div>
 
                         <div class="form-actions">
                             <button type="button" class="btn-approve" onclick="submitWord('approved')">
-                                ✓ Aprobada
+                                ✓ Confirmar
                             </button>
-                            <button type="button" class="btn-correct" onclick="submitWord('corrected')">
+                            <button type="button" class="btn-correct" onclick="submitWord('corrected')" style="display:none;">
                                 ✎ Corregida
                             </button>
                         </div>

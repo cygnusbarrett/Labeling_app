@@ -10,7 +10,8 @@ let state = {
     currentWordIndex: 0,
     allWords: [],
     stats: null,
-    userRole: 'annotator'
+    userRole: 'annotator',
+    fullEditMode: false
 };
 
 /**
@@ -172,27 +173,31 @@ async function displayWord(index) {
         }
 
         state.currentWordIndex = index;
-        const segment = state.allWords[index];  // Ahora es un segmento, no una palabra
+        const segment = state.allWords[index];
         state.currentWord = segment;
+
+        // Reset full-edit mode for each new segment
+        state.fullEditMode = false;
+        const fullEditSection = document.getElementById('fullEditSection');
+        if (fullEditSection) fullEditSection.classList.remove('active');
+        const toggleLink = document.querySelector('.full-edit-toggle');
+        if (toggleLink) toggleLink.style.display = '';
 
         // Actualizar interfaz con los datos del SEGMENTO
         document.getElementById('wordSpeaker').textContent = segment.speaker || 'UNKNOWN';
-        
-        // IMPORTANTE: Mostrar el TEXTO COMPLETO del segmento (no una palabra)
         document.getElementById('originalText').textContent = segment.text;
-        document.getElementById('correctedText').value = segment.text_revised || '';
 
-        // Mostrar el texto con palabras de baja probabilidad destacadas en rojo
+        // Renderizar texto con edición inline de palabras inciertas
         displayHighlightedText(segment);
-        
-        // Pre-llenar la casilla de corrección con el texto original
+
+        // Pre-llenar textarea oculto (para modo edición completa)
         document.getElementById('correctedText').value = segment.text;
 
-        // Duración (sin tiempos de inicio/fin)
+        // Duración
         const duration = (segment.end_time - segment.start_time).toFixed(2);
         document.getElementById('wordDuration').textContent = `${duration}s`;
         
-        // Mostrar información de palabras con baja probabilidad en metadata
+        // Info de palabras con baja probabilidad
         const lowProbText = document.getElementById('lowProbText');
         if (segment.low_prob_word_count > 0) {
             lowProbText.textContent = `⚠️ ${segment.low_prob_word_count} palabra(s) con baja confianza`;
@@ -202,42 +207,28 @@ async function displayWord(index) {
             lowProbText.style.color = '#22863a';
         }
 
-        // Badge de palabras de baja probabilidad (oculto)
-        const badge = document.getElementById('probabilityBadge');
-        badge.innerHTML = '';
+        // Badge (oculto)
+        document.getElementById('probabilityBadge').innerHTML = '';
 
-        // Mostrar las palabras de baja probabilidad dentro del segmento
-        displayLowProbabilityWords(segment);
+        // Indicador de cambios
+        updateChangeIndicator();
 
         // Cargar audio del SEGMENTO
         try {
-            console.log('🎵 Cargando audio para SEGMENTO ID:', segment.id);
-            console.log('📂 Proyecto:', state.currentProject);
-            console.log('⏱️ Duración del segmento:', segment.start_time, '-', segment.end_time);
-            
             const audioUrl = await transcriptionService.getWordAudio(state.currentProject, segment.id, 0.2);
-            
             const audioPlayer = document.getElementById('audioPlayer');
-            console.log('🔧 Seteando src del audioPlayer a:', audioUrl);
-            
             audioPlayer.src = audioUrl;
-            console.log('📍 src seteado, llamando .load()');
-            
             audioPlayer.load();
-            console.log('✅ Audio del segmento cargado y listo para reproducir');
-            
         } catch (audioError) {
-            console.error('❌ Error al cargar audio:', audioError);
+            console.error('Error al cargar audio:', audioError);
             showMessage(`Advertencia: No se pudo cargar el audio - ${audioError.message}`, 'error');
         }
 
-        // Actualizar título del navegador
+        // Actualizar título
         document.title = `Segmento ${index + 1}/${state.allWords.length} - Validador`;
 
         document.getElementById('wordCard').style.display = 'block';
         document.getElementById('loadingState').style.display = 'none';
-
-        // Scroll al card
         document.getElementById('wordCard').scrollIntoView({ behavior: 'smooth', block: 'start' });
 
     } catch (error) {
@@ -246,98 +237,154 @@ async function displayWord(index) {
 }
 
 /**
- * Muestra las palabras con baja probabilidad dentro de un segmento
- */
-function displayLowProbabilityWords(segment) {
-    let container = document.getElementById('lowProbabilityWords');
-    
-    if (!container) {
-        // Crear el contenedor si no existe
-        const correctionSection = document.getElementById('correctionSection');
-        if (correctionSection) {
-            const newContainer = document.createElement('div');
-            newContainer.id = 'lowProbabilityWords';
-            newContainer.style.marginBottom = '1.5rem';
-            newContainer.style.padding = '1rem';
-            newContainer.style.backgroundColor = '#fff3cd';
-            newContainer.style.borderRadius = '0.5rem';
-            newContainer.style.borderLeft = '4px solid #ffc107';
-            correctionSection.parentNode.insertBefore(newContainer, correctionSection);
-            container = newContainer;
-        }
-    }
-
-    if (!segment.words || segment.words.length === 0) {
-        if (container) container.innerHTML = '';
-        return;
-    }
-
-    // Filtrar palabras con probabilidad < 0.95
-    const lowProbWords = segment.words.filter(w => w.probability < 0.95);
-    
-    if (lowProbWords.length === 0) {
-        if (container) container.innerHTML = '';
-        return;
-    }
-
-    let html = '<strong>📌 Palabras con baja confianza (< 95%):</strong><ul style="margin-top: 0.5rem; padding-left: 1.5rem;">';
-    lowProbWords.forEach(word => {
-        const probPercent = (word.probability * 100).toFixed(0);
-        html += `<li><strong>"${word.word}"</strong> - ${probPercent}% confianza</li>`;
-    });
-    html += '</ul>';
-    
-    if (container) container.innerHTML = html;
-}
-
-/**
- * Muestra el texto con palabras de baja confianza destacadas en rojo
+ * Muestra el texto con palabras editables inline para baja confianza
  */
 function displayHighlightedText(segment) {
-    const highlightedDiv = document.getElementById('highlightedText');
-    
-    if (!highlightedDiv) {
-        console.error('No se encontró el elemento highlightedText');
-        return;
-    }
+    const container = document.getElementById('highlightedText');
+    if (!container) return;
+
+    container.innerHTML = '';
 
     if (!segment.words || segment.words.length === 0) {
-        highlightedDiv.textContent = segment.text;
+        // Sin datos de palabras: mostrar texto plano
+        container.textContent = segment.text;
         return;
     }
 
-    // Crear un mapa de palabras con baja probabilidad (< 0.95)
-    const lowProbWords = segment.words.filter(w => w.probability < 0.95);
-    const lowProbWordsSet = new Set(lowProbWords.map(w => w.word.toLowerCase()));
+    // Ordenar palabras por índice
+    const sortedWords = [...segment.words].sort((a, b) => a.word_index - b.word_index);
 
-    // Dividir el texto en palabras y reconstruirlo con highlighting
-    const words = segment.text.split(/(\s+)/); // Mantener espacios
-    let highlightedHtml = '';
+    sortedWords.forEach((wordObj, i) => {
+        // Espacio entre palabras (excepto la primera)
+        if (i > 0) {
+            container.appendChild(document.createTextNode(' '));
+        }
 
-    words.forEach(word => {
-        if (/^\s+$/.test(word)) {
-            // Es espacio en blanco, mantenerlo así
-            highlightedHtml += word;
+        if (wordObj.probability < 0.95) {
+            // Palabra incierta → input editable inline
+            const input = document.createElement('input');
+            input.type = 'text';
+            input.className = 'inline-word-input';
+            input.value = wordObj.word;
+            input.dataset.wordIndex = wordObj.word_index;
+            input.dataset.originalWord = wordObj.word;
+            input.title = `Confianza: ${(wordObj.probability * 100).toFixed(0)}% — edita si es incorrecto`;
+
+            // Ancho dinámico basado en contenido
+            input.style.width = (Math.max(wordObj.word.length, 2) + 2) + 'ch';
+
+            input.addEventListener('input', function() {
+                this.style.width = (Math.max(this.value.length, 2) + 2) + 'ch';
+                // Marcar visualmente si fue modificado
+                if (this.value !== this.dataset.originalWord) {
+                    this.classList.add('modified');
+                } else {
+                    this.classList.remove('modified');
+                }
+                updateChangeIndicator();
+            });
+
+            // Navegación con Tab entre inputs
+            input.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    // Ir al siguiente input o confirmar
+                    const allInputs = container.querySelectorAll('.inline-word-input');
+                    const idx = Array.from(allInputs).indexOf(this);
+                    if (idx < allInputs.length - 1) {
+                        allInputs[idx + 1].focus();
+                    } else {
+                        // Último input: confirmar
+                        submitWord('approved');
+                    }
+                }
+            });
+
+            container.appendChild(input);
         } else {
-            // Verificar si la palabra tiene baja probabilidad
-            // Comparar sin puntuación para mejor matching
-            const cleanWord = word.toLowerCase().replace(/[.,!?;:—-]+$/g, '').replace(/^[¿¡—-]+/, '');
-            const punctuation = word.match(/[.,!?;:—-]+$/g)?.[0] || '';
-            const prefix = word.match(/^[¿¡—-]+/)?.[0] || '';
-            
-            if (lowProbWordsSet.has(cleanWord)) {
-                highlightedHtml += `${prefix}<span style="color: red; font-weight: bold;">${cleanWord}</span>${punctuation}`;
-            } else {
-                highlightedHtml += word;
-            }
+            // Palabra segura → texto estático
+            const span = document.createElement('span');
+            span.className = 'inline-word-static';
+            span.textContent = wordObj.word;
+            span.dataset.wordIndex = wordObj.word_index;
+            container.appendChild(span);
         }
     });
-
-    highlightedDiv.innerHTML = highlightedHtml;
 }
 
 /**
- * Envía la validación de una palabra
+ * Reconstruye el texto completo desde los elementos inline
+ */
+function reconstructText() {
+    const container = document.getElementById('highlightedText');
+    const elements = container.querySelectorAll('.inline-word-input, .inline-word-static');
+    const words = [];
+
+    elements.forEach(el => {
+        if (el.classList.contains('inline-word-input')) {
+            const val = el.value.trim();
+            if (val.length > 0) words.push(val);
+        } else {
+            words.push(el.textContent);
+        }
+    });
+
+    return words.join(' ').trim();
+}
+
+/**
+ * Verifica si hay cambios en las palabras editables
+ */
+function hasInlineChanges() {
+    const inputs = document.querySelectorAll('#highlightedText .inline-word-input');
+    for (const input of inputs) {
+        if (input.value !== input.dataset.originalWord) return true;
+    }
+    return false;
+}
+
+/**
+ * Actualiza el indicador visual de cambios
+ */
+function updateChangeIndicator() {
+    const indicator = document.getElementById('changeIndicator');
+    if (!indicator) return;
+
+    const changed = hasInlineChanges();
+    const inputs = document.querySelectorAll('#highlightedText .inline-word-input');
+    const modifiedCount = Array.from(inputs).filter(i => i.value !== i.dataset.originalWord).length;
+
+    if (inputs.length === 0) {
+        indicator.className = 'change-indicator no-changes';
+        indicator.textContent = '✅ Sin palabras inciertas — escucha el audio y confirma';
+    } else if (changed) {
+        indicator.className = 'change-indicator has-changes';
+        indicator.textContent = `✏️ ${modifiedCount} palabra(s) modificada(s) — se enviará como corregida`;
+    } else {
+        indicator.className = 'change-indicator no-changes';
+        indicator.textContent = `🔍 ${inputs.length} palabra(s) editable(s) — modifica o confirma como está`;
+    }
+}
+
+/**
+ * Alterna al modo de edición completa del texto
+ */
+function toggleFullEdit() {
+    state.fullEditMode = true;
+    const section = document.getElementById('fullEditSection');
+    section.classList.add('active');
+    
+    // Pre-llenar con el texto reconstruido (por si ya se editó algo inline)
+    const textarea = document.getElementById('correctedText');
+    textarea.value = reconstructText();
+    textarea.focus();
+
+    // Ocultar toggle link
+    document.querySelector('.full-edit-toggle').style.display = 'none';
+}
+
+/**
+ * Envía la validación de un segmento
  */
 async function submitWord(status) {
     try {
@@ -346,14 +393,23 @@ async function submitWord(status) {
             return;
         }
 
-        const textRevised = document.getElementById('correctedText').value.trim();
+        // Determinar texto y estado
+        let textRevised;
+        let review_status;
 
-        // El status es equivalente a review_status (pending/approved/corrected)
-        const review_status = status === 'approved' ? 'approved' : 'corrected';
+        if (state.fullEditMode) {
+            // Modo edición completa: usar textarea
+            textRevised = document.getElementById('correctedText').value.trim();
+            review_status = (textRevised !== state.currentWord.text.trim()) ? 'corrected' : 'approved';
+        } else {
+            // Modo inline: reconstruir desde los inputs
+            textRevised = reconstructText();
+            review_status = hasInlineChanges() ? 'corrected' : 'approved';
+        }
 
-        // Validar que si es "corrected", hay texto
-        if (review_status === 'corrected' && !textRevised) {
-            showMessage('Por favor, ingresa la corrección antes de guardar', 'info');
+        // Validar que hay texto
+        if (!textRevised) {
+            showMessage('Error: no se pudo reconstruir el texto', 'error');
             return;
         }
 
@@ -364,14 +420,14 @@ async function submitWord(status) {
         console.log('📤 Enviando segmento:', {
             segment_id: state.currentWord.id,
             review_status: review_status,
-            text_revised: textRevised || null
+            text_revised: textRevised
         });
 
-        // Enviar corrección (usando submitWord que envía al endpoint /words/<id>)
+        // Enviar corrección
         await transcriptionService.submitWord(
             state.currentWord.id,
             review_status,
-            textRevised || null
+            textRevised
         );
 
         // Mostrar mensaje de éxito
@@ -516,7 +572,8 @@ function logout() {
         currentWordIndex: 0,
         allWords: [],
         stats: null,
-        userRole: 'annotator'
+        userRole: 'annotator',
+        fullEditMode: false
     };
     document.getElementById('messageArea').innerHTML = '';
     showLoginSection();
