@@ -183,10 +183,7 @@ def list_words(project_id):
             # Filtrar por rol: anotadores ven solo sus segmentos asignados
             user = session.query(User).filter_by(id=request.user_id).first()
             if user and user.role != 'admin':
-                # Para anotadores, mostrar segmentos pendientes sin asignar o asignados a ellos
-                query = query.filter(
-                    (Segment.annotator_id == None) | (Segment.annotator_id == request.user_id)
-                )
+                query = query.filter(Segment.annotator_id == request.user_id)
             
             total = query.count()
             segments = query.offset(offset).limit(limit).all()
@@ -494,10 +491,10 @@ def get_stats(project_id):
                     project_id=project_id,
                     annotator_id=annotator.id
                 ).count()
-                annotator_completed = session.query(Segment).filter_by(
-                    project_id=project_id,
-                    annotator_id=annotator.id,
-                    review_status__in=['approved', 'corrected']
+                annotator_completed = session.query(Segment).filter(
+                    Segment.project_id == project_id,
+                    Segment.annotator_id == annotator.id,
+                    Segment.review_status.in_(['approved', 'corrected'])
                 ).count()
                 
                 stats_by_annotator[annotator.username] = {
@@ -525,10 +522,10 @@ def get_stats(project_id):
                 project_id=project_id,
                 annotator_id=request.user_id
             ).count()
-            user_completed = session.query(Segment).filter_by(
-                project_id=project_id,
-                annotator_id=request.user_id,
-                review_status__in=['approved', 'corrected']
+            user_completed = session.query(Segment).filter(
+                Segment.project_id == project_id,
+                Segment.annotator_id == request.user_id,
+                Segment.review_status.in_(['approved', 'corrected'])
             ).count()
             
             session.close()

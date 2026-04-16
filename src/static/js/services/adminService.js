@@ -91,6 +91,23 @@ class AdminService {
         return Promise.all(promises);
     }
 
+    async unassignSegment(projectId, segmentId) {
+        return this.makeRequest(`/admin/projects/${projectId}/segments/${segmentId}/unassign`, {
+            method: 'POST'
+        });
+    }
+
+    async unassignMultipleSegments(projectId, segmentIds) {
+        const promises = segmentIds.map(segId =>
+            this.unassignSegment(projectId, segId)
+        );
+        return Promise.all(promises);
+    }
+
+    async getAssignedSegments(projectId) {
+        return this.makeRequest(`/admin/projects/${projectId}/assigned`);
+    }
+
     // ==================== ESTADÍSTICAS ====================
     async getProjectStats(projectId) {
         return this.makeRequest(`/admin/projects/${projectId}/stats`);

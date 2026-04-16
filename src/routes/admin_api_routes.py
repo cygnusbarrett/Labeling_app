@@ -323,6 +323,77 @@ def assign_segment(project_id, segment_id):
         logger.error(f"Error assigning segment: {e}")
         return jsonify({'error': str(e)}), 500
 
+@admin_bp.route('/projects/<project_id>/segments/<int:segment_id>/unassign', methods=['POST'])
+@admin_required
+def unassign_segment(project_id, segment_id):
+    """Desasigna un segmento (lo devuelve al pool de asignables)"""
+    try:
+        db_manager = get_db_manager()
+        session = db_manager.get_session()
+        
+        segment = session.query(Segment).filter_by(
+            id=segment_id,
+            project_id=project_id
+        ).first()
+        
+        if not segment:
+            session.close()
+            return jsonify({'error': 'Segment not found'}), 404
+        
+        segment.annotator_id = None
+        segment.review_status = 'pending'
+        segment.text_revised = None
+        segment.completed_at = None
+        segment.updated_at = datetime.now(timezone.utc)
+        session.commit()
+        session.close()
+        
+        return jsonify({'message': 'Segment unassigned', 'segment_id': segment_id}), 200
+
+    except Exception as e:
+        logger.error(f"Error unassigning segment: {e}")
+        return jsonify({'error': str(e)}), 500
+
+@admin_bp.route('/projects/<project_id>/assigned', methods=['GET'])
+@admin_required
+def list_assigned_segments(project_id):
+    """Lista segmentos asignados agrupados por usuario"""
+    try:
+        db_manager = get_db_manager()
+        session = db_manager.get_session()
+        
+        # Obtener todos los segmentos asignados
+        segments = session.query(Segment).filter(
+            Segment.project_id == project_id,
+            Segment.annotator_id.isnot(None)
+        ).all()
+        
+        # Agrupar por usuario
+        by_user = {}
+        for s in segments:
+            uid = s.annotator_id
+            if uid not in by_user:
+                user = session.query(User).filter_by(id=uid).first()
+                by_user[uid] = {
+                    'user_id': uid,
+                    'username': user.username if user else f'user_{uid}',
+                    'segments': []
+                }
+            by_user[uid]['segments'].append({
+                'id': s.id,
+                'text': s.text,
+                'status': s.review_status,
+                'completed_at': s.completed_at.isoformat() if s.completed_at else None
+            })
+        
+        session.close()
+        
+        return jsonify({'assigned': list(by_user.values())}), 200
+        
+    except Exception as e:
+        logger.error(f"Error listing assigned segments: {e}")
+        return jsonify({'error': str(e)}), 500
+
 # ==================== ESTADÍSTICAS GLOBALES ====================
 
 @admin_bp.route('/stats', methods=['GET'])

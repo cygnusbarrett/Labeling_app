@@ -204,12 +204,10 @@ async function loadAssignmentsTab() {
         annotatorSelect.innerHTML = '<option value="">Selecciona un anotador</option>';
         
         users.forEach(user => {
-            if (user.role !== 'admin') {
-                const option = document.createElement('option');
-                option.value = user.id;
-                option.textContent = user.username;
-                annotatorSelect.appendChild(option);
-            }
+            const option = document.createElement('option');
+            option.value = user.id;
+            option.textContent = user.role === 'admin' ? `${user.username} (admin)` : user.username;
+            annotatorSelect.appendChild(option);
         });
 
     } catch (error) {
@@ -244,6 +242,9 @@ async function loadSegments() {
             segmentsSelect.appendChild(option);
         });
 
+        // También cargar segmentos asignados
+        await loadAssignedSegments();
+
     } catch (error) {
         console.error('Error cargando segmentos:', error);
         showMessage('Error al cargar segmentos', 'error', 'assignments');
@@ -266,9 +267,84 @@ async function assignSegments() {
         
         showMessage(`✅ ${segmentIds.length} segmento(s) asignado(s)`, 'success', 'assignments');
         await loadSegments();
+        await loadAssignedSegments();
 
     } catch (error) {
         console.error('Error asignando segmentos:', error);
+        showMessage(`Error: ${error.message}`, 'error', 'assignments');
+    }
+}
+
+async function loadAssignedSegments() {
+    const projectId = document.getElementById('projectSelect').value;
+    const container = document.getElementById('assignedSegmentsContainer');
+    if (!projectId || !container) {
+        if (container) container.innerHTML = '';
+        return;
+    }
+
+    try {
+        const data = await adminService.getAssignedSegments(projectId);
+        const assigned = data.assigned || [];
+
+        if (assigned.length === 0) {
+            container.innerHTML = '<p style="color:#999;padding:10px;">No hay segmentos asignados aún.</p>';
+            return;
+        }
+
+        let html = '';
+        for (const group of assigned) {
+            const pending = group.segments.filter(s => s.status === 'pending');
+            const completed = group.segments.filter(s => s.status !== 'pending');
+            
+            html += `
+                <div style="background:#f7fafc;padding:15px;border-radius:8px;margin-bottom:15px;border-left:4px solid #667eea;">
+                    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+                        <strong>👤 ${group.username}</strong>
+                        <span class="badge">${completed.length}/${group.segments.length} completados</span>
+                    </div>
+                    <div style="margin-bottom:8px;">
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width:${group.segments.length > 0 ? (completed.length / group.segments.length * 100) : 0}%"></div>
+                        </div>
+                    </div>
+                    <select id="assignedSelect_${group.user_id}" multiple style="width:100%;height:100px;font-size:12px;margin-bottom:8px;">
+                        ${group.segments.map(s => 
+                            `<option value="${s.id}" ${s.status !== 'pending' ? 'style="color:#48bb78;"' : ''}>${s.id} - ${s.text.substring(0, 40)}... [${s.status}]</option>`
+                        ).join('')}
+                    </select>
+                    <button class="btn btn-danger" onclick="unassignSelected('${projectId}', ${group.user_id})" style="font-size:11px;">
+                        🔄 Desasignar seleccionados
+                    </button>
+                </div>
+            `;
+        }
+        container.innerHTML = html;
+
+    } catch (error) {
+        console.error('Error cargando segmentos asignados:', error);
+        container.innerHTML = '<p style="color:#e53e3e;">Error al cargar asignaciones</p>';
+    }
+}
+
+async function unassignSelected(projectId, userId) {
+    const select = document.getElementById(`assignedSelect_${userId}`);
+    if (!select) return;
+
+    const segmentIds = Array.from(select.selectedOptions).map(o => parseInt(o.value));
+    if (segmentIds.length === 0) {
+        showMessage('Selecciona segmentos para desasignar', 'info', 'assignments');
+        return;
+    }
+
+    if (!confirm(`¿Desasignar ${segmentIds.length} segmento(s)? Volverán al listado general.`)) return;
+
+    try {
+        await adminService.unassignMultipleSegments(projectId, segmentIds);
+        showMessage(`✅ ${segmentIds.length} segmento(s) desasignado(s)`, 'success', 'assignments');
+        await loadSegments();
+        await loadAssignedSegments();
+    } catch (error) {
         showMessage(`Error: ${error.message}`, 'error', 'assignments');
     }
 }

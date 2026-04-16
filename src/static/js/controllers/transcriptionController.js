@@ -120,13 +120,31 @@ async function loadProjectWords() {
         document.getElementById('loadingState').style.display = 'block';
         document.getElementById('wordCard').style.display = 'none';
         document.getElementById('statsPanel').style.display = 'none';
+        const completionMsg = document.getElementById('completionMessage');
+        if (completionMsg) completionMsg.style.display = 'none';
 
         const wordsData = await transcriptionService.getWords(state.currentProject, 'pending', 100);
         state.allWords = wordsData.words || [];
 
         if (state.allWords.length === 0) {
             document.getElementById('loadingState').style.display = 'none';
-            showMessage('¡Todas las palabras han sido validadas! 🎉', 'success');
+            
+            // Mostrar mensaje de felicitaciones con opción de solicitar más
+            const msgContainer = document.getElementById('completionMessage');
+            if (msgContainer) {
+                msgContainer.style.display = 'block';
+                msgContainer.innerHTML = `
+                    <div style="text-align:center;padding:40px 20px;">
+                        <div style="font-size:64px;margin-bottom:20px;">🎉</div>
+                        <h2 style="color:#48bb78;margin-bottom:10px;">¡Felicitaciones!</h2>
+                        <p style="color:#666;margin-bottom:20px;">Has completado todos los segmentos asignados.</p>
+                        <p style="color:#999;font-size:14px;">Contacta al administrador para que te asigne más segmentos.</p>
+                    </div>
+                `;
+            } else {
+                showMessage('🎉 ¡Felicitaciones! Has completado todos los segmentos asignados. Contacta al administrador para recibir más.', 'success');
+            }
+            
             await updateStats();
             return;
         }
