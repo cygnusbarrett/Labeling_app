@@ -302,14 +302,82 @@ function displayHighlightedText(segment) {
 
             container.appendChild(input);
         } else {
-            // Palabra segura → texto estático
+            // Palabra segura → texto estático, doble-click para editar
             const span = document.createElement('span');
             span.className = 'inline-word-static';
             span.textContent = wordObj.word;
             span.dataset.wordIndex = wordObj.word_index;
+            span.dataset.originalWord = wordObj.word;
+            span.title = 'Doble-click para editar';
+            span.addEventListener('dblclick', function() {
+                convertStaticToInput(this);
+            });
             container.appendChild(span);
         }
     });
+}
+
+/**
+ * Convierte una palabra estática en un input editable
+ */
+function convertStaticToInput(span) {
+    const container = document.getElementById('highlightedText');
+    const input = document.createElement('input');
+    input.type = 'text';
+    input.className = 'inline-word-input converted';
+    input.value = span.textContent;
+    input.dataset.wordIndex = span.dataset.wordIndex;
+    input.dataset.originalWord = span.dataset.originalWord;
+    input.title = 'Editando palabra (era segura)';
+    input.style.width = (Math.max(span.textContent.length, 2) + 2) + 'ch';
+
+    input.addEventListener('input', function() {
+        this.style.width = (Math.max(this.value.length, 2) + 2) + 'ch';
+        if (this.value !== this.dataset.originalWord) {
+            this.classList.add('modified');
+        } else {
+            this.classList.remove('modified');
+        }
+        updateChangeIndicator();
+    });
+
+    input.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            const allInputs = container.querySelectorAll('.inline-word-input');
+            const idx = Array.from(allInputs).indexOf(this);
+            if (idx < allInputs.length - 1) {
+                allInputs[idx + 1].focus();
+            } else {
+                submitWord('approved');
+            }
+        } else if (e.key === 'Escape') {
+            // Revertir a estático
+            revertInputToStatic(this);
+        }
+    });
+
+    span.replaceWith(input);
+    input.focus();
+    input.select();
+    updateChangeIndicator();
+}
+
+/**
+ * Revierte un input convertido a su estado estático original
+ */
+function revertInputToStatic(input) {
+    const span = document.createElement('span');
+    span.className = 'inline-word-static';
+    span.textContent = input.dataset.originalWord;
+    span.dataset.wordIndex = input.dataset.wordIndex;
+    span.dataset.originalWord = input.dataset.originalWord;
+    span.title = 'Doble-click para editar';
+    span.addEventListener('dblclick', function() {
+        convertStaticToInput(this);
+    });
+    input.replaceWith(span);
+    updateChangeIndicator();
 }
 
 /**
@@ -354,15 +422,18 @@ function updateChangeIndicator() {
     const inputs = document.querySelectorAll('#highlightedText .inline-word-input');
     const modifiedCount = Array.from(inputs).filter(i => i.value !== i.dataset.originalWord).length;
 
+    const convertedCount = Array.from(inputs).filter(i => i.classList.contains('converted')).length;
+
     if (inputs.length === 0) {
         indicator.className = 'change-indicator no-changes';
-        indicator.textContent = '✅ Sin palabras inciertas — escucha el audio y confirma';
+        indicator.textContent = '✅ Sin palabras inciertas — escucha el audio y confirma (doble-click en cualquier palabra para editarla)';
     } else if (changed) {
         indicator.className = 'change-indicator has-changes';
         indicator.textContent = `✏️ ${modifiedCount} palabra(s) modificada(s) — se enviará como corregida`;
     } else {
+        const extra = convertedCount > 0 ? ` (${convertedCount} desbloqueada(s))` : '';
         indicator.className = 'change-indicator no-changes';
-        indicator.textContent = `🔍 ${inputs.length} palabra(s) editable(s) — modifica o confirma como está`;
+        indicator.textContent = `🔍 ${inputs.length} palabra(s) editable(s)${extra} — modifica o confirma como está`;
     }
 }
 

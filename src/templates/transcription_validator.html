@@ -537,6 +537,24 @@
         }
         .inline-word-static {
             color: #2d3748;
+            cursor: default;
+            border-radius: 3px;
+            padding: 1px 2px;
+            transition: background 0.15s;
+        }
+        .inline-word-static:hover {
+            background: #edf2f7;
+            cursor: text;
+        }
+        .inline-word-input.converted {
+            border-bottom-color: #667eea;
+            background: #ebf4ff;
+            color: #2c5282;
+        }
+        .inline-word-input.converted.modified {
+            border-bottom-color: #38a169;
+            background: #f0fff4;
+            color: #276749;
         }
         #highlightedText {
             font-size: 16px;
@@ -662,7 +680,7 @@
                     <!-- Correction Form -->
                     <div class="correction-form">
                         <div class="form-group">
-                            <label>📝 Transcripción — edita directamente las palabras resaltadas si es necesario:</label>
+                            <label>📝 Transcripción — edita las palabras resaltadas, o doble-click en cualquier palabra para desbloquearla:</label>
                             <div id="highlightedText" style="background: #f7fafc; padding: 14px 16px; border: 1px solid #e2e8f0; border-radius: 8px; margin-bottom: 8px; min-height: 60px;"></div>
                             <div id="changeIndicator" class="change-indicator"></div>
                             <span class="full-edit-toggle" onclick="toggleFullEdit()">✏️ ¿Necesitas editar todo el texto? Click aquí</span>
