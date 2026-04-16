@@ -265,7 +265,7 @@ def list_segments(project_id):
         
         if status != 'all':
             if status == 'pending':
-                query = query.filter_by(review_status='pending')
+                query = query.filter_by(review_status='pending').filter(Segment.annotator_id.is_(None))
             elif status == 'completed':
                 query = query.filter(Segment.review_status.in_(['approved', 'corrected']))
         
