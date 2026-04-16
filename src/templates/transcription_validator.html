@@ -480,10 +480,37 @@
                 margin-top: 10px;
             }
         }
+        /* Top Navigation */
+        .top-nav {
+            display: flex;
+            justify-content: center;
+            gap: 0;
+            background: #1a1a2e;
+            padding: 0;
+        }
+        .top-nav a {
+            padding: 14px 32px;
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            transition: all 0.2s;
+            border-bottom: 3px solid transparent;
+        }
+        .top-nav a:hover {
+            color: white;
+            background: rgba(255,255,255,0.05);
+        }
+        .top-nav a.active {
+            color: white;
+            border-bottom-color: #667eea;
+            background: rgba(102,126,234,0.15);
+        }
     </style>
 </head>
 <body>
     <div class="container">
+        <div class="top-nav" id="topNav" style="display:none;"></div>
         <div class="header">
             <h1>🎵 Validador de Transcripciones</h1>
             <p>Verifica y corrige las palabras de los audios de memoria histórica</p>
@@ -611,6 +638,18 @@
     <script>
         // Inicializar la aplicación
         document.addEventListener('DOMContentLoaded', function() {
+            // Mostrar nav de admin si el usuario es admin
+            const token = localStorage.getItem('access_token');
+            if (token) {
+                try {
+                    const payload = JSON.parse(atob(token.split('.')[1]));
+                    if (payload.role === 'admin') {
+                        const nav = document.getElementById('topNav');
+                        nav.style.display = 'flex';
+                        nav.innerHTML = '<a href="/admin/dashboard">⚙️ Administración</a><a href="/transcription/validator" class="active">📝 Mis Anotaciones</a>';
+                    }
+                } catch(e) {}
+            }
             initApp();
         });
     </script>

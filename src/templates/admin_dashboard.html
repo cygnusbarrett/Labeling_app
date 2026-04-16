@@ -401,10 +401,40 @@
                 flex-wrap: wrap;
             }
         }
+        /* Top Navigation */
+        .top-nav {
+            display: flex;
+            justify-content: center;
+            gap: 0;
+            background: #1a1a2e;
+            padding: 0;
+        }
+        .top-nav a {
+            padding: 14px 32px;
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            transition: all 0.2s;
+            border-bottom: 3px solid transparent;
+        }
+        .top-nav a:hover {
+            color: white;
+            background: rgba(255,255,255,0.05);
+        }
+        .top-nav a.active {
+            color: white;
+            border-bottom-color: #667eea;
+            background: rgba(102,126,234,0.15);
+        }
     </style>
 </head>
 <body>
     <div class="container">
+        <div class="top-nav">
+            <a href="/admin/dashboard" class="active">⚙️ Administración</a>
+            <a href="/transcription/validator">📝 Mis Anotaciones</a>
+        </div>
         <div class="header">
             <div>
                 <h1>⚙️ Panel Administrativo</h1>
