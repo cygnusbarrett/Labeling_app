@@ -162,9 +162,9 @@ def get_user_stats(user_id):
             return jsonify({'error': 'User not found'}), 404
         
         # Contar segmentos asignados y completados
-        total_assigned = session.query(Segment).filter_by(assigned_to=user_id).count()
+        total_assigned = session.query(Segment).filter_by(annotator_id=user_id).count()
         completed = session.query(Segment).filter_by(
-            assigned_to=user_id
+            annotator_id=user_id
         ).filter(Segment.review_status.in_(['approved', 'corrected'])).count()
         
         session.close()
@@ -231,7 +231,7 @@ def get_project_stats(project_id):
         
         # Contar anotadores
         from sqlalchemy import func, distinct
-        total_annotators = session.query(func.count(distinct(Segment.assigned_to))).filter_by(project_id=project_id).scalar() or 0
+        total_annotators = session.query(func.count(distinct(Segment.annotator_id))).filter_by(project_id=project_id).scalar() or 0
         
         session.close()
         
@@ -278,7 +278,7 @@ def list_segments(project_id):
                     'id': s.id,
                     'text': s.text,
                     'status': s.review_status,
-                    'assigned_to': s.assigned_to,
+                    'assigned_to': s.annotator_id,
                     'created_at': s.created_at.isoformat() if s.created_at else None
                 }
                 for s in segments
@@ -312,7 +312,7 @@ def assign_segment(project_id, segment_id):
             session.close()
             return jsonify({'error': 'Segment not found'}), 404
         
-        segment.assigned_to = annotator_id
+        segment.annotator_id = annotator_id
         segment.updated_at = datetime.now(timezone.utc)
         session.commit()
         session.close()
