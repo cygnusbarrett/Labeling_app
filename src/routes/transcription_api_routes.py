@@ -4,10 +4,11 @@ Rutas API para validación de transcripciones de audio
 from flask import Blueprint, request, jsonify, send_file, current_app
 from functools import wraps
 from datetime import datetime, timezone
-from models.database import TranscriptionProject, Word, User, DatabaseManager
+from models.database import TranscriptionProject, Word, Segment, User, DatabaseManager
 from services.audio_service import AudioService
 from services.transcription_service import TranscriptionService
 from services.jwt_service import jwt_service
+from services.rate_limiter import rate_limit_service
 from config import Config
 import io
 import os
@@ -148,130 +149,158 @@ def get_project(project_id):
 @transcription_bp.route('/projects/<project_id>/words', methods=['GET'])
 @jwt_required
 def list_words(project_id):
-    """Lista palabras pendientes de un proyecto (filtrado por rol)"""
+    """
+    Lista elementos para validación de un proyecto.
+    IMPORTANTE: Esta ruta retorna SEGMENTOS (no palabras individuales).
+    Cada segmento incluye sus palabras asociadas para contexto.
+    """
     try:
+        from sqlalchemy.orm import joinedload
+        
         db_manager = get_db_manager()
         session = db_manager.get_session()
         
-        # Verificar que el proyecto existe
-        project = session.query(TranscriptionProject).filter_by(id=project_id).first()
-        if not project:
+        try:
+            # Verificar que el proyecto existe
+            project = session.query(TranscriptionProject).filter_by(id=project_id).first()
+            if not project:
+                return jsonify({'error': 'Proyecto no encontrado'}), 404
+            
+            # Parámetros de paginación
+            limit = min(int(request.args.get('limit', 50)), 100)
+            offset = int(request.args.get('offset', 0))
+            status = request.args.get('status', 'pending')  # Maps to review_status for Segments
+            
+            # Construir query base de Segmentos con eager loading de words
+            query = session.query(Segment).options(
+                joinedload(Segment.words)
+            ).filter_by(project_id=project_id)
+            
+            # Filtrar por estado (review_status en segmentos)
+            if status:
+                query = query.filter_by(review_status=status)
+            
+            # Filtrar por rol: anotadores ven solo sus segmentos asignados
+            user = session.query(User).filter_by(id=request.user_id).first()
+            if user and user.role != 'admin':
+                # Para anotadores, mostrar segmentos pendientes sin asignar o asignados a ellos
+                query = query.filter(
+                    (Segment.annotator_id == None) | (Segment.annotator_id == request.user_id)
+                )
+            
+            total = query.count()
+            segments = query.offset(offset).limit(limit).all()
+            
+            # Formato compatible con frontend: retornamos "words" pero son segmentos
+            result = {
+                'total': total,
+                'limit': limit,
+                'offset': offset,
+                'segments': [s.to_dict() for s in segments],
+                # Para compatibilidad: también retornamos como 'words'
+                'words': [
+                    {
+                        'id': s.id,
+                        'project': s.project_id,
+                        'audio_filename': s.audio_filename,
+                        'text': s.text,  # El texto completo del segmento
+                        'text_revised': s.text_revised,
+                        'speaker': s.speaker,
+                        'start_time': s.start_time,
+                        'end_time': s.end_time,
+                        'review_status': s.review_status,
+                        'annotator_id': s.annotator_id,
+                        'low_prob_word_count': s.low_prob_word_count,
+                        'words': [w.to_dict() for w in s.words],  # Palabras asociadas para contexto
+                    }
+                    for s in segments
+                ]
+            }
+            
+            return jsonify(result), 200
+            
+        finally:
             session.close()
-            return jsonify({'error': 'Proyecto no encontrado'}), 404
-        
-        # Parámetros de paginación
-        limit = min(int(request.args.get('limit', 50)), 100)
-        offset = int(request.args.get('offset', 0))
-        status = request.args.get('status', 'pending')
-        
-        # Construir query base
-        query = session.query(Word).filter_by(project_id=project_id)
-        
-        if status:
-            query = query.filter_by(status=status)
-        
-        # Filtrar por rol: anotadores ven solo sus palabras asignadas
-        user = session.query(User).filter_by(id=request.user_id).first()
-        if user and user.role != 'admin':
-            query = query.filter_by(annotator_id=request.user_id)
-        
-        total = query.count()
-        words = query.offset(offset).limit(limit).all()
-        session.close()
-        
-        return jsonify({
-            'total': total,
-            'limit': limit,
-            'offset': offset,
-            'words': [
-                {
-                    'id': w.id,
-                    'word': w.word,
-                    'speaker': w.speaker,
-                    'probability': w.probability,
-                    'start_time': w.start_time,
-                    'end_time': w.end_time,
-                    'alignment_score': w.alignment_score,
-                    'status': w.status,
-                    'annotator_id': w.annotator_id,
-                }
-                for w in words
-            ]
-        }), 200
         
     except Exception as e:
+        current_app.logger.error(f'Error en list_words: {str(e)}', exc_info=True)
         return jsonify({'error': str(e)}), 500
 
 @transcription_bp.route('/projects/<project_id>/words/<int:word_id>', methods=['GET'])
 @jwt_required
 def get_word(project_id, word_id):
-    """Obtiene detalles de una palabra"""
+    """
+    Obtiene detalles de un segmento (el word_id es en realidad segment_id).
+    Retorna el segmento completo con todas sus palabras asociadas.
+    """
     try:
         db_manager = get_db_manager()
         session = db_manager.get_session()
         
-        word = session.query(Word).filter_by(id=word_id, project_id=project_id).first()
+        # Buscar el segmento (no la palabra)
+        segment = session.query(Segment).filter_by(
+            id=word_id,
+            project_id=project_id
+        ).first()
         
-        if not word:
+        if not segment:
             session.close()
-            return jsonify({'error': 'Palabra no encontrada'}), 404
+            return jsonify({'error': 'Segmento no encontrado'}), 404
         
         # Verificar acceso
         user = session.query(User).filter_by(id=request.user_id).first()
-        if user and user.role != 'admin' and word.annotator_id != request.user_id:
-            session.close()
-            return jsonify({'error': 'Acceso denegado'}), 403
+        if user and user.role != 'admin' and segment.annotator_id != request.user_id:
+            # Allow if not assigned yet or if assigned to this user
+            if segment.annotator_id is not None and segment.annotator_id != request.user_id:
+                session.close()
+                return jsonify({'error': 'Acceso denegado'}), 403
         
         session.close()
         
         return jsonify({
-            'word': {
-                'id': word.id,
-                'project_id': word.project_id,
-                'audio_filename': word.audio_filename,
-                'word': word.word,
-                'speaker': word.speaker,
-                'probability': word.probability,
-                'start_time': word.start_time,
-                'end_time': word.end_time,
-                'alignment_score': word.alignment_score,
-                'status': word.status,
-                'annotator_id': word.annotator_id,
-                'corrected_text': word.corrected_text,
-            }
+            'word': segment.to_dict(include_words=True)  # Returns as 'word' for backward compatibility
         }), 200
         
     except Exception as e:
+        current_app.logger.error(f'Error en get_word: {str(e)}', exc_info=True)
         return jsonify({'error': str(e)}), 500
 
 @transcription_bp.route('/projects/<project_id>/words/<int:word_id>/audio', methods=['GET'])
 @jwt_required
 def get_word_audio(project_id, word_id):
-    """Descarga segmento de audio para una palabra"""
+    """
+    Descarga el audio del segmento (word_id es en realidad segment_id).
+    Extrae el audio entre start_time y end_time del segmento.
+    """
     try:
         import wave
         
         db_manager = get_db_manager()
         session = db_manager.get_session()
         
-        word = session.query(Word).filter_by(id=word_id, project_id=project_id).first()
+        # Buscar el segmento
+        segment = session.query(Segment).filter_by(
+            id=word_id,
+            project_id=project_id
+        ).first()
         
-        if not word:
+        if not segment:
             session.close()
-            return jsonify({'error': 'Palabra no encontrada'}), 404
+            return jsonify({'error': 'Segmento no encontrado'}), 404
         
         # Verificar acceso
         user = session.query(User).filter_by(id=request.user_id).first()
-        if user and user.role != 'admin' and word.annotator_id != request.user_id:
-            session.close()
-            return jsonify({'error': 'Acceso denegado'}), 403
+        if user and user.role != 'admin' and segment.annotator_id != request.user_id:
+            if segment.annotator_id is not None:
+                session.close()
+                return jsonify({'error': 'Acceso denegado'}), 403
         
         session.close()
         
         # Obtener ruta del audio
         audio_service = get_audio_service()
         project_path = audio_service.get_project_path(project_id)
-        audio_path = os.path.join(project_path, word.audio_filename)
+        audio_path = os.path.join(project_path, segment.audio_filename)
         
         if not os.path.exists(audio_path):
             current_app.logger.error(f'Archivo de audio no encontrado: {audio_path}')
@@ -280,7 +309,7 @@ def get_word_audio(project_id, word_id):
         try:
             margin = float(request.args.get('margin', 0.2))
             
-            # Leer archivo WAV y extraer segmento
+            # Leer archivo WAV y extraer segmento de audio
             with wave.open(audio_path, 'rb') as wav_file:
                 # Obtener parámetros
                 n_channels = wav_file.getnchannels()
@@ -288,9 +317,9 @@ def get_word_audio(project_id, word_id):
                 framerate = wav_file.getframerate()
                 n_frames = wav_file.getnframes()
                 
-                # Calcular índices de frames
-                start_frame = max(0, int((word.start_time - margin) * framerate))
-                end_frame = min(n_frames, int((word.end_time + margin) * framerate))
+                # Calcular índices de frames basados en segment times
+                start_frame = max(0, int((segment.start_time - margin) * framerate))
+                end_frame = min(n_frames, int((segment.end_time + margin) * framerate))
                 
                 # Leer datos
                 wav_file.setpos(start_frame)
@@ -308,8 +337,8 @@ def get_word_audio(project_id, word_id):
             audio_bytes = output_buffer.getvalue()
             
             current_app.logger.info(
-                f'Audio segmento: {word.word} '
-                f'({word.start_time:.2f}-{word.end_time:.2f}s) '
+                f'Audio segmento: "{segment.text[:50]}..." '
+                f'({segment.start_time:.2f}-{segment.end_time:.2f}s) '
                 f'con margen {margin}s = {len(audio_bytes)} bytes'
             )
             
@@ -317,7 +346,7 @@ def get_word_audio(project_id, word_id):
                 io.BytesIO(audio_bytes),
                 mimetype='audio/wav',
                 as_attachment=False,
-                download_name=f"word_{word_id}.wav"
+                download_name=f"segment_{word_id}.wav"
             )
         except Exception as e:
             current_app.logger.error(f'Error procesando audio: {str(e)}', exc_info=True)
@@ -331,57 +360,94 @@ def get_word_audio(project_id, word_id):
 
 @transcription_bp.route('/words/<int:word_id>', methods=['POST'])
 @jwt_required
+@rate_limit_service.limit_submit  # 60 submisiones por minuto
 def submit_correction(word_id):
-    """Envía una corrección de palabra"""
+    """
+    Envía una corrección para un segmento (word_id es en realidad segment_id).
+    Actualiza el texto revisado y el estado del segmento.
+    """
+    session = None
     try:
         db_manager = get_db_manager()
         session = db_manager.get_session()
         
         data = request.get_json()
-        status = data.get('status')
-        corrected_text = data.get('corrected_text')
+        review_status = data.get('review_status', data.get('status'))  # Support both names
+        text_revised = data.get('text_revised', data.get('corrected_text'))
         
-        if status not in ['approved', 'corrected']:
+        if review_status not in ['approved', 'corrected', 'pending']:
             session.close()
-            return jsonify({'error': 'Status debe ser "approved" o "corrected"'}), 400
+            return jsonify({'error': 'review_status debe ser "approved", "corrected", o "pending"'}), 400
         
-        word = session.query(Word).filter_by(id=word_id).first()
+        # Buscar el segmento
+        segment = session.query(Segment).filter_by(id=word_id).first()
         
-        if not word:
+        if not segment:
             session.close()
-            return jsonify({'error': 'Palabra no encontrada'}), 404
+            return jsonify({'error': f'Segmento {word_id} no encontrado'}), 404
         
-        # Verificar que el usuario tenga permiso
+        # Verificar permisos
         user = session.query(User).filter_by(id=request.user_id).first()
         is_admin = user and user.role == 'admin'
-        is_assigned = word.annotator_id == request.user_id
         
-        # Admin puede editar cualquier palabra, anotadores solo sus asignadas
-        if not is_admin and not is_assigned:
-            session.close()
-            return jsonify({'error': 'Acceso denegado - palabra no asignada a ti'}), 403
+        # Admin puede editar cualquier segmento
+        # Anotadores pueden editar segmentos sin asignar o asignados a ellos
+        if not is_admin:
+            if segment.annotator_id and segment.annotator_id != request.user_id:
+                session.close()
+                return jsonify({'error': 'Acceso denegado - segmento no asignado a ti'}), 403
         
-        # Actualizar palabra
-        word.status = status
-        if corrected_text:
-            word.corrected_text = corrected_text
-        word.completed_at = datetime.now(timezone.utc)
+        # Actualizar segmento
+        segment.review_status = review_status
+        if text_revised:
+            segment.text_revised = text_revised
         
-        # Actualizar proyecto
-        project = session.query(TranscriptionProject).filter_by(id=word.project_id).first()
+        # Si no estaba asignado, asignarlo ahora
+        if not segment.annotator_id:
+            segment.annotator_id = request.user_id
+        
+        # Timestamps
+        segment.updated_at = datetime.now(timezone.utc)
+        if review_status in ['approved', 'corrected']:
+            segment.completed_at = datetime.now(timezone.utc)
+        
+        # Actualizar estadísticas del proyecto
+        project = session.query(TranscriptionProject).filter_by(id=segment.project_id).first()
         if project:
-            completed = session.query(Word).filter(
-                Word.project_id == word.project_id,
-                Word.status.in_(['approved', 'corrected'])
+            # Recalcular estadísticas después del cambio
+            session.flush()  # Asegurar que los cambios se vean en las consultas
+            
+            completed = session.query(Segment).filter(
+                Segment.project_id == segment.project_id,
+                Segment.review_status.in_(['approved', 'corrected'])
             ).count()
+            total = session.query(Segment).filter_by(project_id=segment.project_id).count()
+            
             project.words_completed = completed
+            project.words_to_review = total
+            
+            current_app.logger.info(f'Segmento {word_id} actualizado: status={review_status}, proyecto stats: {completed}/{total}')
+        
+        # Capture values before closing session
+        segment_id = segment.id
+        final_review_status = segment.review_status
         
         session.commit()
         session.close()
         
-        return jsonify({'message': 'Palabra actualizada'}), 200
+        return jsonify({
+            'message': 'Segmento actualizado',
+            'segment_id': segment_id,
+            'review_status': final_review_status
+        }), 200
         
     except Exception as e:
+        if session:
+            try:
+                session.rollback()
+                session.close()
+            except:
+                pass
         current_app.logger.error(f'Error en submit_correction: {str(e)}', exc_info=True)
         return jsonify({'error': str(e)}), 500
 
@@ -390,7 +456,7 @@ def submit_correction(word_id):
 @transcription_bp.route('/projects/<project_id>/stats', methods=['GET'])
 @jwt_required
 def get_stats(project_id):
-    """Obtiene estadísticas del proyecto"""
+    """Obtiene estadísticas del proyecto - BASADO EN SEGMENTOS"""
     try:
         db_manager = get_db_manager()
         session = db_manager.get_session()
@@ -403,27 +469,42 @@ def get_stats(project_id):
         # Obtener usuario
         user = session.query(User).filter_by(id=request.user_id).first()
         
+        # Estadísticas generales por estado de segmento
+        total_segments = session.query(Segment).filter_by(project_id=project_id).count()
+        pending_segments = session.query(Segment).filter_by(
+            project_id=project_id, 
+            review_status='pending'
+        ).count()
+        approved_segments = session.query(Segment).filter_by(
+            project_id=project_id,
+            review_status='approved'
+        ).count()
+        corrected_segments = session.query(Segment).filter_by(
+            project_id=project_id,
+            review_status='corrected'
+        ).count()
+        
         # Si es admin, mostrar stats por anotador
         if user and user.role == 'admin':
             annotators = session.query(User).filter_by(role='annotator').all()
             stats_by_annotator = {}
             
             for annotator in annotators:
-                total = session.query(Word).filter_by(
+                annotator_total = session.query(Segment).filter_by(
                     project_id=project_id,
                     annotator_id=annotator.id
                 ).count()
-                completed = session.query(Word).filter_by(
+                annotator_completed = session.query(Segment).filter_by(
                     project_id=project_id,
                     annotator_id=annotator.id,
-                    status__in=['approved', 'corrected']
+                    review_status__in=['approved', 'corrected']
                 ).count()
                 
                 stats_by_annotator[annotator.username] = {
-                    'total': total,
-                    'completed': completed,
-                    'pending': total - completed,
-                    'progress': round((completed / total * 100) if total > 0 else 0, 2)
+                    'total': annotator_total,
+                    'completed': annotator_completed,
+                    'pending': annotator_total - annotator_completed,
+                    'progress': round((annotator_completed / annotator_total * 100) if annotator_total > 0 else 0, 2)
                 }
             
             session.close()
@@ -431,22 +512,23 @@ def get_stats(project_id):
             return jsonify({
                 'project_id': project_id,
                 'project_name': project.name,
-                'total_words': project.total_words,
-                'words_completed': project.words_completed,
-                'words_pending': project.total_words - project.words_completed,
-                'overall_progress': round((project.words_completed / project.total_words * 100) if project.total_words > 0 else 0, 2),
+                'total_segments': total_segments,
+                'pending_segments': pending_segments,
+                'approved_segments': approved_segments,
+                'corrected_segments': corrected_segments,
+                'overall_progress': round(((approved_segments + corrected_segments) / total_segments * 100) if total_segments > 0 else 0, 2),
                 'by_annotator': stats_by_annotator
             }), 200
         else:
             # Si es anotador, mostrar solo sus stats
-            total = session.query(Word).filter_by(
+            user_total = session.query(Segment).filter_by(
                 project_id=project_id,
                 annotator_id=request.user_id
             ).count()
-            completed = session.query(Word).filter_by(
+            user_completed = session.query(Segment).filter_by(
                 project_id=project_id,
                 annotator_id=request.user_id,
-                status__in=['approved', 'corrected']
+                review_status__in=['approved', 'corrected']
             ).count()
             
             session.close()
@@ -454,13 +536,17 @@ def get_stats(project_id):
             return jsonify({
                 'project_id': project_id,
                 'project_name': project.name,
-                'my_total': total,
-                'my_completed': completed,
-                'my_pending': total - completed,
-                'my_progress': round((completed / total * 100) if total > 0 else 0, 2)
+                'total_segments': total_segments,
+                'pending_segments': pending_segments,
+                'my_total': user_total,
+                'my_completed': user_completed,
+                'my_pending': user_total - user_completed,
+                'my_progress': round((user_completed / user_total * 100) if user_total > 0 else 0, 2)
             }), 200
         
     except Exception as e:
+        session.close()
+        current_app.logger.error(f'Error en get_stats: {str(e)}', exc_info=True)
         return jsonify({'error': str(e)}), 500
 
 # ==================== ENDPOINTS PARA ADMIN ====================
@@ -570,4 +656,223 @@ def assign_word(project_id, word_id):
         return jsonify({'message': 'Palabra asignada'}), 200
         
     except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+
+# ==================== ENDPOINTS PARA SEGMENTOS (Nueva arquitectura) ====================
+
+@transcription_bp.route('/projects/<project_id>/segments', methods=['GET'])
+@jwt_required
+def list_segments(project_id):
+    """
+    Lista segmentos de un proyecto
+    Query params:
+    - status: 'pending', 'approved', 'corrected' (default: pending)
+    - limit: Límite de resultados (default: 100)
+    - offset: Offset para paginación (default: 0)
+    """
+    try:
+        db_manager = get_db_manager()
+        session = db_manager.get_session()
+        
+        # Validar que el proyecto exista
+        project = session.query(TranscriptionProject).filter_by(id=project_id).first()
+        if not project:
+            session.close()
+            return jsonify({'error': 'Proyecto no encontrado'}), 404
+        
+        # Parámetros
+        status = request.args.get('status', 'pending')
+        limit = request.args.get('limit', 100, type=int)
+        offset = request.args.get('offset', 0, type=int)
+        
+        # Listar segmentos
+        query = session.query(Segment).filter_by(project_id=project_id, review_status=status)
+        total = query.count()
+        segments = query.limit(limit).offset(offset).all()
+        
+        # Convertir a dict ANTES de cerrar la sesión (para evitar DetachedInstanceError)
+        segments_data = [s.to_dict() for s in segments]
+        
+        session.close()
+        
+        return jsonify({
+            'segments': segments_data,
+            'total': total,
+            'limit': limit,
+            'offset': offset
+        }), 200
+        
+    except Exception as e:
+        current_app.logger.error(f'Error en list_segments: {str(e)}', exc_info=True)
+        return jsonify({'error': str(e)}), 500
+
+@transcription_bp.route('/projects/<project_id>/segments/<int:segment_id>', methods=['GET'])
+@jwt_required
+def get_segment(project_id, segment_id):
+    """
+    Obtiene detalles completos de un segmento (incluyendo sus palabras)
+    """
+    try:
+        db_manager = get_db_manager()
+        session = db_manager.get_session()
+        
+        segment = session.query(Segment).filter_by(
+            id=segment_id,
+            project_id=project_id
+        ).first()
+        
+        if not segment:
+            session.close()
+            return jsonify({'error': 'Segmento no encontrado'}), 404
+        
+        result = segment.to_dict(include_words=True)
+        session.close()
+        
+        return jsonify({'segment': result}), 200
+        
+    except Exception as e:
+        current_app.logger.error(f'Error en get_segment: {str(e)}', exc_info=True)
+        return jsonify({'error': str(e)}), 500
+
+@transcription_bp.route('/projects/<project_id>/segments/<int:segment_id>/audio', methods=['GET'])
+@jwt_required
+def get_segment_audio(project_id, segment_id):
+    """
+    Descarga el audio de un segmento específico
+    Query params:
+    - margin: Margen de tiempo adicional antes/después (segundos, default: 0.2)
+    """
+    try:
+        db_manager = get_db_manager()
+        session = db_manager.get_session()
+        
+        segment = session.query(Segment).filter_by(
+            id=segment_id,
+            project_id=project_id
+        ).first()
+        
+        if not segment:
+            session.close()
+            return jsonify({'error': 'Segmento no encontrado'}), 404
+        
+        # Parámetro de margen
+        margin = request.args.get('margin', 0.2, type=float)
+        
+        # Obtener servicio de audio
+        audio_service = get_audio_service()
+        
+        # Ruta del archivo de audio
+        audio_dir = os.path.join(
+            os.path.dirname(__file__),
+            '..',
+            'data',
+            'transcription_projects',
+            project_id
+        )
+        
+        # Extraer y enviar audio
+        audio_bytes = audio_service.extract_frame_segment(
+            project_dir=audio_dir,
+            filename=segment.audio_filename,
+            start_time=segment.start_time - margin,
+            end_time=segment.end_time + margin
+        )
+        
+        session.close()
+        
+        return send_file(
+            io.BytesIO(audio_bytes),
+            mimetype='audio/wav',
+            as_attachment=True,
+            download_name=f'segment_{segment.segment_index}.wav'
+        )
+        
+    except Exception as e:
+        current_app.logger.error(f'Error en get_segment_audio: {str(e)}', exc_info=True)
+        return jsonify({'error': str(e)}), 500
+
+@transcription_bp.route('/segments/<int:segment_id>', methods=['POST'])
+@jwt_required
+def submit_segment_correction(segment_id):
+    """
+    Envía una corrección de segmento
+    POST body:
+    {
+        "text_revised": "Texto corregido del segmento completo",
+        "review_status": "approved" o "corrected"
+    }
+    """
+    try:
+        db_manager = get_db_manager()
+        session = db_manager.get_session()
+        
+        data = request.get_json()
+        text_revised = data.get('text_revised')
+        review_status = data.get('review_status', 'corrected')
+        
+        # Validar entrada
+        if review_status not in ['approved', 'corrected']:
+            session.close()
+            return jsonify({'error': 'review_status debe ser "approved" o "corrected"'}), 400
+        
+        # Obtener segmento
+        segment = session.query(Segment).filter_by(id=segment_id).first()
+        if not segment:
+            session.close()
+            return jsonify({'error': 'Segmento no encontrado'}), 404
+        
+        # Actualizar segmento
+        segment.text_revised = text_revised
+        segment.review_status = review_status
+        segment.annotator_id = request.user_id
+        segment.updated_at = datetime.now(timezone.utc)
+        
+        if review_status in ['approved', 'corrected']:
+            segment.completed_at = datetime.now(timezone.utc)
+        
+        session.commit()
+        session.close()
+        
+        return jsonify({
+            'message': 'Segmento actualizado',
+            'segment': segment.to_dict()
+        }), 200
+        
+    except Exception as e:
+        current_app.logger.error(f'Error en submit_segment_correction: {str(e)}', exc_info=True)
+        return jsonify({'error': str(e)}), 500
+
+@transcription_bp.route('/projects/<project_id>/segments/stats', methods=['GET'])
+@jwt_required
+def get_segments_stats(project_id):
+    """
+    Obtiene estadísticas de segmentos de un proyecto
+    """
+    try:
+        db_manager = get_db_manager()
+        session = db_manager.get_session()
+        
+        project = session.query(TranscriptionProject).filter_by(id=project_id).first()
+        if not project:
+            session.close()
+            return jsonify({'error': 'Proyecto no encontrado'}), 404
+        
+        total = session.query(Segment).filter_by(project_id=project_id).count()
+        pending = session.query(Segment).filter_by(project_id=project_id, review_status='pending').count()
+        approved = session.query(Segment).filter_by(project_id=project_id, review_status='approved').count()
+        corrected = session.query(Segment).filter_by(project_id=project_id, review_status='corrected').count()
+        
+        session.close()
+        
+        return jsonify({
+            'total_segments': total,
+            'pending': pending,
+            'approved': approved,
+            'corrected': corrected,
+            'progress': round((approved + corrected) / total * 100, 2) if total > 0 else 0
+        }), 200
+        
+    except Exception as e:
+        current_app.logger.error(f'Error en get_segments_stats: {str(e)}', exc_info=True)
         return jsonify({'error': str(e)}), 500

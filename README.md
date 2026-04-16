@@ -1,127 +1,106 @@
-# 🎯 Aplicación de Validación de Transcripciones de Audio
+# 🎯 Labeling App — Validación de Transcripciones de Audio
 
-Sistema colaborativo para validación manual de transcripciones automáticas de audio, con arquitectura robusta y seguridad enterprise-grade.
-
-## 🔐 Seguridad y Configuración
-
-### ⚠️ Configuración de Claves Secretas
-
-**IMPORTANTE**: Este repositorio NO contiene claves secretas reales. Debes configurarlas tú mismo.
-
-#### 1. Generar Claves Seguras
-
-```bash
-cd src/scripts
-python generate_secrets.py
-```
-
-#### 2. Configurar Archivo .env
-
-```bash
-# Copiar template
-cp envs/web_app.env.example envs/web_app.env
-
-# Editar con tus claves generadas
-nano envs/web_app.env
-```
-
-#### 3. Variables Requeridas
-
-```bash
-JWT_SECRET_KEY=tu_clave_jwt_segura_aqui
-SECRET_KEY=tu_clave_flask_segura_aqui
-DATABASE_URL=sqlite:///labeling_app.db
-FLASK_ENV=development
-PORT=8080
-```
-
-### 🔄 Rotación de Claves
-
-Para rotar claves en producción:
-
-```bash
-./rotate_keys.sh
-sudo systemctl restart labeling-app
-```
-
-### 📖 Documentación de Seguridad
-
-Lee [`KEY_MANAGEMENT.md`](KEY_MANAGEMENT.md) para información completa sobre manejo de claves.
+Sistema colaborativo para validación manual de transcripciones automáticas de audio, con panel administrativo, autenticación JWT y arquitectura lista para producción con Docker.
 
 ## 🚀 Inicio Rápido
 
-### Prerrequisitos
-
-- Python 3.8+
-- pip
-- virtualenv
-
-### Instalación
+### Desarrollo Local
 
 ```bash
-# Clonar repositorio
-git clone <repository-url>
-cd labeling_app
+# Clonar y entrar
+git clone <repo-url> && cd Labeling_app
 
-# Configurar entorno virtual
-python -m venv venv
-source venv/bin/activate
+# Entorno virtual
+python3 -m venv .venv && source .venv/bin/activate
 
-# Instalar dependencias
+# Dependencias
 pip install -r src/requirements/requirements.txt
 
-# Configurar claves (ver sección de seguridad arriba)
+# Configurar entorno
 cp envs/web_app.env.example envs/web_app.env
-# Editar envs/web_app.env con tus claves
+nano envs/web_app.env   # editar claves
 
-# Inicializar base de datos
-cd src
-python -c "from models.database import DatabaseManager; dm=DatabaseManager(); dm.create_tables(); dm.init_admin_user()"
+# Iniciar
+cd src && python app.py
+```
 
-# Ejecutar aplicación
-python app.py
+Acceder en http://localhost:3000 — credenciales por defecto: `admin / admin123`
+
+### Producción (Docker)
+
+```bash
+cp envs/web_app.env.example envs/web_app.env
+nano envs/web_app.env   # Generar secretos reales (ver KEY_MANAGEMENT.md)
+docker compose -f docker-compose.prod.yml up -d
+```
+
+Ver guía completa: [DEPLOYMENT_DOCKER_SETUP.md](DEPLOYMENT_DOCKER_SETUP.md)
+
+## 📁 Estructura del Proyecto
+
+```
+Labeling_app/
+├── src/                      # Código fuente
+│   ├── app.py               # Aplicación Flask (entrada principal)
+│   ├── config.py             # Configuración
+│   ├── models/               # Modelos de base de datos
+│   ├── routes/               # API endpoints
+│   ├── services/             # Lógica de negocio
+│   ├── static/               # Frontend (JS, CSS)
+│   ├── templates/            # HTML (Jinja2)
+│   ├── scripts/              # Utilidades (crear usuarios, importar datos)
+│   └── requirements/         # Dependencias Python
+├── docker/                   # Configuración Docker
+│   ├── web_app/Dockerfile    # Imagen de la aplicación
+│   └── nginx/nginx-prod.conf # Reverse proxy
+├── envs/                     # Templates de variables de entorno
+├── certs/                    # Certificados SSL
+├── scripts/                  # Scripts de deployment
+├── docker-compose.prod.yml   # Orquestación producción
+└── archived-docs/            # Documentación de fases anteriores
 ```
 
 ## 🏗️ Arquitectura
 
-- **Backend**: Flask + SQLAlchemy + JWT
-- **Base de Datos**: SQLite/PostgreSQL
-- **Autenticación**: JWT con refresh tokens
-- **Monitoreo**: Health checks + logging rotativo
-- **Seguridad**: Variables de entorno + validación automática
+```
+  [Nginx :80/:443] → SSL, headers, rate limiting
+         ↓
+  [Flask/Gunicorn :3000] → JWT auth, admin panel, API
+         ↓
+  [PostgreSQL :5432]  [Redis :6379]
+```
 
-## 📊 Características
+- **Backend:** Flask + Gunicorn
+- **BD:** SQLite (dev) / PostgreSQL (prod)
+- **Cache/Sesiones:** Redis
+- **Proxy:** Nginx con SSL/TLS
+- **Auth:** JWT con roles (admin / annotator)
+- **Contenedores:** Docker Compose
 
-- ✅ Validación colaborativa de transcripciones
-- ✅ API REST completa
-- ✅ Autenticación JWT robusta
-- ✅ Monitoreo de salud integrado
-- ✅ Manejo seguro de claves secretas
-- ✅ Arquitectura escalable
+## 📖 Documentación
 
-## 🔒 Seguridad
+| Documento | Descripción |
+|-----------|-------------|
+| [DEPLOYMENT_DOCKER_SETUP.md](DEPLOYMENT_DOCKER_SETUP.md) | Guía de deployment con Docker |
+| [PRODUCTION_CHECKLIST.md](PRODUCTION_CHECKLIST.md) | Checklist pre/post deployment |
+| [SECURITY.md](SECURITY.md) | Políticas de seguridad |
+| [KEY_MANAGEMENT.md](KEY_MANAGEMENT.md) | Gestión de secretos y rotación |
+| [src/README.md](src/README.md) | Documentación técnica del código |
 
-- **Claves criptográficamente seguras**: Generadas con módulo `secrets`
-- **Variables de entorno**: No hardcoded en código
-- **Validación automática**: Chequeo de configuración en producción
-- **Rotación periódica**: Scripts automatizados para rotación de claves
-- **Auditoría**: Logs detallados de todas las operaciones
+Documentación histórica en [archived-docs/](archived-docs/).
 
-## 📚 Documentación
+## 🔐 Seguridad
 
-- [`IMPLEMENTATION_SUMMARY.md`](IMPLEMENTATION_SUMMARY.md) - Resumen técnico
-- [`ROBUSTNESS_ARCHITECTURE.md`](ROBUSTNESS_ARCHITECTURE.md) - Arquitectura robusta
-- [`KEY_MANAGEMENT.md`](KEY_MANAGEMENT.md) - Manejo de claves secretas
-- [`DEPLOYMENT.md`](DEPLOYMENT.md) - Guía de despliegue
+Este repositorio **NO** contiene secretos reales. Generar antes de producción:
 
-## 🤝 Contribución
+```bash
+python3 -c "import secrets; print(secrets.token_hex(64))"   # JWT_SECRET_KEY
+openssl rand -base64 32                                       # DB_PASSWORD, REDIS_PASSWORD
+```
 
-1. **Nunca commitear claves reales**
-2. **Usar variables de entorno para configuración**
-3. **Seguir estándares de seguridad OWASP**
-4. **Rotar claves periódicamente**
+Ver: [KEY_MANAGEMENT.md](KEY_MANAGEMENT.md) y [SECURITY.md](SECURITY.md)
 
 ## 📄 Licencia
 
-Ver [`LICENSE`](LICENSE)</content>
+Ver [LICENSE](src/LICENSE)</content>
 <parameter name="filePath">/Users/camilogutierrez/STEM/nuestra-memoria/Repos/Untitled/Labeling_app/README.md

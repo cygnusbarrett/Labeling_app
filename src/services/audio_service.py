@@ -1,10 +1,14 @@
 """
 Servicio para gestión de audio - recorte on-demand y validación
 """
+from __future__ import annotations
 import os
 import json
-from typing import Tuple, Optional
+from typing import Tuple, Optional, TYPE_CHECKING
 from pathlib import Path
+
+if TYPE_CHECKING:
+    import numpy as np
 
 try:
     import librosa

@@ -20,7 +20,8 @@ class User(Base):
     role = Column(String(20), nullable=False, default='annotator')  # 'annotator' o 'admin'
     
     # Relaciones
-    words = relationship('Word', back_populates='annotator')
+    # Un usuario puede tener asignados múltiples segmentos para validar
+    segments = relationship('Segment', back_populates='annotator')
     
     # Índices para mejorar rendimiento
     __table_args__ = (
@@ -101,6 +102,7 @@ class TranscriptionProject(Base):
     completed_at = Column(DateTime(timezone=True), nullable=True)
     
     # Relaciones
+    segments = relationship('Segment', back_populates='project', cascade='all, delete-orphan')
     words = relationship('Word', back_populates='project', cascade='all, delete-orphan')
     
     # Índices
@@ -128,25 +130,32 @@ class TranscriptionProject(Base):
     def __repr__(self):
         return f'<TranscriptionProject {self.id}>'
 
-class Word(Base):
-    """Modelo de palabra en transcripción de audio para validación"""
-    __tablename__ = 'words'
+class Segment(Base):
+    """Modelo de segmento de audio para validación de transcripciones
+    
+    Un segmento es una frase/oración completa con múltiples palabras.
+    A diferencia de las palabras individuales, el usuario valida/corrige el segmento COMPLETO.
+    """
+    __tablename__ = 'segments'
     
     id = Column(Integer, primary_key=True)
     project_id = Column(String(100), ForeignKey('transcription_projects.id'), nullable=False)
-    audio_filename = Column(String(255), nullable=False)  # "D 394 caja 6 cinta 1 Osvaldo Muray lado B-01_short_full.wav"
-    word_index = Column(Integer, nullable=False)  # Posición en el JSON (0-based)
-    word = Column(String(255), nullable=False)  # Transcripción original
-    speaker = Column(String(50), nullable=False)  # "SPEAKER_01", etc
-    probability = Column(Float, nullable=False)  # 0.0-1.0
+    audio_filename = Column(String(255), nullable=False)  # Archivo de audio
+    segment_index = Column(Integer, nullable=False)  # Posición ordinal en el JSON
+    
+    # Datos del segmento
     start_time = Column(Float, nullable=False)  # Segundos
     end_time = Column(Float, nullable=False)  # Segundos
-    alignment_score = Column(Float, nullable=True)  # Métrica opcional del JSON
+    text = Column(Text, nullable=False)  # Transcripción original (texto completo del segmento)
+    speaker = Column(String(50), nullable=True)  # Hablante predominante
     
-    # Anotación
-    status = Column(String(20), nullable=False, default='pending')  # 'pending', 'approved', 'corrected'
-    annotator_id = Column(Integer, ForeignKey('users.id'), nullable=True)  # Quién anotó
-    corrected_text = Column(Text, nullable=True)  # Corrección si difiere
+    # Corrección a nivel de segmento
+    text_revised = Column(Text, nullable=True)  # Transcripción corregida por anotador
+    review_status = Column(String(20), nullable=False, default='pending')  # 'pending', 'approved', 'corrected'
+    
+    # Auditoría y asignación
+    annotator_id = Column(Integer, ForeignKey('users.id'), nullable=True)
+    low_prob_word_count = Column(Integer, default=0)  # Cuántas palabras en este segmento tienen prob < 0.95
     
     # Timestamps
     created_at = Column(DateTime(timezone=True), nullable=False, default=datetime.now(timezone.utc))
@@ -154,24 +163,89 @@ class Word(Base):
     completed_at = Column(DateTime(timezone=True), nullable=True)
     
     # Relaciones
+    words = relationship('Word', back_populates='segment', cascade='all, delete-orphan')
+    project = relationship('TranscriptionProject', back_populates='segments')
+    annotator = relationship('User', back_populates='segments')
+    
+    # Índices
+    __table_args__ = (
+        Index('idx_segment_project_id', 'project_id'),
+        Index('idx_segment_status', 'review_status'),
+        Index('idx_segment_annotator_id', 'annotator_id'),
+        Index('idx_segment_project_status', 'project_id', 'review_status'),
+        Index('idx_segment_file', 'audio_filename'),
+    )
+    
+    def to_dict(self, include_words=True):
+        """Convierte el segmento a diccionario"""
+        result = {
+            'id': self.id,
+            'project_id': self.project_id,
+            'audio_filename': self.audio_filename,
+            'segment_index': self.segment_index,
+            'start_time': self.start_time,
+            'end_time': self.end_time,
+            'duration': self.end_time - self.start_time,
+            'text': self.text,
+            'text_revised': self.text_revised,
+            'speaker': self.speaker,
+            'review_status': self.review_status,
+            'low_prob_word_count': self.low_prob_word_count,
+            'annotator_id': self.annotator_id,
+            'created_at': self.created_at.isoformat() if self.created_at else None,
+            'updated_at': self.updated_at.isoformat() if self.updated_at else None,
+            'completed_at': self.completed_at.isoformat() if self.completed_at else None
+        }
+        
+        if include_words:
+            result['words'] = [w.to_dict(include_segment=False) for w in self.words]
+        
+        return result
+    
+    def __repr__(self):
+        return f'<Segment {self.project_id}:{self.segment_index} status={self.review_status}>'
+
+class Word(Base):
+    """Modelo de palabra para detectar qué requiere revisión
+    
+    Las palabras se usan principalmente para:
+    - Detectar probabilidades bajas (prob < 0.95)
+    - Calcular cuántas palabras en un segmento necesitan revisión
+    - Proporcionar contexto al anotador
+    
+    La anotación real sucede a nivel de SEGMENTO, no de palabra.
+    """
+    __tablename__ = 'words'
+    
+    id = Column(Integer, primary_key=True)
+    segment_id = Column(Integer, ForeignKey('segments.id'), nullable=False)  # A qué segmento pertenece
+    project_id = Column(String(100), ForeignKey('transcription_projects.id'), nullable=False)
+    audio_filename = Column(String(255), nullable=False)  # "D 394 caja 6 cinta 1 Osvaldo Muray lado B-01_short_full.wav"
+    word_index = Column(Integer, nullable=False)  # Posición en el segmento (0-based)
+    word = Column(String(255), nullable=False)  # Transcripción original
+    speaker = Column(String(50), nullable=False)  # "SPEAKER_01", etc
+    probability = Column(Float, nullable=False)  # 0.0-1.0
+    start_time = Column(Float, nullable=False)  # Segundos (absoluto en audio)
+    end_time = Column(Float, nullable=False)  # Segundos (absoluto en audio)
+    alignment_score = Column(Float, nullable=True)  # Métrica opcional del JSON
+    
+    # Relaciones
+    segment = relationship('Segment', back_populates='words')
     project = relationship('TranscriptionProject', back_populates='words')
-    annotator = relationship('User', back_populates='words')
     
     # Índices para búsqueda eficiente
     __table_args__ = (
+        Index('idx_word_segment_id', 'segment_id'),
         Index('idx_word_project_id', 'project_id'),
-        Index('idx_word_status', 'status'),
-        Index('idx_word_annotator_id', 'annotator_id'),
-        Index('idx_word_project_status', 'project_id', 'status'),
-        Index('idx_word_annotator_status', 'annotator_id', 'status'),
         Index('idx_word_probability', 'probability'),
-        Index('idx_word_updated_at', 'updated_at'),
+        Index('idx_word_file', 'audio_filename'),
     )
     
-    def to_dict(self, include_corrected=True):
+    def to_dict(self, include_segment=True):
         """Convierte la palabra a diccionario"""
         result = {
             'id': self.id,
+            'segment_id': self.segment_id,
             'project_id': self.project_id,
             'audio_filename': self.audio_filename,
             'word_index': self.word_index,
@@ -181,17 +255,15 @@ class Word(Base):
             'start_time': self.start_time,
             'end_time': self.end_time,
             'alignment_score': self.alignment_score,
-            'status': self.status,
-            'annotator_id': self.annotator_id,
-            'created_at': self.created_at.isoformat() if self.created_at else None,
-            'updated_at': self.updated_at.isoformat() if self.updated_at else None,
-            'completed_at': self.completed_at.isoformat() if self.completed_at else None
         }
         
-        if include_corrected:
-            result['corrected_text'] = self.corrected_text
+        if include_segment:
+            result['segment_id'] = self.segment_id
         
         return result
+    
+    def __repr__(self):
+        return f'<Word {self.project_id}:{self.word_index} "{self.word}" prob={self.probability:.2f}>'
     
     def __repr__(self):
         return f'<Word {self.project_id}:{self.word_index} "{self.word}">'

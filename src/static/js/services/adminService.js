@@ -1,61 +1,102 @@
-import { http } from '../core/http.js';
+/**
+ * Admin Service para Panel Administrativo - Phase 2 (Transcripciones de Audio)
+ */
 
-const API_BASE = '/api/v2/admin';
-
-export const adminService = {
-  // users
-  listUsers() { return http(`${API_BASE}/users`); },
-  createUser({ username, password, role = 'annotator' }) {
-    return http(`${API_BASE}/users`, { method: 'POST', body: JSON.stringify({ username, password, role }) });
-  },
-  deleteUser(userId) { return http(`${API_BASE}/users/${userId}`, { method: 'DELETE' }); },
-  userStats(userId) { return http(`${API_BASE}/users/${userId}/stats`); },
-  userAnnotations(userId) { return http(`${API_BASE}/users/${userId}/annotations`); },
-  deleteUserAnnotation(userId, annotationId) {
-    return http(`${API_BASE}/users/${userId}/annotations/${annotationId}`, { method: 'DELETE' });
-  },
-  bulkDeleteUserAnnotations(userId, statuses) {
-    return http(`${API_BASE}/users/${userId}/annotations/bulk-delete`, { method: 'POST', body: JSON.stringify({ statuses }) });
-  },
-  transferAnnotations(fromUserId, { to_user_id, include_pending, include_reviewed }) {
-    return http(`${API_BASE}/users/${fromUserId}/transfer-annotations`, { method: 'POST', body: JSON.stringify({ to_user_id, include_pending, include_reviewed }) });
-  },
-  agreementStats() { return http(`${API_BASE}/users/agreement-stats`); },
-
-  // assignments
-  createAssignments({ user_ids, image_ids }) {
-    return http(`${API_BASE}/assignments`, { method: 'POST', body: JSON.stringify({ user_ids, image_ids }) });
-  },
-  createAutoAssignments({ count, priority_unannotated, user_id }) {
-    return http(`${API_BASE}/assignments/auto`, { method: 'POST', body: JSON.stringify({ count, priority_unannotated, user_id }) });
-  },
-
-  // stats and activity
-  generalStats() { return http(`${API_BASE}/stats`); },
-  recentActivity(limit = 6) { return http(`${API_BASE}/recent-activity?limit=${limit}`); },
-  qualityControl(filters = {}) {
-    const params = new URLSearchParams();
-    if (filters.user_ids) {
-      const ids = Array.isArray(filters.user_ids) ? filters.user_ids : String(filters.user_ids).split(',');
-      if (ids.length) params.set('user_ids', ids.join(','));
+class AdminService {
+    constructor() {
+        this.token = localStorage.getItem('access_token');
     }
-    if (filters.usernames) {
-      const names = Array.isArray(filters.usernames) ? filters.usernames : String(filters.usernames).split(',');
-      if (names.length) params.set('usernames', names.join(','));
+
+    async makeRequest(endpoint, options = {}) {
+        const url = endpoint.startsWith('http') ? endpoint : `/api/v1${endpoint}`;
+        const headers = {
+            'Content-Type': 'application/json',
+            ...options.headers
+        };
+
+        if (this.token) {
+            headers['Authorization'] = `Bearer ${this.token}`;
+        }
+
+        try {
+            const response = await fetch(url, {
+                ...options,
+                headers
+            });
+
+            if (response.status === 401) {
+                window.location.href = '/login';
+                return;
+            }
+
+            const data = await response.json();
+            if (!response.ok) {
+                throw new Error(data.error || `Error ${response.status}`);
+            }
+            return data;
+        } catch (error) {
+            console.error('Admin Service Error:', error);
+            throw error;
+        }
     }
-    const qs = params.toString();
-    return http(`${API_BASE}/quality-control${qs ? `?${qs}` : ''}`);
-  },
-  consolidateQuality({ user_annotation_id, admin_annotation_id }) {
-    return http(`${API_BASE}/quality-control/consolidate`, { method: 'POST', body: JSON.stringify({ user_annotation_id, admin_annotation_id }) });
-  },
-  // admin annotations
-  updateAnnotation(annotation_id, { status, corrected_text }) {
-    return http(`${API_BASE}/annotations/${annotation_id}`, { method: 'PUT', body: JSON.stringify({ status, corrected_text }) });
-  },
-  
-  // export
-  exportAnnotations() {
-    return http(`${API_BASE}/export/annotations`);
-  }
-};
+
+    // ==================== USUARIOS ====================
+    async getUsers() {
+        return this.makeRequest('/admin/users');
+    }
+
+    async createUser(username, password, role = 'annotator') {
+        return this.makeRequest('/admin/users', {
+            method: 'POST',
+            body: JSON.stringify({ username, password, role })
+        });
+    }
+
+    async deleteUser(userId) {
+        return this.makeRequest(`/admin/users/${userId}`, {
+            method: 'DELETE'
+        });
+    }
+
+    async getUserStats(userId) {
+        return this.makeRequest(`/admin/users/${userId}/stats`);
+    }
+
+    // ==================== PROYECTOS ====================
+    async getProjects() {
+        return this.makeRequest('/admin/projects');
+    }
+
+    async getProjectStats(projectId) {
+        return this.makeRequest(`/admin/projects/${projectId}/stats`);
+    }
+
+    // ==================== SEGMENTOS ====================
+    async getSegments(projectId, status = 'all') {
+        const statusParam = status !== 'all' ? `?status=${status}` : '';
+        return this.makeRequest(`/admin/projects/${projectId}/segments${statusParam}`);
+    }
+
+    async assignSegment(projectId, segmentId, annotatorId) {
+        return this.makeRequest(`/admin/projects/${projectId}/segments/${segmentId}/assign`, {
+            method: 'POST',
+            body: JSON.stringify({ annotator_id: annotatorId })
+        });
+    }
+
+    async assignMultipleSegments(projectId, segmentIds, annotatorId) {
+        const promises = segmentIds.map(segId => 
+            this.assignSegment(projectId, segId, annotatorId)
+        );
+        return Promise.all(promises);
+    }
+
+    // ==================== ESTADÍSTICAS ====================
+    async getProjectStats(projectId) {
+        return this.makeRequest(`/admin/projects/${projectId}/stats`);
+    }
+
+    async getAllStats() {
+        return this.makeRequest('/admin/stats');
+    }
+}

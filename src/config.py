@@ -36,6 +36,11 @@ class Config:
     FLASK_ENV: str = "development"  # development, production
     SECRET_KEY: str = None
     
+    # Redis Configuration para sesiones distribuidas (Phase 2)
+    REDIS_URL: str = "redis://127.0.0.1:6379/0"  # Para sincronización entre workers
+    SESSION_TYPE: str = "redis"  # Usar Redis para sesiones
+    PERMANENT_SESSION_LIFETIME: int = 3600  # 1 hora en segundos
+    
     # Configuración de logging
     LOG_PATH: str = "logs/"
     LOG_LEVEL: str = "DEBUG"  # DEBUG, INFO, WARNING, ERROR, CRITICAL
@@ -45,10 +50,11 @@ class Config:
     LOG_BACKUP_COUNT: int = 10  # Mantener más logs en producción
 
     # DB Configuración
-    DATABASE_URL: str = "sqlite:///labeling_app.db"
-    DB_POOL_SIZE: int = 10  # Conexiones simultáneas
-    DB_MAX_OVERFLOW: int = 20  # Conexiones adicionales con estrés
-    DB_POOL_RECYCLE: int = 3600  # Reciclar conexiones cada hora
+    # Usar PostgreSQL en producción, SQLite en desarrollo
+    DATABASE_URL: str = "sqlite:///labeling_app.db"  # Default para desarrollo
+    DB_POOL_SIZE: int = 10  # Conexiones simultáneas (PostgreSQL)
+    DB_MAX_OVERFLOW: int = 20  # Conexiones adicionales con estrés (PostgreSQL)
+    DB_POOL_RECYCLE: int = 3600  # Reciclar conexiones cada hora (PostgreSQL)
     DB_ECHO: bool = False  # SQL queries logging
     DB_CONNECT_TIMEOUT: int = 30  # segundos
     
@@ -117,7 +123,10 @@ class Config:
             API_DEPRECATION_HEADERS=os.getenv('API_DEPRECATION_HEADERS', 'True').lower() == 'true',
             TELEGRAM_BOT_TOKEN=os.getenv('TELEGRAM_BOT_TOKEN'),
             TELEGRAM_ADMIN_CHAT_ID=os.getenv('TELEGRAM_ADMIN_CHAT_ID'),
-            NOTIFICATION_RETRY_ATTEMPTS=int(os.getenv('NOTIFICATION_RETRY_ATTEMPTS', cls.NOTIFICATION_RETRY_ATTEMPTS))
+            NOTIFICATION_RETRY_ATTEMPTS=int(os.getenv('NOTIFICATION_RETRY_ATTEMPTS', cls.NOTIFICATION_RETRY_ATTEMPTS)),
+            REDIS_URL=os.getenv('REDIS_URL', cls.REDIS_URL),
+            SESSION_TYPE=os.getenv('SESSION_TYPE', cls.SESSION_TYPE),
+            PERMANENT_SESSION_LIFETIME=int(os.getenv('PERMANENT_SESSION_LIFETIME', cls.PERMANENT_SESSION_LIFETIME))
         )
         
         # Validar configuración

@@ -18,7 +18,10 @@ if env_file.exists():
 
 from config import Config
 from routes.transcription_api_routes import transcription_bp
+from routes.admin_api_routes import admin_bp
 from models.database import DatabaseManager, User
+from services.rate_limiter import rate_limit_service
+from services.session_service import session_manager
 
 # Configurar logger para este módulo
 logger = logging.getLogger(__name__)
@@ -76,9 +79,20 @@ def create_app():
     db_manager.init_admin_user()
     logger.info("Base de datos inicializada correctamente")
     
+    # Inicializar Rate Limiting para proteger endpoints
+    rate_limit_service.init_app(app)
+    logger.info("✅ Rate Limiting inicializado")
+    
+    # Inicializar sesiones distribuidas con Redis (Phase 2)
+    session_manager.init_app(app, config)
+    logger.info("✅ Sesiones distribuidas inicializadas")
+    
     # Registrar blueprints
     app.register_blueprint(transcription_bp)
     logger.debug("Blueprint de API de transcripción registrado")
+    
+    app.register_blueprint(admin_bp)
+    logger.debug("Blueprint de API administrativo registrado")
     
     # Importar decoradores de autenticación
     from services.jwt_service import optional_jwt, require_admin, require_auth, jwt_service
@@ -130,15 +144,38 @@ def create_app():
                 return redirect('/login')
             
             logger.info(f"Admin access granted to {payload.get('username')}")
-            return redirect('/transcription/validator')
+            return redirect('/admin/dashboard')
             
         except Exception as e:
             logger.warning(f"Admin access denied - invalid token: {e}")
             return redirect('/login')
     
+    @app.route('/admin/dashboard')
+    def admin_dashboard():
+        """Dashboard administrativo de Phase 2 - Gestión de usuarios, asignaciones y control de calidad"""
+        logger.debug("Acceso a dashboard administrativo")
+        try:
+            token = jwt_service.get_token_from_cookie_or_header()
+            if not token:
+                logger.warning("Admin dashboard access denied - no token")
+                return redirect('/login')
+            
+            payload = jwt_service.verify_access_token(token)
+            if payload.get('role') != 'admin':
+                logger.warning(f"Admin dashboard access denied - user {payload.get('username')} is not admin")
+                return redirect('/transcription/validator')
+            
+            logger.info(f"Admin dashboard access granted to {payload.get('username')}")
+            return render_template('admin_dashboard.html')
+            
+        except Exception as e:
+            logger.warning(f"Admin dashboard access denied - invalid token: {e}")
+            return redirect('/login')
+    
     # ==================== RUTAS DE AUTENTICACIÓN ====================
     
     @app.route('/login', methods=['POST'])
+    @rate_limit_service.limit_login
     def login():
         """Autentica usuario y retorna JWT token"""
         logger.info("=" * 80)

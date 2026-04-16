@@ -443,6 +443,26 @@
             display: none;
         }
 
+        /* Footer fixed bluish */
+        .app-footer {
+            position: fixed;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            min-height: 64px;
+            padding: 0.75rem 1rem;
+            background: linear-gradient(135deg, #4f6eea, #5a67d8);
+            color: #fff;
+            font-size: 0.85rem;
+            text-align: center;
+            box-shadow: 0 -6px 14px rgba(0,0,0,0.08);
+            z-index: 1000;
+        }
+
+        body {
+            padding-bottom: 64px;
+        }
+
         @media (max-width: 768px) {
             .content {
                 padding: 20px;
@@ -470,19 +490,7 @@
         </div>
 
         <div class="content">
-            <!-- Login Section -->
-            <div class="login-section active" id="loginSection">
-                <h2 style="margin-bottom: 20px; text-align: center;">Inicia Sesión</h2>
-                <form class="login-form" id="loginForm">
-                    <input type="text" id="username" placeholder="Usuario" required>
-                    <input type="password" id="password" placeholder="Contraseña" required>
-                    <button type="submit">Acceder</button>
-                    <div class="login-error" id="loginError"></div>
-                </form>
-                <p style="text-align: center; margin-top: 20px; color: #666; font-size: 14px;">
-                    <strong>Demo:</strong> Usuario: admin | Contraseña: admin123
-                </p>
-            </div>
+
 
             <!-- Validator Section -->
             <div class="validator-section" id="validatorSection">
@@ -531,8 +539,8 @@
                                 <span>
                                     ⏱️ Duración: <strong id="wordDuration"></strong>
                                 </span>
-                                <span id="probabilitySpan">
-                                    📊 Probabilidad: <strong id="wordProbability"></strong>
+                                <span id="lowProbSpan">
+                                    <strong id="lowProbText"></strong>
                                 </span>
                             </div>
                         </div>
@@ -552,13 +560,14 @@
                     <!-- Correction Form -->
                     <div class="correction-form">
                         <div class="form-group">
-                            <label>Transcripción Original:</label>
-                            <textarea id="originalText" readonly style="background: #f7fafc; color: #666;"></textarea>
+                            <label>Transcripción Original (palabras destacadas en rojo tienen baja confianza):</label>
+                            <div id="highlightedText" style="background: #f7fafc; color: #666; padding: 10px; border: 1px solid #ddd; border-radius: 6px; margin-bottom: 15px; line-height: 1.6; min-height: 60px;"></div>
+                            <textarea id="originalText" readonly style="background: #f7fafc; color: #666; display: none;"></textarea>
                         </div>
 
                         <div class="form-group">
                             <label for="correctedText">Corrección (si es necesaria):</label>
-                            <textarea id="correctedText" placeholder="Deja vacío si es correcta, o escribe la corrección..."></textarea>
+                            <textarea id="correctedText" placeholder="Se copiará automáticamente el texto original"></textarea>
                         </div>
 
                         <div class="form-actions">
@@ -602,5 +611,6 @@
             initApp();
         });
     </script>
+    <footer class="app-footer" role="contentinfo">© 2026 · Corrector de Transcripciones de Audio · NuestramemorIA</footer>
 </body>
 </html>

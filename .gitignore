@@ -59,3 +59,14 @@ nohup.out
 ngrok
 *.env
 backups/
+
+# SSL certificates (private keys)
+certs/*.pem
+certs/*.key
+
+# Database files
+*.db
+*.sqlite3
+
+# Virtual environments
+.venv/

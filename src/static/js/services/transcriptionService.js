@@ -126,14 +126,16 @@ class TranscriptionService {
     }
 
     /**
-     * Envía una corrección de palabra
+     * Envía una corrección de segmento (antes "palabra")
      */
     async submitWord(wordId, status, correctedText = null) {
         const data = {
-            status: status
+            review_status: status,  // Usar review_status para segmentos
+            status: status  // Para backward compatibility
         };
         if (correctedText) {
-            data.corrected_text = correctedText;
+            data.text_revised = correctedText;  // Usar text_revised para segmentos
+            data.corrected_text = correctedText;  // Para backward compatibility
         }
         return await this.apiCall('POST', `/words/${wordId}`, data);
     }
