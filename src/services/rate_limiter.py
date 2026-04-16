@@ -18,7 +18,7 @@ class RateLimitService:
             key_func=get_remote_address,
             strategy="fixed-window",  # Reinicia cada minuto
             storage_uri="memory://",  # Para desarrollo - cambiar a Redis en producción
-            default_limits=["200 per day", "50 per hour"],
+            default_limits=["1000 per hour", "5000 per day"],
             swallow_errors=True  # No romper app si Redis falla
         )
     

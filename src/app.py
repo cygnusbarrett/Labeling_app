@@ -94,6 +94,9 @@ def create_app():
     app.register_blueprint(admin_bp)
     logger.debug("Blueprint de API administrativo registrado")
     
+    # Eximir rutas admin del rate limit por defecto (ya protegidas por JWT + admin_required)
+    rate_limit_service.get_limiter().exempt(admin_bp)
+    
     # Importar decoradores de autenticación
     from services.jwt_service import optional_jwt, require_admin, require_auth, jwt_service
     
