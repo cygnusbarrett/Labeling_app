@@ -261,22 +261,23 @@ function displayHighlightedText(segment) {
         }
 
         if (wordObj.probability < 0.95) {
-            // Palabra incierta → input editable inline
+            // Palabra incierta → input editable inline (placeholder, no pre-llenado)
             const input = document.createElement('input');
             input.type = 'text';
             input.className = 'inline-word-input';
-            input.value = wordObj.word;
+            input.value = '';
+            input.placeholder = wordObj.word;
             input.dataset.wordIndex = wordObj.word_index;
             input.dataset.originalWord = wordObj.word;
-            input.title = `Confianza: ${(wordObj.probability * 100).toFixed(0)}% — edita si es incorrecto`;
+            input.title = `Confianza: ${(wordObj.probability * 100).toFixed(0)}% — escribe la corrección o deja vacío si está bien`;
 
-            // Ancho dinámico basado en contenido
+            // Ancho dinámico basado en placeholder
             input.style.width = (Math.max(wordObj.word.length, 2) + 2) + 'ch';
 
             input.addEventListener('input', function() {
-                this.style.width = (Math.max(this.value.length, 2) + 2) + 'ch';
+                this.style.width = (Math.max(this.value.length || this.placeholder.length, 2) + 2) + 'ch';
                 // Marcar visualmente si fue modificado
-                if (this.value !== this.dataset.originalWord) {
+                if (this.value.trim() !== '' && this.value !== this.dataset.originalWord) {
                     this.classList.add('modified');
                 } else {
                     this.classList.remove('modified');
@@ -391,7 +392,13 @@ function reconstructText() {
     elements.forEach(el => {
         if (el.classList.contains('inline-word-input')) {
             const val = el.value.trim();
-            if (val.length > 0) words.push(val);
+            if (val.length > 0) {
+                // Anotador escribió algo → usar lo que escribió
+                words.push(val);
+            } else {
+                // Campo vacío → mantener palabra original del ASR
+                words.push(el.dataset.originalWord);
+            }
         } else {
             words.push(el.textContent);
         }
@@ -406,7 +413,9 @@ function reconstructText() {
 function hasInlineChanges() {
     const inputs = document.querySelectorAll('#highlightedText .inline-word-input');
     for (const input of inputs) {
-        if (input.value !== input.dataset.originalWord) return true;
+        const val = input.value.trim();
+        // Cambio = campo con texto que difiere del original
+        if (val !== '' && val !== input.dataset.originalWord) return true;
     }
     return false;
 }
@@ -420,7 +429,7 @@ function updateChangeIndicator() {
 
     const changed = hasInlineChanges();
     const inputs = document.querySelectorAll('#highlightedText .inline-word-input');
-    const modifiedCount = Array.from(inputs).filter(i => i.value !== i.dataset.originalWord).length;
+    const modifiedCount = Array.from(inputs).filter(i => i.value.trim() !== '' && i.value !== i.dataset.originalWord).length;
 
     const convertedCount = Array.from(inputs).filter(i => i.classList.contains('converted')).length;
 
@@ -433,7 +442,7 @@ function updateChangeIndicator() {
     } else {
         const extra = convertedCount > 0 ? ` (${convertedCount} desbloqueada(s))` : '';
         indicator.className = 'change-indicator no-changes';
-        indicator.textContent = `🔍 ${inputs.length} palabra(s) editable(s)${extra} — modifica o confirma como está`;
+        indicator.textContent = `🔍 ${inputs.length} palabra(s) en duda${extra} — escribe la corrección o confirma tal cual`;
     }
 }
 

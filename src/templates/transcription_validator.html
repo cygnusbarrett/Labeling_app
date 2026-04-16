@@ -524,6 +524,12 @@
             transition: all 0.2s;
             min-width: 2.5ch;
         }
+        .inline-word-input::placeholder {
+            color: #e07070;
+            font-weight: 400;
+            font-style: italic;
+            opacity: 0.7;
+        }
         .inline-word-input:focus {
             border-bottom-color: #667eea;
             background: #ebf4ff;
@@ -680,7 +686,7 @@
                     <!-- Correction Form -->
                     <div class="correction-form">
                         <div class="form-group">
-                            <label>📝 Transcripción — edita las palabras resaltadas, o doble-click en cualquier palabra para desbloquearla:</label>
+                            <label>📝 Transcripción — las palabras en duda aparecen vacías con el texto sugerido en gris. Escribe la corrección o deja vacío si el ASR acertó:</label>
                             <div id="highlightedText" style="background: #f7fafc; padding: 14px 16px; border: 1px solid #e2e8f0; border-radius: 8px; margin-bottom: 8px; min-height: 60px;"></div>
                             <div id="changeIndicator" class="change-indicator"></div>
                             <span class="full-edit-toggle" onclick="toggleFullEdit()">✏️ ¿Necesitas editar todo el texto? Click aquí</span>
