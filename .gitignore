@@ -70,3 +70,9 @@ certs/*.key
 
 # Virtual environments
 .venv/
+
+# Audio files (too large for git, deploy separately)
+*.wav
+*.mp3
+*.flac
+*.ogg
