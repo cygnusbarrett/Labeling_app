@@ -427,6 +427,88 @@
             border-bottom-color: #667eea;
             background: rgba(102,126,234,0.15);
         }
+
+        /* Annotation items in modal */
+        .annotation-item {
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 12px 14px;
+            margin-bottom: 10px;
+            background: #fff;
+            transition: border-color 0.2s;
+        }
+        .annotation-item:hover {
+            border-color: #667eea;
+        }
+        .annotation-item.selected {
+            background: #f0f4ff;
+            border-color: #667eea;
+        }
+        .annotation-item__header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 8px;
+        }
+        .annotation-item__header input[type="checkbox"] {
+            flex-shrink: 0;
+        }
+        .annotation-item__meta {
+            font-size: 12px;
+            color: #999;
+        }
+        .annotation-item__text {
+            font-size: 14px;
+            color: #2d3748;
+            line-height: 1.5;
+        }
+        .annotation-item__original {
+            font-size: 12px;
+            color: #718096;
+            margin-top: 4px;
+            padding-left: 10px;
+            border-left: 2px solid #e2e8f0;
+        }
+        .annotation-item__actions {
+            display: flex;
+            gap: 6px;
+            margin-top: 8px;
+        }
+        .annotation-item__actions button {
+            font-size: 11px;
+            padding: 3px 10px;
+            border-radius: 4px;
+            border: 1px solid #e2e8f0;
+            background: #fff;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .annotation-item__actions button:hover {
+            background: #f7fafc;
+        }
+        .annotation-item__actions .btn-edit {
+            color: #667eea;
+            border-color: #667eea;
+        }
+        .annotation-item__actions .btn-delete {
+            color: #e53e3e;
+            border-color: #e53e3e;
+        }
+        .status-tag {
+            display: inline-block;
+            font-size: 11px;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-weight: 600;
+        }
+        .status-tag.approved {
+            background: #c6f6d5;
+            color: #22543d;
+        }
+        .status-tag.corrected {
+            background: #fefcbf;
+            color: #744210;
+        }
     </style>
 </head>
 <body>
@@ -464,7 +546,10 @@
                     <div class="loading"></div>
                 </div>
 
-                <div class="section-title" style="margin-top: 40px;">Progreso por Usuario</div>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 40px;">
+                    <div class="section-title" style="margin: 0;">Progreso por Usuario</div>
+                    <button class="btn btn-success" style="font-size: 13px; padding: 6px 16px;" onclick="downloadAnnotationsExcel()">📥 Descargar Excel de Anotaciones</button>
+                </div>
                 <table class="users-table">
                     <thead>
                         <tr>
@@ -604,6 +689,56 @@
             <button class="btn btn-success" onclick="createUser()" style="width: 100%;">
                 ✓ Crear Usuario
             </button>
+        </div>
+    </div>
+
+    <!-- Modal Anotaciones del Usuario -->
+    <div id="annotationsModal" class="modal">
+        <div class="modal-content" style="max-width: 900px; max-height: 85vh; display: flex; flex-direction: column;">
+            <div class="modal-header">
+                <span id="annotationsModalTitle">Anotaciones</span>
+                <button class="modal-close" onclick="closeAnnotationsModal()">&times;</button>
+            </div>
+            <div style="padding: 0 20px; display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+                <label style="font-size: 13px; color: #666;">
+                    <input type="checkbox" id="selectAllAnnotations" onchange="toggleSelectAll(this)"> Seleccionar todas
+                </label>
+                <button class="btn btn-danger" id="bulkRevertBtn" style="display:none; font-size: 12px; padding: 4px 12px;" onclick="bulkRevertSelected()">🗑️ Eliminar seleccionadas</button>
+                <span id="selectedCount" style="font-size: 12px; color: #999;"></span>
+                <div style="flex:1;"></div>
+                <span id="annotationsCount" style="font-size: 13px; color: #666;"></span>
+            </div>
+            <div id="annotationsList" style="overflow-y: auto; flex: 1; padding: 16px 20px;"></div>
+        </div>
+    </div>
+
+    <!-- Modal Editar Anotación -->
+    <div id="editAnnotationModal" class="modal">
+        <div class="modal-content" style="max-width: 600px;">
+            <div class="modal-header">
+                <span>Editar Anotación</span>
+                <button class="modal-close" onclick="closeEditModal()">&times;</button>
+            </div>
+            <div style="padding: 0 20px 20px;">
+                <div class="form-group">
+                    <label style="font-size: 12px; color: #999;">Texto original (ASR)</label>
+                    <div id="editOriginalText" style="background: #f7fafc; padding: 10px; border-radius: 6px; border: 1px solid #e2e8f0; font-size: 14px; color: #555;"></div>
+                </div>
+                <div class="form-group">
+                    <label>Texto revisado</label>
+                    <textarea id="editTextRevised" rows="4" style="width: 100%; padding: 10px; border: 1px solid #e2e8f0; border-radius: 6px; font-size: 14px;"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Estado</label>
+                    <select id="editReviewStatus" style="width: 100%; padding: 8px; border-radius: 6px; border: 1px solid #e2e8f0;">
+                        <option value="approved">Aprobada</option>
+                        <option value="corrected">Corregida</option>
+                    </select>
+                </div>
+                <button class="btn btn-success" onclick="saveAnnotationEdit()" style="width: 100%;">
+                    💾 Guardar cambios
+                </button>
+            </div>
         </div>
     </div>
 

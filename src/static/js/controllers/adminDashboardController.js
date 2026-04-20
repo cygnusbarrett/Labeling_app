@@ -458,8 +458,191 @@ async function deleteUser(userId, username) {
     }
 }
 
-function viewUserDetail(userId) {
-    alert(`Detalle de usuario ${userId} - Próximamente disponible`);
+// ==================== DETALLE DE ANOTACIONES ====================
+
+let currentAnnotationsUserId = null;
+let currentAnnotations = [];
+let editingSegmentId = null;
+
+async function viewUserDetail(userId) {
+    try {
+        const data = await adminService.getUserAnnotations(userId);
+        currentAnnotationsUserId = userId;
+        currentAnnotations = data.annotations || [];
+
+        document.getElementById('annotationsModalTitle').textContent =
+            `Anotaciones de ${data.username} (${data.total})`;
+        document.getElementById('annotationsCount').textContent =
+            `${data.total} anotación(es)`;
+
+        renderAnnotationsList();
+
+        document.getElementById('selectAllAnnotations').checked = false;
+        updateBulkUI();
+        document.getElementById('annotationsModal').style.display = 'block';
+
+    } catch (error) {
+        console.error('Error cargando anotaciones:', error);
+        showMessage(`Error: ${error.message}`, 'error', 'overview');
+    }
+}
+
+function renderAnnotationsList() {
+    const container = document.getElementById('annotationsList');
+
+    if (currentAnnotations.length === 0) {
+        container.innerHTML = '<p style="text-align:center; color:#999; padding:40px;">Este usuario no tiene anotaciones completadas.</p>';
+        return;
+    }
+
+    container.innerHTML = currentAnnotations.map(ann => {
+        const displayText = ann.text_revised || ann.text;
+        const wasEdited = ann.review_status === 'corrected' && ann.text_revised;
+        const date = ann.completed_at
+            ? new Date(ann.completed_at).toLocaleDateString('es-ES', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' })
+            : '—';
+
+        return `
+        <div class="annotation-item" data-segment-id="${ann.id}">
+            <div class="annotation-item__header">
+                <input type="checkbox" class="annotation-check" value="${ann.id}" onchange="updateBulkUI()">
+                <span class="status-tag ${ann.review_status}">${ann.review_status === 'approved' ? '✓ Aprobada' : '✎ Corregida'}</span>
+                <span class="annotation-item__meta">Segmento #${ann.segment_index} · ${date}</span>
+            </div>
+            <div class="annotation-item__text">${escapeHtml(displayText)}</div>
+            ${wasEdited ? `<div class="annotation-item__original">Original: ${escapeHtml(ann.text)}</div>` : ''}
+            <div class="annotation-item__actions">
+                <button class="btn-edit" onclick="openEditAnnotation(${ann.id})">✏️ Editar</button>
+                <button class="btn-delete" onclick="revertSingleAnnotation(${ann.id})">🗑️ Eliminar</button>
+            </div>
+        </div>`;
+    }).join('');
+}
+
+function escapeHtml(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+}
+
+function closeAnnotationsModal() {
+    document.getElementById('annotationsModal').style.display = 'none';
+}
+
+async function downloadAnnotationsExcel() {
+    try {
+        const token = localStorage.getItem('access_token');
+        const response = await fetch('/api/v1/admin/annotations/export', {
+            headers: { 'Authorization': `Bearer ${token}` }
+        });
+        if (!response.ok) throw new Error('Error al descargar');
+        const blob = await response.blob();
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = response.headers.get('Content-Disposition')?.match(/filename="?(.+?)"?$/)?.[1] || 'anotaciones.xlsx';
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        window.URL.revokeObjectURL(url);
+    } catch (error) {
+        showMessage(`Error: ${error.message}`, 'error', 'overview');
+    }
+}
+
+function toggleSelectAll(checkbox) {
+    document.querySelectorAll('.annotation-check').forEach(cb => {
+        cb.checked = checkbox.checked;
+        cb.closest('.annotation-item').classList.toggle('selected', checkbox.checked);
+    });
+    updateBulkUI();
+}
+
+function updateBulkUI() {
+    const checked = document.querySelectorAll('.annotation-check:checked');
+    const btn = document.getElementById('bulkRevertBtn');
+    const count = document.getElementById('selectedCount');
+
+    if (checked.length > 0) {
+        btn.style.display = 'inline-block';
+        count.textContent = `${checked.length} seleccionada(s)`;
+    } else {
+        btn.style.display = 'none';
+        count.textContent = '';
+    }
+
+    // Toggle visual selection
+    document.querySelectorAll('.annotation-check').forEach(cb => {
+        cb.closest('.annotation-item').classList.toggle('selected', cb.checked);
+    });
+}
+
+async function revertSingleAnnotation(segmentId) {
+    if (!confirm('¿Eliminar esta anotación? El segmento volverá a estado pendiente.')) return;
+
+    try {
+        await adminService.revertAnnotation(segmentId);
+        showMessage('Anotación eliminada', 'success', 'overview');
+        // Refresh the list
+        await viewUserDetail(currentAnnotationsUserId);
+        await loadOverviewTab();
+    } catch (error) {
+        showMessage(`Error: ${error.message}`, 'error', 'overview');
+    }
+}
+
+async function bulkRevertSelected() {
+    const checked = document.querySelectorAll('.annotation-check:checked');
+    const ids = Array.from(checked).map(cb => parseInt(cb.value));
+
+    if (ids.length === 0) return;
+    if (!confirm(`¿Eliminar ${ids.length} anotación(es)? Volverán a estado pendiente.`)) return;
+
+    try {
+        await adminService.bulkRevertAnnotations(ids);
+        showMessage(`${ids.length} anotación(es) eliminadas`, 'success', 'overview');
+        await viewUserDetail(currentAnnotationsUserId);
+        await loadOverviewTab();
+    } catch (error) {
+        showMessage(`Error: ${error.message}`, 'error', 'overview');
+    }
+}
+
+function openEditAnnotation(segmentId) {
+    const ann = currentAnnotations.find(a => a.id === segmentId);
+    if (!ann) return;
+
+    editingSegmentId = segmentId;
+    document.getElementById('editOriginalText').textContent = ann.text;
+    document.getElementById('editTextRevised').value = ann.text_revised || ann.text;
+    document.getElementById('editReviewStatus').value = ann.review_status;
+    document.getElementById('editAnnotationModal').style.display = 'block';
+}
+
+function closeEditModal() {
+    document.getElementById('editAnnotationModal').style.display = 'none';
+    editingSegmentId = null;
+}
+
+async function saveAnnotationEdit() {
+    if (!editingSegmentId) return;
+
+    const textRevised = document.getElementById('editTextRevised').value.trim();
+    const reviewStatus = document.getElementById('editReviewStatus').value;
+
+    if (!textRevised) {
+        alert('El texto revisado no puede estar vacío');
+        return;
+    }
+
+    try {
+        await adminService.editAnnotation(editingSegmentId, textRevised, reviewStatus);
+        showMessage('Anotación actualizada', 'success', 'overview');
+        closeEditModal();
+        await viewUserDetail(currentAnnotationsUserId);
+    } catch (error) {
+        showMessage(`Error: ${error.message}`, 'error', 'overview');
+    }
 }
 
 // ==================== UTILIDADES ====================

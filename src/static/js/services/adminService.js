@@ -116,4 +116,29 @@ class AdminService {
     async getAllStats() {
         return this.makeRequest('/admin/stats');
     }
+
+    // ==================== ANOTACIONES ====================
+    async getUserAnnotations(userId) {
+        return this.makeRequest(`/admin/users/${userId}/annotations`);
+    }
+
+    async editAnnotation(segmentId, textRevised, reviewStatus) {
+        return this.makeRequest(`/admin/annotations/${segmentId}`, {
+            method: 'PUT',
+            body: JSON.stringify({ text_revised: textRevised, review_status: reviewStatus })
+        });
+    }
+
+    async revertAnnotation(segmentId) {
+        return this.makeRequest(`/admin/annotations/${segmentId}/revert`, {
+            method: 'POST'
+        });
+    }
+
+    async bulkRevertAnnotations(segmentIds) {
+        return this.makeRequest('/admin/annotations/bulk-revert', {
+            method: 'POST',
+            body: JSON.stringify({ segment_ids: segmentIds })
+        });
+    }
 }
