@@ -659,7 +659,7 @@
                         <div class="word-info">
                             <h2 id="wordText"></h2>
                             <div class="word-meta">
-                                <span>
+                                <span id="wordSpeakerSpan" style="display:none;">
                                     🎤 Hablante: <strong id="wordSpeaker"></strong>
                                 </span>
                                 <span>
@@ -680,6 +680,25 @@
                             <button onclick="playAudio()">▶ Reproducir</button>
                             <button onclick="pauseAudio()">⏸ Pausar</button>
                             <button onclick="replayAudio()">🔄 Repetir</button>
+                            <button id="contextBtn" onclick="toggleContext()">📖 Más contexto</button>
+                        </div>
+                    </div>
+
+                    <!-- Context Display (hidden by default) -->
+                    <div id="contextSection" style="display:none; margin-bottom: 16px;">
+                        <div style="background: #f0f4f8; border: 1px solid #d2dae2; border-radius: 8px; padding: 14px 16px;">
+                            <div id="prevContext" style="display:none; margin-bottom: 10px;">
+                                <span style="font-size: 11px; color: #718096; text-transform: uppercase; letter-spacing: 0.5px;">Segmento anterior</span>
+                                <p style="color: #4a5568; font-style: italic; margin-top: 4px;" id="prevContextText"></p>
+                            </div>
+                            <div style="border-left: 3px solid #667eea; padding-left: 12px; margin: 8px 0;">
+                                <span style="font-size: 11px; color: #667eea; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600;">Segmento actual</span>
+                                <p style="color: #2d3748; font-weight: 500; margin-top: 4px;" id="currentContextText"></p>
+                            </div>
+                            <div id="nextContext" style="display:none; margin-top: 10px;">
+                                <span style="font-size: 11px; color: #718096; text-transform: uppercase; letter-spacing: 0.5px;">Segmento siguiente</span>
+                                <p style="color: #4a5568; font-style: italic; margin-top: 4px;" id="nextContextText"></p>
+                            </div>
                         </div>
                     </div>
 

@@ -306,6 +306,17 @@ def get_word_audio(project_id, word_id):
         try:
             margin = float(request.args.get('margin', 0.2))
             
+            # Soporte para rango personalizado (contexto extendido)
+            start_override = request.args.get('start_override', type=float)
+            end_override = request.args.get('end_override', type=float)
+            
+            if start_override is not None and end_override is not None:
+                audio_start = max(0, start_override - margin)
+                audio_end = end_override + margin
+            else:
+                audio_start = max(0, segment.start_time - margin)
+                audio_end = segment.end_time + margin
+            
             # Leer archivo WAV y extraer segmento de audio
             with wave.open(audio_path, 'rb') as wav_file:
                 # Obtener parámetros
@@ -315,8 +326,8 @@ def get_word_audio(project_id, word_id):
                 n_frames = wav_file.getnframes()
                 
                 # Calcular índices de frames basados en segment times
-                start_frame = max(0, int((segment.start_time - margin) * framerate))
-                end_frame = min(n_frames, int((segment.end_time + margin) * framerate))
+                start_frame = max(0, int(audio_start * framerate))
+                end_frame = min(n_frames, int(audio_end * framerate))
                 
                 # Leer datos
                 wav_file.setpos(start_frame)
@@ -352,6 +363,72 @@ def get_word_audio(project_id, word_id):
     except Exception as e:
         current_app.logger.error(f'Error en get_word_audio: {str(e)}', exc_info=True)
         return jsonify({'error': str(e)}), 500
+
+
+@transcription_bp.route('/projects/<project_id>/words/<int:word_id>/context', methods=['GET'])
+@jwt_required
+def get_segment_context(project_id, word_id):
+    """
+    Devuelve los segmentos adyacentes (anterior y siguiente) para dar contexto.
+    También devuelve el rango de tiempo extendido para reproducir audio con contexto.
+    """
+    try:
+        db_manager = get_db_manager()
+        session = db_manager.get_session()
+
+        # Segmento actual
+        segment = session.query(Segment).filter_by(
+            id=word_id,
+            project_id=project_id
+        ).first()
+
+        if not segment:
+            session.close()
+            return jsonify({'error': 'Segmento no encontrado'}), 404
+
+        # Buscar segmento anterior (mismo audio, segment_index - 1)
+        prev_seg = session.query(Segment).filter_by(
+            project_id=project_id,
+            audio_filename=segment.audio_filename,
+            segment_index=segment.segment_index - 1
+        ).first()
+
+        # Buscar segmento siguiente (mismo audio, segment_index + 1)
+        next_seg = session.query(Segment).filter_by(
+            project_id=project_id,
+            audio_filename=segment.audio_filename,
+            segment_index=segment.segment_index + 1
+        ).first()
+
+        # Rango de tiempo extendido
+        extended_start = prev_seg.start_time if prev_seg else segment.start_time
+        extended_end = next_seg.end_time if next_seg else segment.end_time
+
+        result = {
+            'segment_id': segment.id,
+            'extended_start': extended_start,
+            'extended_end': extended_end,
+            'prev': {
+                'id': prev_seg.id,
+                'text': prev_seg.text,
+                'start_time': prev_seg.start_time,
+                'end_time': prev_seg.end_time
+            } if prev_seg else None,
+            'next': {
+                'id': next_seg.id,
+                'text': next_seg.text,
+                'start_time': next_seg.start_time,
+                'end_time': next_seg.end_time
+            } if next_seg else None
+        }
+
+        session.close()
+        return jsonify(result), 200
+
+    except Exception as e:
+        current_app.logger.error(f'Error en get_segment_context: {str(e)}', exc_info=True)
+        return jsonify({'error': str(e)}), 500
+
 
 # ==================== ENDPOINTS PARA ANOTACIÓN ====================
 

@@ -11,7 +11,8 @@ let state = {
     allWords: [],
     stats: null,
     userRole: 'annotator',
-    fullEditMode: false
+    fullEditMode: false,
+    fullEditTouched: false
 };
 
 /**
@@ -178,13 +179,20 @@ async function displayWord(index) {
 
         // Reset full-edit mode for each new segment
         state.fullEditMode = false;
+        state.fullEditTouched = false;
         const fullEditSection = document.getElementById('fullEditSection');
         if (fullEditSection) fullEditSection.classList.remove('active');
         const toggleLink = document.querySelector('.full-edit-toggle');
         if (toggleLink) toggleLink.style.display = '';
 
+        // Reset context section
+        const contextSection = document.getElementById('contextSection');
+        if (contextSection) contextSection.style.display = 'none';
+        const contextBtn = document.getElementById('contextBtn');
+        if (contextBtn) contextBtn.textContent = '📖 Más contexto';
+
         // Actualizar interfaz con los datos del SEGMENTO
-        document.getElementById('wordSpeaker').textContent = segment.speaker || 'UNKNOWN';
+        // Speaker hidden by design
         document.getElementById('originalText').textContent = segment.text;
 
         // Renderizar texto con edición inline de palabras inciertas
@@ -447,10 +455,79 @@ function updateChangeIndicator() {
 }
 
 /**
+ * Muestra/oculta el contexto de segmentos adyacentes y extiende el audio
+ */
+async function toggleContext() {
+    const section = document.getElementById('contextSection');
+    const btn = document.getElementById('contextBtn');
+
+    if (section.style.display !== 'none') {
+        // Ocultar contexto y restaurar audio original
+        section.style.display = 'none';
+        btn.textContent = '📖 Más contexto';
+        try {
+            const audioUrl = await transcriptionService.getWordAudio(state.currentProject, state.currentWord.id, 0.2);
+            const audioPlayer = document.getElementById('audioPlayer');
+            audioPlayer.src = audioUrl;
+            audioPlayer.load();
+        } catch (e) { console.error('Error restaurando audio:', e); }
+        return;
+    }
+
+    btn.textContent = '⏳ Cargando...';
+    btn.disabled = true;
+
+    try {
+        const ctx = await transcriptionService.getSegmentContext(state.currentProject, state.currentWord.id);
+
+        // Texto del segmento actual
+        document.getElementById('currentContextText').textContent = state.currentWord.text;
+
+        // Segmento anterior
+        const prevDiv = document.getElementById('prevContext');
+        if (ctx.prev) {
+            document.getElementById('prevContextText').textContent = ctx.prev.text;
+            prevDiv.style.display = 'block';
+        } else {
+            prevDiv.style.display = 'none';
+        }
+
+        // Segmento siguiente
+        const nextDiv = document.getElementById('nextContext');
+        if (ctx.next) {
+            document.getElementById('nextContextText').textContent = ctx.next.text;
+            nextDiv.style.display = 'block';
+        } else {
+            nextDiv.style.display = 'none';
+        }
+
+        section.style.display = 'block';
+        btn.textContent = '📖 Ocultar contexto';
+
+        // Cargar audio extendido (incluye segmentos adyacentes)
+        const audioUrl = await transcriptionService.getExtendedAudio(
+            state.currentProject, state.currentWord.id,
+            ctx.extended_start, ctx.extended_end
+        );
+        const audioPlayer = document.getElementById('audioPlayer');
+        audioPlayer.src = audioUrl;
+        audioPlayer.load();
+
+    } catch (e) {
+        console.error('Error cargando contexto:', e);
+        showMessage('No se pudo cargar el contexto', 'error');
+        btn.textContent = '📖 Más contexto';
+    } finally {
+        btn.disabled = false;
+    }
+}
+
+/**
  * Alterna al modo de edición completa del texto
  */
 function toggleFullEdit() {
     state.fullEditMode = true;
+    state.fullEditTouched = false;
     const section = document.getElementById('fullEditSection');
     section.classList.add('active');
     
@@ -458,6 +535,9 @@ function toggleFullEdit() {
     const textarea = document.getElementById('correctedText');
     textarea.value = reconstructText();
     textarea.focus();
+
+    // Detectar si el usuario realmente edita el textarea
+    textarea.addEventListener('input', () => { state.fullEditTouched = true; }, { once: true });
 
     // Ocultar toggle link
     document.querySelector('.full-edit-toggle').style.display = 'none';
@@ -477,12 +557,12 @@ async function submitWord(status) {
         let textRevised;
         let review_status;
 
-        if (state.fullEditMode) {
-            // Modo edición completa: usar textarea
+        if (state.fullEditMode && state.fullEditTouched) {
+            // Textarea fue editado manualmente: tiene prioridad sobre inline
             textRevised = document.getElementById('correctedText').value.trim();
             review_status = (textRevised !== state.currentWord.text.trim()) ? 'corrected' : 'approved';
         } else {
-            // Modo inline: reconstruir desde los inputs
+            // Modo inline (o fullEdit abierto pero no tocado): reconstruir desde inputs
             textRevised = reconstructText();
             review_status = hasInlineChanges() ? 'corrected' : 'approved';
         }
@@ -653,7 +733,8 @@ function logout() {
         allWords: [],
         stats: null,
         userRole: 'annotator',
-        fullEditMode: false
+        fullEditMode: false,
+        fullEditTouched: false
     };
     document.getElementById('messageArea').innerHTML = '';
     showLoginSection();

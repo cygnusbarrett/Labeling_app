@@ -126,6 +126,24 @@ class TranscriptionService {
     }
 
     /**
+     * Obtiene contexto de segmentos adyacentes
+     */
+    async getSegmentContext(projectId, wordId) {
+        return await this.apiCall('GET', `/projects/${projectId}/words/${wordId}/context`);
+    }
+
+    /**
+     * Descarga audio con rango de tiempo personalizado (para contexto extendido)
+     */
+    async getExtendedAudio(projectId, wordId, startTime, endTime) {
+        const url = `${this.apiBase}/projects/${projectId}/words/${wordId}/audio?start_override=${startTime}&end_override=${endTime}&margin=0.1`;
+        const response = await fetch(url, { headers: this.getAuthHeader() });
+        if (!response.ok) throw new Error(`Error ${response.status}`);
+        const blob = await response.blob();
+        return URL.createObjectURL(blob);
+    }
+
+    /**
      * Envía una corrección de segmento (antes "palabra")
      */
     async submitWord(wordId, status, correctedText = null) {
