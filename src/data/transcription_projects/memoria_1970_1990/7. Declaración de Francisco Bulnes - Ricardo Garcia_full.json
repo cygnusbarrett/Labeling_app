@@ -1,0 +1,2910 @@
+{
+  "segments": [
+    {
+      "start": 0.0,
+      "end": 5.3,
+      "text": " La amenaza que se cernía sobre Chile era ya entonces más que un peligro.",
+      "words": [
+        {
+          "word": "La",
+          "start": 0.0,
+          "end": 0.423,
+          "speaker": "SPEAKER_01",
+          "probability": 0.9979445338249207,
+          "alignment_score": 0.874
+        },
+        {
+          "word": "amenaza",
+          "start": 0.464,
+          "end": 0.826,
+          "speaker": "SPEAKER_01",
+          "probability": 0.999809980392456,
+          "alignment_score": 0.806
+        },
+        {
+          "word": "que",
+          "start": 0.846,
+          "end": 0.907,
+          "speaker": "SPEAKER_01",
+          "probability": 0.9999417066574097,
+          "alignment_score": 0.331
+        },
+        {
+          "word": "se",
+          "start": 1.068,
+          "end": 1.149,
+          "speaker": "SPEAKER_01",
+          "probability": 0.9986221790313721,
+          "alignment_score": 0.919
+        },
+        {
+          "word": "cernía",
+          "start": 1.209,
+          "end": 1.632,
+          "speaker": "SPEAKER_01",
+          "probability": 0.999581774075826,
+          "alignment_score": 0.913
+        },
+        {
+          "word": "sobre",
+          "start": 1.673,
+          "end": 1.935,
+          "speaker": "SPEAKER_01",
+          "probability": 0.9999815225601196,
+          "alignment_score": 0.91
+        },
+        {
+          "word": "Chile",
+          "start": 2.035,
+          "end": 2.277,
+          "speaker": "SPEAKER_01",
+          "probability": 0.9999711513519287,
+          "alignment_score": 0.881
+        },
+        {
+          "word": "era",
+          "start": 2.902,
+          "end": 3.023,
+          "speaker": "SPEAKER_01",
+          "probability": 0.9123732447624207,
+          "alignment_score": 0.803
+        },
+        {
+          "word": "ya",
+          "start": 3.083,
+          "end": 3.224,
+          "speaker": "SPEAKER_01",
+          "probability": 0.9994913339614868,
+          "alignment_score": 0.984
+        },
+        {
+          "word": "entonces",
+          "start": 3.285,
+          "end": 3.809,
+          "speaker": "SPEAKER_01",
+          "probability": 0.9995241165161133,
+          "alignment_score": 0.933
+        },
+        {
+          "word": "más",
+          "start": 4.534,
+          "end": 4.675,
+          "speaker": "SPEAKER_01",
+          "probability": 0.9968969821929932,
+          "alignment_score": 0.942
+        },
+        {
+          "word": "que",
+          "start": 4.736,
+          "end": 4.837,
+          "speaker": "SPEAKER_01",
+          "probability": 0.9999920129776001,
+          "alignment_score": 0.633
+        },
+        {
+          "word": "un",
+          "start": 4.917,
+          "end": 4.978,
+          "speaker": "SPEAKER_01",
+          "probability": 0.9999916553497314,
+          "alignment_score": 0.94
+        },
+        {
+          "word": "peligro.",
+          "start": 5.018,
+          "end": 5.3,
+          "speaker": "SPEAKER_01",
+          "probability": 0.9999960660934448,
+          "alignment_score": 0.533
+        }
+      ],
+      "speaker": "SPEAKER_01"
+    },
+    {
+      "start": 5.76,
+      "end": 7.68,
+      "text": " La decisión estaba tomada.",
+      "words": [
+        {
+          "word": "La",
+          "start": 5.76,
+          "end": 6.557,
+          "speaker": "SPEAKER_01",
+          "probability": 0.9999876022338867,
+          "alignment_score": 0.948
+        },
+        {
+          "word": "decisión",
+          "start": 6.598,
+          "end": 6.945,
+          "speaker": "SPEAKER_01",
+          "probability": 0.9999848008155823,
+          "alignment_score": 0.886
+        },
+        {
+          "word": "estaba",
+          "start": 6.986,
+          "end": 7.354,
+          "speaker": "SPEAKER_01",
+          "probability": 0.9999300241470337,
+          "alignment_score": 0.699
+        },
+        {
+          "word": "tomada.",
+          "start": 7.456,
+          "end": 7.68,
+          "speaker": "SPEAKER_01",
+          "probability": 0.9999867081642151,
+          "alignment_score": 0.509
+        }
+      ],
+      "speaker": "SPEAKER_01"
+    },
+    {
+      "start": 7.98,
+      "end": 12.3,
+      "text": " La comunicó al país el senador derechista Francisco Bulnes.",
+      "words": [
+        {
+          "word": "La",
+          "start": 7.98,
+          "end": 8.767,
+          "speaker": "SPEAKER_01",
+          "probability": 0.9999829530715942,
+          "alignment_score": 0.596
+        },
+        {
+          "word": "comunicó",
+          "start": 8.808,
+          "end": 9.252,
+          "speaker": "SPEAKER_01",
+          "probability": 0.9999638795852661,
+          "alignment_score": 0.901
+        },
+        {
+          "word": "al",
+          "start": 9.292,
+          "end": 9.373,
+          "speaker": "SPEAKER_01",
+          "probability": 0.9999817609786987,
+          "alignment_score": 0.968
+        },
+        {
+          "word": "país",
+          "start": 9.454,
+          "end": 9.635,
+          "speaker": "SPEAKER_01",
+          "probability": 0.9997466206550598,
+          "alignment_score": 0.775
+        },
+        {
+          "word": "el",
+          "start": 9.656,
+          "end": 9.696,
+          "speaker": "SPEAKER_01",
+          "probability": 0.9989537000656128,
+          "alignment_score": 0.492
+        },
+        {
+          "word": "senador",
+          "start": 10.281,
+          "end": 10.645,
+          "speaker": "SPEAKER_01",
+          "probability": 0.9997316300868988,
+          "alignment_score": 0.995
+        },
+        {
+          "word": "derechista",
+          "start": 10.705,
+          "end": 11.25,
+          "speaker": "SPEAKER_01",
+          "probability": 0.9991223812103271,
+          "alignment_score": 0.912
+        },
+        {
+          "word": "Francisco",
+          "start": 11.291,
+          "end": 12.139,
+          "speaker": "SPEAKER_01",
+          "probability": 0.9999760389328003,
+          "alignment_score": 0.869
+        },
+        {
+          "word": "Bulnes.",
+          "start": 12.159,
+          "end": 12.3,
+          "speaker": "SPEAKER_01",
+          "probability": 0.9261881113052368,
+          "alignment_score": 0.186
+        }
+      ],
+      "speaker": "SPEAKER_01"
+    },
+    {
+      "start": 12.52,
+      "end": 17.84,
+      "text": " El gobierno atenta contra las garantías individuales consagradas en la Carta Fundamental,",
+      "words": [
+        {
+          "word": "El",
+          "start": 12.52,
+          "end": 13.225,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9983717799186707,
+          "alignment_score": 0.67
+        },
+        {
+          "word": "gobierno",
+          "start": 13.306,
+          "end": 13.628,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9991469383239746,
+          "alignment_score": 0.92
+        },
+        {
+          "word": "atenta",
+          "start": 13.649,
+          "end": 14.132,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9997424483299255,
+          "alignment_score": 0.829
+        },
+        {
+          "word": "contra",
+          "start": 14.273,
+          "end": 14.555,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9986982345581055,
+          "alignment_score": 0.861
+        },
+        {
+          "word": "las",
+          "start": 14.676,
+          "end": 14.737,
+          "speaker": "SPEAKER_00",
+          "probability": 0.999879002571106,
+          "alignment_score": 0.603
+        },
+        {
+          "word": "garantías",
+          "start": 14.837,
+          "end": 15.301,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9999765753746033,
+          "alignment_score": 0.745
+        },
+        {
+          "word": "individuales",
+          "start": 15.341,
+          "end": 16.087,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9999504685401917,
+          "alignment_score": 0.622
+        },
+        {
+          "word": "consagradas",
+          "start": 16.168,
+          "end": 16.772,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9997440576553345,
+          "alignment_score": 0.8
+        },
+        {
+          "word": "en",
+          "start": 16.873,
+          "end": 16.913,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9999737739562988,
+          "alignment_score": 0.638
+        },
+        {
+          "word": "la",
+          "start": 16.953,
+          "end": 17.014,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9999817609786987,
+          "alignment_score": 0.884
+        },
+        {
+          "word": "Carta",
+          "start": 17.095,
+          "end": 17.336,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9926504790782928,
+          "alignment_score": 0.928
+        },
+        {
+          "word": "Fundamental,",
+          "start": 17.417,
+          "end": 17.84,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9999585747718811,
+          "alignment_score": 0.389
+        }
+      ],
+      "speaker": "SPEAKER_00"
+    },
+    {
+      "start": 18.58,
+      "end": 23.42,
+      "text": " entre ellas la libertad de educación, la libertad de opinión, la libertad de trabajo,",
+      "words": [
+        {
+          "word": "entre",
+          "start": 18.58,
+          "end": 18.943,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9999865293502808,
+          "alignment_score": 0.709
+        },
+        {
+          "word": "ellas",
+          "start": 19.004,
+          "end": 19.185,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9977586269378662,
+          "alignment_score": 0.48
+        },
+        {
+          "word": "la",
+          "start": 19.266,
+          "end": 19.326,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9998793601989746,
+          "alignment_score": 0.207
+        },
+        {
+          "word": "libertad",
+          "start": 19.407,
+          "end": 19.75,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9999746680259705,
+          "alignment_score": 0.808
+        },
+        {
+          "word": "de",
+          "start": 19.79,
+          "end": 19.851,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9999969005584717,
+          "alignment_score": 0.585
+        },
+        {
+          "word": "educación,",
+          "start": 19.871,
+          "end": 20.516,
+          "speaker": "SPEAKER_00",
+          "probability": 0.99946528673172,
+          "alignment_score": 0.822
+        },
+        {
+          "word": "la",
+          "start": 20.556,
+          "end": 20.597,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9999886751174927,
+          "alignment_score": 0.486
+        },
+        {
+          "word": "libertad",
+          "start": 21.02,
+          "end": 21.484,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9999969601631165,
+          "alignment_score": 0.717
+        },
+        {
+          "word": "de",
+          "start": 21.524,
+          "end": 21.585,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9999927282333374,
+          "alignment_score": 0.575
+        },
+        {
+          "word": "opinión,",
+          "start": 21.686,
+          "end": 22.089,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9999883770942688,
+          "alignment_score": 0.926
+        },
+        {
+          "word": "la",
+          "start": 22.129,
+          "end": 22.613,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9999750852584839,
+          "alignment_score": 0.912
+        },
+        {
+          "word": "libertad",
+          "start": 22.674,
+          "end": 23.057,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9999957084655762,
+          "alignment_score": 0.791
+        },
+        {
+          "word": "de",
+          "start": 23.198,
+          "end": 23.239,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9999130964279175,
+          "alignment_score": 0.0
+        },
+        {
+          "word": "trabajo,",
+          "start": 23.259,
+          "end": 23.42,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9999879598617554,
+          "alignment_score": 0.127
+        }
+      ],
+      "speaker": "SPEAKER_00"
+    },
+    {
+      "start": 23.64,
+      "end": 27.16,
+      "text": " el derecho a propiedad, la libertad de salir del país",
+      "words": [
+        {
+          "word": "el",
+          "start": 23.64,
+          "end": 24.247,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9997206330299377,
+          "alignment_score": 0.426
+        },
+        {
+          "word": "derecho",
+          "start": 24.308,
+          "end": 24.571,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9999878406524658,
+          "alignment_score": 0.905
+        },
+        {
+          "word": "a",
+          "start": 24.611,
+          "end": 24.631,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9921903014183044,
+          "alignment_score": 0.264
+        },
+        {
+          "word": "propiedad,",
+          "start": 24.773,
+          "end": 25.258,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9959410627683004,
+          "alignment_score": 0.979
+        },
+        {
+          "word": "la",
+          "start": 25.279,
+          "end": 25.319,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9992696642875671,
+          "alignment_score": 0.496
+        },
+        {
+          "word": "libertad",
+          "start": 25.785,
+          "end": 26.351,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9999565482139587,
+          "alignment_score": 0.756
+        },
+        {
+          "word": "de",
+          "start": 26.391,
+          "end": 26.493,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9972097277641296,
+          "alignment_score": 0.468
+        },
+        {
+          "word": "salir",
+          "start": 26.594,
+          "end": 26.877,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9998373985290527,
+          "alignment_score": 0.711
+        },
+        {
+          "word": "del",
+          "start": 26.897,
+          "end": 27.059,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9999651908874512,
+          "alignment_score": 0.708
+        },
+        {
+          "word": "país",
+          "start": 27.079,
+          "end": 27.16,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9999974966049194,
+          "alignment_score": 0.249
+        }
+      ],
+      "speaker": "SPEAKER_00"
+    },
+    {
+      "start": 27.14,
+      "end": 30.6,
+      "text": " y hasta la libertad de las personas y su integridad física,",
+      "words": [
+        {
+          "word": "y",
+          "start": 27.14,
+          "end": 27.808,
+          "speaker": "SPEAKER_00",
+          "probability": 0.5483607053756714,
+          "alignment_score": 0.658
+        },
+        {
+          "word": "hasta",
+          "start": 27.889,
+          "end": 28.071,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9866856336593628,
+          "alignment_score": 0.777
+        },
+        {
+          "word": "la",
+          "start": 28.152,
+          "end": 28.212,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9939513206481934,
+          "alignment_score": 0.716
+        },
+        {
+          "word": "libertad",
+          "start": 28.273,
+          "end": 28.678,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9996702671051025,
+          "alignment_score": 0.818
+        },
+        {
+          "word": "de",
+          "start": 28.698,
+          "end": 28.739,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9737791419029236,
+          "alignment_score": 0.49
+        },
+        {
+          "word": "las",
+          "start": 28.82,
+          "end": 28.961,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9996582269668579,
+          "alignment_score": 0.498
+        },
+        {
+          "word": "personas",
+          "start": 29.062,
+          "end": 29.508,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9999182224273682,
+          "alignment_score": 0.935
+        },
+        {
+          "word": "y",
+          "start": 29.528,
+          "end": 29.548,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9983519315719604,
+          "alignment_score": 0.98
+        },
+        {
+          "word": "su",
+          "start": 29.588,
+          "end": 29.791,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9992942810058594,
+          "alignment_score": 0.684
+        },
+        {
+          "word": "integridad",
+          "start": 29.852,
+          "end": 30.438,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9997368454933167,
+          "alignment_score": 0.904
+        },
+        {
+          "word": "física,",
+          "start": 30.459,
+          "end": 30.6,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9995550513267517,
+          "alignment_score": 0.146
+        }
+      ],
+      "speaker": "SPEAKER_00"
+    },
+    {
+      "start": 30.82,
+      "end": 35.26,
+      "text": " atropelladas por detenciones ilegales y flagelaciones inhumanas.",
+      "words": [
+        {
+          "word": "atropelladas",
+          "start": 30.82,
+          "end": 32.132,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9975726157426834,
+          "alignment_score": 0.751
+        },
+        {
+          "word": "por",
+          "start": 32.213,
+          "end": 32.334,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9998189806938171,
+          "alignment_score": 0.88
+        },
+        {
+          "word": "detenciones",
+          "start": 32.394,
+          "end": 32.959,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9991875092188517,
+          "alignment_score": 0.806
+        },
+        {
+          "word": "ilegales",
+          "start": 33.0,
+          "end": 33.605,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9997871120770773,
+          "alignment_score": 0.722
+        },
+        {
+          "word": "y",
+          "start": 33.625,
+          "end": 33.646,
+          "speaker": "SPEAKER_00",
+          "probability": 0.999153733253479,
+          "alignment_score": 0.908
+        },
+        {
+          "word": "flagelaciones",
+          "start": 34.15,
+          "end": 34.756,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9956909020741781,
+          "alignment_score": 0.8
+        },
+        {
+          "word": "inhumanas.",
+          "start": 34.857,
+          "end": 35.26,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9994409283002218,
+          "alignment_score": 0.633
+        }
+      ],
+      "speaker": "SPEAKER_00"
+    },
+    {
+      "start": 35.72,
+      "end": 42.06,
+      "text": " En estas circunstancias hay que preguntarse si el actual gobierno sigue siendo legítimo.",
+      "words": [
+        {
+          "word": "En",
+          "start": 35.72,
+          "end": 36.787,
+          "speaker": "SPEAKER_00",
+          "probability": 0.999519944190979,
+          "alignment_score": 0.56
+        },
+        {
+          "word": "estas",
+          "start": 36.847,
+          "end": 37.028,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9998301267623901,
+          "alignment_score": 0.658
+        },
+        {
+          "word": "circunstancias",
+          "start": 37.109,
+          "end": 37.954,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9999848902225494,
+          "alignment_score": 0.862
+        },
+        {
+          "word": "hay",
+          "start": 38.779,
+          "end": 38.92,
+          "speaker": "SPEAKER_00",
+          "probability": 0.7200573086738586,
+          "alignment_score": 0.617
+        },
+        {
+          "word": "que",
+          "start": 38.981,
+          "end": 39.061,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9999692440032959,
+          "alignment_score": 0.913
+        },
+        {
+          "word": "preguntarse",
+          "start": 39.142,
+          "end": 39.826,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9993951618671417,
+          "alignment_score": 0.855
+        },
+        {
+          "word": "si",
+          "start": 39.886,
+          "end": 39.987,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9812490940093994,
+          "alignment_score": 0.161
+        },
+        {
+          "word": "el",
+          "start": 40.007,
+          "end": 40.068,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9989218711853027,
+          "alignment_score": 0.356
+        },
+        {
+          "word": "actual",
+          "start": 40.088,
+          "end": 40.47,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9837474226951599,
+          "alignment_score": 0.406
+        },
+        {
+          "word": "gobierno",
+          "start": 40.53,
+          "end": 40.873,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9537880420684814,
+          "alignment_score": 0.719
+        },
+        {
+          "word": "sigue",
+          "start": 40.993,
+          "end": 41.175,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9996722936630249,
+          "alignment_score": 0.668
+        },
+        {
+          "word": "siendo",
+          "start": 41.336,
+          "end": 41.597,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9999570846557617,
+          "alignment_score": 0.8
+        },
+        {
+          "word": "legítimo.",
+          "start": 41.698,
+          "end": 42.06,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9988384246826172,
+          "alignment_score": 0.277
+        }
+      ],
+      "speaker": "SPEAKER_00"
+    },
+    {
+      "start": 43.08,
+      "end": 47.6,
+      "text": " Con verdadero dolor de patriotas tenemos que contestar que no.",
+      "words": [
+        {
+          "word": "Con",
+          "start": 43.08,
+          "end": 43.383,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9988139867782593,
+          "alignment_score": 0.876
+        },
+        {
+          "word": "verdadero",
+          "start": 43.463,
+          "end": 43.968,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9997751414775848,
+          "alignment_score": 0.887
+        },
+        {
+          "word": "dolor",
+          "start": 43.988,
+          "end": 44.412,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9995315074920654,
+          "alignment_score": 0.822
+        },
+        {
+          "word": "de",
+          "start": 44.452,
+          "end": 44.533,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9999469518661499,
+          "alignment_score": 0.876
+        },
+        {
+          "word": "patriotas",
+          "start": 44.614,
+          "end": 45.138,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9989701211452484,
+          "alignment_score": 0.861
+        },
+        {
+          "word": "tenemos",
+          "start": 46.026,
+          "end": 46.41,
+          "speaker": "SPEAKER_00",
+          "probability": 0.6279150247573853,
+          "alignment_score": 0.692
+        },
+        {
+          "word": "que",
+          "start": 46.531,
+          "end": 46.672,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9999638795852661,
+          "alignment_score": 0.398
+        },
+        {
+          "word": "contestar",
+          "start": 46.692,
+          "end": 47.439,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9999132752418518,
+          "alignment_score": 0.909
+        },
+        {
+          "word": "que",
+          "start": 47.459,
+          "end": 47.519,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9998728036880493,
+          "alignment_score": 0.001
+        },
+        {
+          "word": "no.",
+          "start": 47.54,
+          "end": 47.6,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9993351101875305,
+          "alignment_score": 0.323
+        }
+      ],
+      "speaker": "SPEAKER_00"
+    },
+    {
+      "start": 48.36,
+      "end": 51.66,
+      "text": " Estamos obligados a emplear contra un gobierno ilegítimo",
+      "words": [
+        {
+          "word": "Estamos",
+          "start": 48.36,
+          "end": 48.927,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9980288147926331,
+          "alignment_score": 0.54
+        },
+        {
+          "word": "obligados",
+          "start": 49.028,
+          "end": 49.474,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9692675769329071,
+          "alignment_score": 0.923
+        },
+        {
+          "word": "a",
+          "start": 49.494,
+          "end": 49.514,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9999780654907227,
+          "alignment_score": 0.99
+        },
+        {
+          "word": "emplear",
+          "start": 49.534,
+          "end": 50.101,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9788927435874939,
+          "alignment_score": 0.482
+        },
+        {
+          "word": "contra",
+          "start": 50.283,
+          "end": 50.547,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9997883439064026,
+          "alignment_score": 0.867
+        },
+        {
+          "word": "un",
+          "start": 50.648,
+          "end": 50.688,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9999232292175293,
+          "alignment_score": 0.674
+        },
+        {
+          "word": "gobierno",
+          "start": 50.749,
+          "end": 51.093,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9995136260986328,
+          "alignment_score": 0.798
+        },
+        {
+          "word": "ilegítimo",
+          "start": 51.195,
+          "end": 51.66,
+          "speaker": "SPEAKER_00",
+          "probability": 0.99062579870224,
+          "alignment_score": 0.515
+        }
+      ],
+      "speaker": "SPEAKER_00"
+    },
+    {
+      "start": 51.64,
+      "end": 55.06,
+      "text": " que marcha derechamente a la abolición de la democracia",
+      "words": [
+        {
+          "word": "que",
+          "start": 51.64,
+          "end": 52.348,
+          "speaker": "SPEAKER_00",
+          "probability": 0.8360572457313538,
+          "alignment_score": 0.505
+        },
+        {
+          "word": "marcha",
+          "start": 52.45,
+          "end": 52.794,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9996853768825531,
+          "alignment_score": 0.88
+        },
+        {
+          "word": "derechamente",
+          "start": 53.036,
+          "end": 53.603,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9900771776835123,
+          "alignment_score": 0.661
+        },
+        {
+          "word": "a",
+          "start": 53.644,
+          "end": 53.664,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9986569881439209,
+          "alignment_score": 0.628
+        },
+        {
+          "word": "la",
+          "start": 53.704,
+          "end": 53.765,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9999723434448242,
+          "alignment_score": 0.818
+        },
+        {
+          "word": "abolición",
+          "start": 53.846,
+          "end": 54.291,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9951659043629965,
+          "alignment_score": 0.67
+        },
+        {
+          "word": "de",
+          "start": 54.311,
+          "end": 54.413,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9999579191207886,
+          "alignment_score": 0.51
+        },
+        {
+          "word": "la",
+          "start": 54.433,
+          "end": 54.514,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9999758005142212,
+          "alignment_score": 0.853
+        },
+        {
+          "word": "democracia",
+          "start": 54.595,
+          "end": 55.06,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9999330639839172,
+          "alignment_score": 0.534
+        }
+      ],
+      "speaker": "SPEAKER_00"
+    },
+    {
+      "start": 55.04,
+      "end": 57.14,
+      "text": " y que además está destruyendo...",
+      "words": [
+        {
+          "word": "y",
+          "start": 55.04,
+          "end": 55.998,
+          "speaker": "SPEAKER_00",
+          "probability": 0.871379554271698,
+          "alignment_score": 0.69
+        },
+        {
+          "word": "que",
+          "start": 56.039,
+          "end": 56.1,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9999111890792847,
+          "alignment_score": 0.213
+        },
+        {
+          "word": "además",
+          "start": 56.141,
+          "end": 56.447,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9981111288070679,
+          "alignment_score": 0.899
+        },
+        {
+          "word": "está",
+          "start": 56.529,
+          "end": 56.835,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9751401543617249,
+          "alignment_score": 0.343
+        },
+        {
+          "word": "destruyendo...",
+          "start": 56.855,
+          "end": 57.14,
+          "speaker": "SPEAKER_00",
+          "probability": 0.763961385935545,
+          "alignment_score": 0.075
+        }
+      ],
+      "speaker": "SPEAKER_00"
+    },
+    {
+      "start": 57.14,
+      "end": 59.8,
+      "text": " ...está destruyendo el patrimonio económico de todos los chilenos,",
+      "words": [
+        {
+          "word": "...está",
+          "start": 57.14,
+          "end": 57.282,
+          "speaker": "SPEAKER_00",
+          "probability": 0.11925934658696254,
+          "alignment_score": 0.066
+        },
+        {
+          "word": "destruyendo",
+          "start": 57.302,
+          "end": 57.526,
+          "speaker": "SPEAKER_00",
+          "probability": 0.6693584953124324,
+          "alignment_score": 0.071
+        },
+        {
+          "word": "el",
+          "start": 57.546,
+          "end": 57.587,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9975590705871582,
+          "alignment_score": 0.918
+        },
+        {
+          "word": "patrimonio",
+          "start": 57.627,
+          "end": 58.094,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9998370409011841,
+          "alignment_score": 0.839
+        },
+        {
+          "word": "económico",
+          "start": 58.155,
+          "end": 58.744,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9997362792491913,
+          "alignment_score": 0.455
+        },
+        {
+          "word": "de",
+          "start": 58.765,
+          "end": 58.947,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9942101240158081,
+          "alignment_score": 0.498
+        },
+        {
+          "word": "todos",
+          "start": 58.968,
+          "end": 59.211,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9994300007820129,
+          "alignment_score": 0.481
+        },
+        {
+          "word": "los",
+          "start": 59.232,
+          "end": 59.394,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9999313354492188,
+          "alignment_score": 0.282
+        },
+        {
+          "word": "chilenos,",
+          "start": 59.414,
+          "end": 59.8,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9996046225229899,
+          "alignment_score": 0.517
+        }
+      ],
+      "speaker": "SPEAKER_00"
+    },
+    {
+      "start": 60.9,
+      "end": 63.28,
+      "text": " cuantos medios estén a nuestro alcance.",
+      "words": [
+        {
+          "word": "cuantos",
+          "start": 60.9,
+          "end": 61.612,
+          "speaker": "SPEAKER_00",
+          "probability": 0.8836849133173624,
+          "alignment_score": 0.816
+        },
+        {
+          "word": "medios",
+          "start": 61.714,
+          "end": 62.019,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9987092018127441,
+          "alignment_score": 0.568
+        },
+        {
+          "word": "estén",
+          "start": 62.06,
+          "end": 62.446,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9924812912940979,
+          "alignment_score": 0.598
+        },
+        {
+          "word": "a",
+          "start": 62.467,
+          "end": 62.487,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9988527297973633,
+          "alignment_score": 0.676
+        },
+        {
+          "word": "nuestro",
+          "start": 62.568,
+          "end": 62.833,
+          "speaker": "SPEAKER_00",
+          "probability": 0.999861478805542,
+          "alignment_score": 0.761
+        },
+        {
+          "word": "alcance.",
+          "start": 62.873,
+          "end": 63.28,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9999580383300781,
+          "alignment_score": 0.534
+        }
+      ],
+      "speaker": "SPEAKER_00"
+    },
+    {
+      "start": 63.44,
+      "end": 68.42,
+      "text": " Todos los medios para defender libertades que en Chile tenían plena vigencia.",
+      "words": [
+        {
+          "word": "Todos",
+          "start": 63.44,
+          "end": 63.964,
+          "speaker": "SPEAKER_01",
+          "probability": 0.9981153011322021,
+          "alignment_score": 0.924
+        },
+        {
+          "word": "los",
+          "start": 64.025,
+          "end": 64.126,
+          "speaker": "SPEAKER_01",
+          "probability": 0.9999698400497437,
+          "alignment_score": 0.893
+        },
+        {
+          "word": "medios",
+          "start": 64.186,
+          "end": 64.509,
+          "speaker": "SPEAKER_01",
+          "probability": 0.999985933303833,
+          "alignment_score": 0.991
+        },
+        {
+          "word": "para",
+          "start": 64.549,
+          "end": 65.174,
+          "speaker": "SPEAKER_01",
+          "probability": 0.6204380393028259,
+          "alignment_score": 0.466
+        },
+        {
+          "word": "defender",
+          "start": 65.295,
+          "end": 65.698,
+          "speaker": "SPEAKER_01",
+          "probability": 0.9998914003372192,
+          "alignment_score": 0.92
+        },
+        {
+          "word": "libertades",
+          "start": 65.739,
+          "end": 66.364,
+          "speaker": "SPEAKER_01",
+          "probability": 0.9999703168869019,
+          "alignment_score": 0.719
+        },
+        {
+          "word": "que",
+          "start": 66.444,
+          "end": 66.585,
+          "speaker": "SPEAKER_01",
+          "probability": 0.9999293088912964,
+          "alignment_score": 0.664
+        },
+        {
+          "word": "en",
+          "start": 66.626,
+          "end": 66.706,
+          "speaker": "SPEAKER_01",
+          "probability": 0.9999197721481323,
+          "alignment_score": 0.625
+        },
+        {
+          "word": "Chile",
+          "start": 66.807,
+          "end": 67.029,
+          "speaker": "SPEAKER_01",
+          "probability": 0.9998050332069397,
+          "alignment_score": 0.655
+        },
+        {
+          "word": "tenían",
+          "start": 67.13,
+          "end": 67.432,
+          "speaker": "SPEAKER_01",
+          "probability": 0.9996552467346191,
+          "alignment_score": 0.905
+        },
+        {
+          "word": "plena",
+          "start": 67.694,
+          "end": 67.916,
+          "speaker": "SPEAKER_01",
+          "probability": 0.9999144673347473,
+          "alignment_score": 0.96
+        },
+        {
+          "word": "vigencia.",
+          "start": 67.977,
+          "end": 68.42,
+          "speaker": "SPEAKER_01",
+          "probability": 0.999900241692861,
+          "alignment_score": 0.853
+        }
+      ],
+      "speaker": "SPEAKER_01"
+    },
+    {
+      "start": 68.86,
+      "end": 75.64,
+      "text": " Todos los medios a su alcance para terminar con la acción de un gobierno que ponía en peligro sus privilegios.",
+      "words": [
+        {
+          "word": "Todos",
+          "start": 68.86,
+          "end": 69.625,
+          "speaker": "SPEAKER_01",
+          "probability": 0.9999445676803589,
+          "alignment_score": 0.954
+        },
+        {
+          "word": "los",
+          "start": 69.685,
+          "end": 69.785,
+          "speaker": "SPEAKER_01",
+          "probability": 0.9999961853027344,
+          "alignment_score": 0.839
+        },
+        {
+          "word": "medios",
+          "start": 69.886,
+          "end": 70.128,
+          "speaker": "SPEAKER_01",
+          "probability": 0.9999960660934448,
+          "alignment_score": 0.908
+        },
+        {
+          "word": "a",
+          "start": 70.148,
+          "end": 70.168,
+          "speaker": "SPEAKER_01",
+          "probability": 0.9999860525131226,
+          "alignment_score": 0.998
+        },
+        {
+          "word": "su",
+          "start": 70.349,
+          "end": 70.49,
+          "speaker": "SPEAKER_01",
+          "probability": 0.999992847442627,
+          "alignment_score": 0.988
+        },
+        {
+          "word": "alcance",
+          "start": 70.55,
+          "end": 71.174,
+          "speaker": "SPEAKER_01",
+          "probability": 0.9999895095825195,
+          "alignment_score": 0.916
+        },
+        {
+          "word": "para",
+          "start": 71.616,
+          "end": 71.717,
+          "speaker": "SPEAKER_01",
+          "probability": 0.9994232654571533,
+          "alignment_score": 0.942
+        },
+        {
+          "word": "terminar",
+          "start": 71.818,
+          "end": 72.18,
+          "speaker": "SPEAKER_01",
+          "probability": 0.9999741315841675,
+          "alignment_score": 0.934
+        },
+        {
+          "word": "con",
+          "start": 72.26,
+          "end": 72.361,
+          "speaker": "SPEAKER_01",
+          "probability": 0.9999910593032837,
+          "alignment_score": 0.994
+        },
+        {
+          "word": "la",
+          "start": 72.421,
+          "end": 72.481,
+          "speaker": "SPEAKER_01",
+          "probability": 0.999984622001648,
+          "alignment_score": 0.992
+        },
+        {
+          "word": "acción",
+          "start": 72.562,
+          "end": 72.783,
+          "speaker": "SPEAKER_01",
+          "probability": 0.999976634979248,
+          "alignment_score": 0.909
+        },
+        {
+          "word": "de",
+          "start": 72.844,
+          "end": 72.904,
+          "speaker": "SPEAKER_01",
+          "probability": 0.9998323917388916,
+          "alignment_score": 0.881
+        },
+        {
+          "word": "un",
+          "start": 72.964,
+          "end": 73.025,
+          "speaker": "SPEAKER_01",
+          "probability": 0.9999812841415405,
+          "alignment_score": 0.696
+        },
+        {
+          "word": "gobierno",
+          "start": 73.085,
+          "end": 73.447,
+          "speaker": "SPEAKER_01",
+          "probability": 0.9986875653266907,
+          "alignment_score": 0.63
+        },
+        {
+          "word": "que",
+          "start": 73.487,
+          "end": 73.548,
+          "speaker": "SPEAKER_01",
+          "probability": 0.9989066123962402,
+          "alignment_score": 0.333
+        },
+        {
+          "word": "ponía",
+          "start": 73.709,
+          "end": 73.97,
+          "speaker": "SPEAKER_01",
+          "probability": 0.9999696016311646,
+          "alignment_score": 0.802
+        },
+        {
+          "word": "en",
+          "start": 74.051,
+          "end": 74.111,
+          "speaker": "SPEAKER_01",
+          "probability": 0.9999716281890869,
+          "alignment_score": 0.863
+        },
+        {
+          "word": "peligro",
+          "start": 74.192,
+          "end": 74.554,
+          "speaker": "SPEAKER_01",
+          "probability": 0.9999936819076538,
+          "alignment_score": 0.92
+        },
+        {
+          "word": "sus",
+          "start": 74.594,
+          "end": 75.077,
+          "speaker": "SPEAKER_01",
+          "probability": 0.9998914003372192,
+          "alignment_score": 0.897
+        },
+        {
+          "word": "privilegios.",
+          "start": 75.137,
+          "end": 75.64,
+          "speaker": "SPEAKER_01",
+          "probability": 0.9999297062555949,
+          "alignment_score": 0.804
+        }
+      ],
+      "speaker": "SPEAKER_01"
+    }
+  ],
+  "word_segments": [
+    {
+      "word": "La",
+      "start": 0.0,
+      "end": 0.423,
+      "speaker": "SPEAKER_01",
+      "probability": 0.9979445338249207,
+      "alignment_score": 0.874
+    },
+    {
+      "word": "amenaza",
+      "start": 0.464,
+      "end": 0.826,
+      "speaker": "SPEAKER_01",
+      "probability": 0.999809980392456,
+      "alignment_score": 0.806
+    },
+    {
+      "word": "que",
+      "start": 0.846,
+      "end": 0.907,
+      "speaker": "SPEAKER_01",
+      "probability": 0.9999417066574097,
+      "alignment_score": 0.331
+    },
+    {
+      "word": "se",
+      "start": 1.068,
+      "end": 1.149,
+      "speaker": "SPEAKER_01",
+      "probability": 0.9986221790313721,
+      "alignment_score": 0.919
+    },
+    {
+      "word": "cernía",
+      "start": 1.209,
+      "end": 1.632,
+      "speaker": "SPEAKER_01",
+      "probability": 0.999581774075826,
+      "alignment_score": 0.913
+    },
+    {
+      "word": "sobre",
+      "start": 1.673,
+      "end": 1.935,
+      "speaker": "SPEAKER_01",
+      "probability": 0.9999815225601196,
+      "alignment_score": 0.91
+    },
+    {
+      "word": "Chile",
+      "start": 2.035,
+      "end": 2.277,
+      "speaker": "SPEAKER_01",
+      "probability": 0.9999711513519287,
+      "alignment_score": 0.881
+    },
+    {
+      "word": "era",
+      "start": 2.902,
+      "end": 3.023,
+      "speaker": "SPEAKER_01",
+      "probability": 0.9123732447624207,
+      "alignment_score": 0.803
+    },
+    {
+      "word": "ya",
+      "start": 3.083,
+      "end": 3.224,
+      "speaker": "SPEAKER_01",
+      "probability": 0.9994913339614868,
+      "alignment_score": 0.984
+    },
+    {
+      "word": "entonces",
+      "start": 3.285,
+      "end": 3.809,
+      "speaker": "SPEAKER_01",
+      "probability": 0.9995241165161133,
+      "alignment_score": 0.933
+    },
+    {
+      "word": "más",
+      "start": 4.534,
+      "end": 4.675,
+      "speaker": "SPEAKER_01",
+      "probability": 0.9968969821929932,
+      "alignment_score": 0.942
+    },
+    {
+      "word": "que",
+      "start": 4.736,
+      "end": 4.837,
+      "speaker": "SPEAKER_01",
+      "probability": 0.9999920129776001,
+      "alignment_score": 0.633
+    },
+    {
+      "word": "un",
+      "start": 4.917,
+      "end": 4.978,
+      "speaker": "SPEAKER_01",
+      "probability": 0.9999916553497314,
+      "alignment_score": 0.94
+    },
+    {
+      "word": "peligro.",
+      "start": 5.018,
+      "end": 5.3,
+      "speaker": "SPEAKER_01",
+      "probability": 0.9999960660934448,
+      "alignment_score": 0.533
+    },
+    {
+      "word": "La",
+      "start": 5.76,
+      "end": 6.557,
+      "speaker": "SPEAKER_01",
+      "probability": 0.9999876022338867,
+      "alignment_score": 0.948
+    },
+    {
+      "word": "decisión",
+      "start": 6.598,
+      "end": 6.945,
+      "speaker": "SPEAKER_01",
+      "probability": 0.9999848008155823,
+      "alignment_score": 0.886
+    },
+    {
+      "word": "estaba",
+      "start": 6.986,
+      "end": 7.354,
+      "speaker": "SPEAKER_01",
+      "probability": 0.9999300241470337,
+      "alignment_score": 0.699
+    },
+    {
+      "word": "tomada.",
+      "start": 7.456,
+      "end": 7.68,
+      "speaker": "SPEAKER_01",
+      "probability": 0.9999867081642151,
+      "alignment_score": 0.509
+    },
+    {
+      "word": "La",
+      "start": 7.98,
+      "end": 8.767,
+      "speaker": "SPEAKER_01",
+      "probability": 0.9999829530715942,
+      "alignment_score": 0.596
+    },
+    {
+      "word": "comunicó",
+      "start": 8.808,
+      "end": 9.252,
+      "speaker": "SPEAKER_01",
+      "probability": 0.9999638795852661,
+      "alignment_score": 0.901
+    },
+    {
+      "word": "al",
+      "start": 9.292,
+      "end": 9.373,
+      "speaker": "SPEAKER_01",
+      "probability": 0.9999817609786987,
+      "alignment_score": 0.968
+    },
+    {
+      "word": "país",
+      "start": 9.454,
+      "end": 9.635,
+      "speaker": "SPEAKER_01",
+      "probability": 0.9997466206550598,
+      "alignment_score": 0.775
+    },
+    {
+      "word": "el",
+      "start": 9.656,
+      "end": 9.696,
+      "speaker": "SPEAKER_01",
+      "probability": 0.9989537000656128,
+      "alignment_score": 0.492
+    },
+    {
+      "word": "senador",
+      "start": 10.281,
+      "end": 10.645,
+      "speaker": "SPEAKER_01",
+      "probability": 0.9997316300868988,
+      "alignment_score": 0.995
+    },
+    {
+      "word": "derechista",
+      "start": 10.705,
+      "end": 11.25,
+      "speaker": "SPEAKER_01",
+      "probability": 0.9991223812103271,
+      "alignment_score": 0.912
+    },
+    {
+      "word": "Francisco",
+      "start": 11.291,
+      "end": 12.139,
+      "speaker": "SPEAKER_01",
+      "probability": 0.9999760389328003,
+      "alignment_score": 0.869
+    },
+    {
+      "word": "Bulnes.",
+      "start": 12.159,
+      "end": 12.3,
+      "speaker": "SPEAKER_01",
+      "probability": 0.9261881113052368,
+      "alignment_score": 0.186
+    },
+    {
+      "word": "El",
+      "start": 12.52,
+      "end": 13.225,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9983717799186707,
+      "alignment_score": 0.67
+    },
+    {
+      "word": "gobierno",
+      "start": 13.306,
+      "end": 13.628,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9991469383239746,
+      "alignment_score": 0.92
+    },
+    {
+      "word": "atenta",
+      "start": 13.649,
+      "end": 14.132,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9997424483299255,
+      "alignment_score": 0.829
+    },
+    {
+      "word": "contra",
+      "start": 14.273,
+      "end": 14.555,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9986982345581055,
+      "alignment_score": 0.861
+    },
+    {
+      "word": "las",
+      "start": 14.676,
+      "end": 14.737,
+      "speaker": "SPEAKER_00",
+      "probability": 0.999879002571106,
+      "alignment_score": 0.603
+    },
+    {
+      "word": "garantías",
+      "start": 14.837,
+      "end": 15.301,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9999765753746033,
+      "alignment_score": 0.745
+    },
+    {
+      "word": "individuales",
+      "start": 15.341,
+      "end": 16.087,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9999504685401917,
+      "alignment_score": 0.622
+    },
+    {
+      "word": "consagradas",
+      "start": 16.168,
+      "end": 16.772,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9997440576553345,
+      "alignment_score": 0.8
+    },
+    {
+      "word": "en",
+      "start": 16.873,
+      "end": 16.913,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9999737739562988,
+      "alignment_score": 0.638
+    },
+    {
+      "word": "la",
+      "start": 16.953,
+      "end": 17.014,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9999817609786987,
+      "alignment_score": 0.884
+    },
+    {
+      "word": "Carta",
+      "start": 17.095,
+      "end": 17.336,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9926504790782928,
+      "alignment_score": 0.928
+    },
+    {
+      "word": "Fundamental,",
+      "start": 17.417,
+      "end": 17.84,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9999585747718811,
+      "alignment_score": 0.389
+    },
+    {
+      "word": "entre",
+      "start": 18.58,
+      "end": 18.943,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9999865293502808,
+      "alignment_score": 0.709
+    },
+    {
+      "word": "ellas",
+      "start": 19.004,
+      "end": 19.185,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9977586269378662,
+      "alignment_score": 0.48
+    },
+    {
+      "word": "la",
+      "start": 19.266,
+      "end": 19.326,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9998793601989746,
+      "alignment_score": 0.207
+    },
+    {
+      "word": "libertad",
+      "start": 19.407,
+      "end": 19.75,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9999746680259705,
+      "alignment_score": 0.808
+    },
+    {
+      "word": "de",
+      "start": 19.79,
+      "end": 19.851,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9999969005584717,
+      "alignment_score": 0.585
+    },
+    {
+      "word": "educación,",
+      "start": 19.871,
+      "end": 20.516,
+      "speaker": "SPEAKER_00",
+      "probability": 0.99946528673172,
+      "alignment_score": 0.822
+    },
+    {
+      "word": "la",
+      "start": 20.556,
+      "end": 20.597,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9999886751174927,
+      "alignment_score": 0.486
+    },
+    {
+      "word": "libertad",
+      "start": 21.02,
+      "end": 21.484,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9999969601631165,
+      "alignment_score": 0.717
+    },
+    {
+      "word": "de",
+      "start": 21.524,
+      "end": 21.585,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9999927282333374,
+      "alignment_score": 0.575
+    },
+    {
+      "word": "opinión,",
+      "start": 21.686,
+      "end": 22.089,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9999883770942688,
+      "alignment_score": 0.926
+    },
+    {
+      "word": "la",
+      "start": 22.129,
+      "end": 22.613,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9999750852584839,
+      "alignment_score": 0.912
+    },
+    {
+      "word": "libertad",
+      "start": 22.674,
+      "end": 23.057,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9999957084655762,
+      "alignment_score": 0.791
+    },
+    {
+      "word": "de",
+      "start": 23.198,
+      "end": 23.239,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9999130964279175,
+      "alignment_score": 0.0
+    },
+    {
+      "word": "trabajo,",
+      "start": 23.259,
+      "end": 23.42,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9999879598617554,
+      "alignment_score": 0.127
+    },
+    {
+      "word": "el",
+      "start": 23.64,
+      "end": 24.247,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9997206330299377,
+      "alignment_score": 0.426
+    },
+    {
+      "word": "derecho",
+      "start": 24.308,
+      "end": 24.571,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9999878406524658,
+      "alignment_score": 0.905
+    },
+    {
+      "word": "a",
+      "start": 24.611,
+      "end": 24.631,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9921903014183044,
+      "alignment_score": 0.264
+    },
+    {
+      "word": "propiedad,",
+      "start": 24.773,
+      "end": 25.258,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9959410627683004,
+      "alignment_score": 0.979
+    },
+    {
+      "word": "la",
+      "start": 25.279,
+      "end": 25.319,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9992696642875671,
+      "alignment_score": 0.496
+    },
+    {
+      "word": "libertad",
+      "start": 25.785,
+      "end": 26.351,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9999565482139587,
+      "alignment_score": 0.756
+    },
+    {
+      "word": "de",
+      "start": 26.391,
+      "end": 26.493,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9972097277641296,
+      "alignment_score": 0.468
+    },
+    {
+      "word": "salir",
+      "start": 26.594,
+      "end": 26.877,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9998373985290527,
+      "alignment_score": 0.711
+    },
+    {
+      "word": "del",
+      "start": 26.897,
+      "end": 27.059,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9999651908874512,
+      "alignment_score": 0.708
+    },
+    {
+      "word": "país",
+      "start": 27.079,
+      "end": 27.16,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9999974966049194,
+      "alignment_score": 0.249
+    },
+    {
+      "word": "y",
+      "start": 27.14,
+      "end": 27.808,
+      "speaker": "SPEAKER_00",
+      "probability": 0.5483607053756714,
+      "alignment_score": 0.658
+    },
+    {
+      "word": "hasta",
+      "start": 27.889,
+      "end": 28.071,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9866856336593628,
+      "alignment_score": 0.777
+    },
+    {
+      "word": "la",
+      "start": 28.152,
+      "end": 28.212,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9939513206481934,
+      "alignment_score": 0.716
+    },
+    {
+      "word": "libertad",
+      "start": 28.273,
+      "end": 28.678,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9996702671051025,
+      "alignment_score": 0.818
+    },
+    {
+      "word": "de",
+      "start": 28.698,
+      "end": 28.739,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9737791419029236,
+      "alignment_score": 0.49
+    },
+    {
+      "word": "las",
+      "start": 28.82,
+      "end": 28.961,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9996582269668579,
+      "alignment_score": 0.498
+    },
+    {
+      "word": "personas",
+      "start": 29.062,
+      "end": 29.508,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9999182224273682,
+      "alignment_score": 0.935
+    },
+    {
+      "word": "y",
+      "start": 29.528,
+      "end": 29.548,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9983519315719604,
+      "alignment_score": 0.98
+    },
+    {
+      "word": "su",
+      "start": 29.588,
+      "end": 29.791,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9992942810058594,
+      "alignment_score": 0.684
+    },
+    {
+      "word": "integridad",
+      "start": 29.852,
+      "end": 30.438,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9997368454933167,
+      "alignment_score": 0.904
+    },
+    {
+      "word": "física,",
+      "start": 30.459,
+      "end": 30.6,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9995550513267517,
+      "alignment_score": 0.146
+    },
+    {
+      "word": "atropelladas",
+      "start": 30.82,
+      "end": 32.132,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9975726157426834,
+      "alignment_score": 0.751
+    },
+    {
+      "word": "por",
+      "start": 32.213,
+      "end": 32.334,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9998189806938171,
+      "alignment_score": 0.88
+    },
+    {
+      "word": "detenciones",
+      "start": 32.394,
+      "end": 32.959,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9991875092188517,
+      "alignment_score": 0.806
+    },
+    {
+      "word": "ilegales",
+      "start": 33.0,
+      "end": 33.605,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9997871120770773,
+      "alignment_score": 0.722
+    },
+    {
+      "word": "y",
+      "start": 33.625,
+      "end": 33.646,
+      "speaker": "SPEAKER_00",
+      "probability": 0.999153733253479,
+      "alignment_score": 0.908
+    },
+    {
+      "word": "flagelaciones",
+      "start": 34.15,
+      "end": 34.756,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9956909020741781,
+      "alignment_score": 0.8
+    },
+    {
+      "word": "inhumanas.",
+      "start": 34.857,
+      "end": 35.26,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9994409283002218,
+      "alignment_score": 0.633
+    },
+    {
+      "word": "En",
+      "start": 35.72,
+      "end": 36.787,
+      "speaker": "SPEAKER_00",
+      "probability": 0.999519944190979,
+      "alignment_score": 0.56
+    },
+    {
+      "word": "estas",
+      "start": 36.847,
+      "end": 37.028,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9998301267623901,
+      "alignment_score": 0.658
+    },
+    {
+      "word": "circunstancias",
+      "start": 37.109,
+      "end": 37.954,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9999848902225494,
+      "alignment_score": 0.862
+    },
+    {
+      "word": "hay",
+      "start": 38.779,
+      "end": 38.92,
+      "speaker": "SPEAKER_00",
+      "probability": 0.7200573086738586,
+      "alignment_score": 0.617
+    },
+    {
+      "word": "que",
+      "start": 38.981,
+      "end": 39.061,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9999692440032959,
+      "alignment_score": 0.913
+    },
+    {
+      "word": "preguntarse",
+      "start": 39.142,
+      "end": 39.826,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9993951618671417,
+      "alignment_score": 0.855
+    },
+    {
+      "word": "si",
+      "start": 39.886,
+      "end": 39.987,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9812490940093994,
+      "alignment_score": 0.161
+    },
+    {
+      "word": "el",
+      "start": 40.007,
+      "end": 40.068,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9989218711853027,
+      "alignment_score": 0.356
+    },
+    {
+      "word": "actual",
+      "start": 40.088,
+      "end": 40.47,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9837474226951599,
+      "alignment_score": 0.406
+    },
+    {
+      "word": "gobierno",
+      "start": 40.53,
+      "end": 40.873,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9537880420684814,
+      "alignment_score": 0.719
+    },
+    {
+      "word": "sigue",
+      "start": 40.993,
+      "end": 41.175,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9996722936630249,
+      "alignment_score": 0.668
+    },
+    {
+      "word": "siendo",
+      "start": 41.336,
+      "end": 41.597,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9999570846557617,
+      "alignment_score": 0.8
+    },
+    {
+      "word": "legítimo.",
+      "start": 41.698,
+      "end": 42.06,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9988384246826172,
+      "alignment_score": 0.277
+    },
+    {
+      "word": "Con",
+      "start": 43.08,
+      "end": 43.383,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9988139867782593,
+      "alignment_score": 0.876
+    },
+    {
+      "word": "verdadero",
+      "start": 43.463,
+      "end": 43.968,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9997751414775848,
+      "alignment_score": 0.887
+    },
+    {
+      "word": "dolor",
+      "start": 43.988,
+      "end": 44.412,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9995315074920654,
+      "alignment_score": 0.822
+    },
+    {
+      "word": "de",
+      "start": 44.452,
+      "end": 44.533,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9999469518661499,
+      "alignment_score": 0.876
+    },
+    {
+      "word": "patriotas",
+      "start": 44.614,
+      "end": 45.138,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9989701211452484,
+      "alignment_score": 0.861
+    },
+    {
+      "word": "tenemos",
+      "start": 46.026,
+      "end": 46.41,
+      "speaker": "SPEAKER_00",
+      "probability": 0.6279150247573853,
+      "alignment_score": 0.692
+    },
+    {
+      "word": "que",
+      "start": 46.531,
+      "end": 46.672,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9999638795852661,
+      "alignment_score": 0.398
+    },
+    {
+      "word": "contestar",
+      "start": 46.692,
+      "end": 47.439,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9999132752418518,
+      "alignment_score": 0.909
+    },
+    {
+      "word": "que",
+      "start": 47.459,
+      "end": 47.519,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9998728036880493,
+      "alignment_score": 0.001
+    },
+    {
+      "word": "no.",
+      "start": 47.54,
+      "end": 47.6,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9993351101875305,
+      "alignment_score": 0.323
+    },
+    {
+      "word": "Estamos",
+      "start": 48.36,
+      "end": 48.927,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9980288147926331,
+      "alignment_score": 0.54
+    },
+    {
+      "word": "obligados",
+      "start": 49.028,
+      "end": 49.474,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9692675769329071,
+      "alignment_score": 0.923
+    },
+    {
+      "word": "a",
+      "start": 49.494,
+      "end": 49.514,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9999780654907227,
+      "alignment_score": 0.99
+    },
+    {
+      "word": "emplear",
+      "start": 49.534,
+      "end": 50.101,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9788927435874939,
+      "alignment_score": 0.482
+    },
+    {
+      "word": "contra",
+      "start": 50.283,
+      "end": 50.547,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9997883439064026,
+      "alignment_score": 0.867
+    },
+    {
+      "word": "un",
+      "start": 50.648,
+      "end": 50.688,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9999232292175293,
+      "alignment_score": 0.674
+    },
+    {
+      "word": "gobierno",
+      "start": 50.749,
+      "end": 51.093,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9995136260986328,
+      "alignment_score": 0.798
+    },
+    {
+      "word": "ilegítimo",
+      "start": 51.195,
+      "end": 51.66,
+      "speaker": "SPEAKER_00",
+      "probability": 0.99062579870224,
+      "alignment_score": 0.515
+    },
+    {
+      "word": "que",
+      "start": 51.64,
+      "end": 52.348,
+      "speaker": "SPEAKER_00",
+      "probability": 0.8360572457313538,
+      "alignment_score": 0.505
+    },
+    {
+      "word": "marcha",
+      "start": 52.45,
+      "end": 52.794,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9996853768825531,
+      "alignment_score": 0.88
+    },
+    {
+      "word": "derechamente",
+      "start": 53.036,
+      "end": 53.603,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9900771776835123,
+      "alignment_score": 0.661
+    },
+    {
+      "word": "a",
+      "start": 53.644,
+      "end": 53.664,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9986569881439209,
+      "alignment_score": 0.628
+    },
+    {
+      "word": "la",
+      "start": 53.704,
+      "end": 53.765,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9999723434448242,
+      "alignment_score": 0.818
+    },
+    {
+      "word": "abolición",
+      "start": 53.846,
+      "end": 54.291,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9951659043629965,
+      "alignment_score": 0.67
+    },
+    {
+      "word": "de",
+      "start": 54.311,
+      "end": 54.413,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9999579191207886,
+      "alignment_score": 0.51
+    },
+    {
+      "word": "la",
+      "start": 54.433,
+      "end": 54.514,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9999758005142212,
+      "alignment_score": 0.853
+    },
+    {
+      "word": "democracia",
+      "start": 54.595,
+      "end": 55.06,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9999330639839172,
+      "alignment_score": 0.534
+    },
+    {
+      "word": "y",
+      "start": 55.04,
+      "end": 55.998,
+      "speaker": "SPEAKER_00",
+      "probability": 0.871379554271698,
+      "alignment_score": 0.69
+    },
+    {
+      "word": "que",
+      "start": 56.039,
+      "end": 56.1,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9999111890792847,
+      "alignment_score": 0.213
+    },
+    {
+      "word": "además",
+      "start": 56.141,
+      "end": 56.447,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9981111288070679,
+      "alignment_score": 0.899
+    },
+    {
+      "word": "está",
+      "start": 56.529,
+      "end": 56.835,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9751401543617249,
+      "alignment_score": 0.343
+    },
+    {
+      "word": "destruyendo...",
+      "start": 56.855,
+      "end": 57.14,
+      "speaker": "SPEAKER_00",
+      "probability": 0.763961385935545,
+      "alignment_score": 0.075
+    },
+    {
+      "word": "...está",
+      "start": 57.14,
+      "end": 57.282,
+      "speaker": "SPEAKER_00",
+      "probability": 0.11925934658696254,
+      "alignment_score": 0.066
+    },
+    {
+      "word": "destruyendo",
+      "start": 57.302,
+      "end": 57.526,
+      "speaker": "SPEAKER_00",
+      "probability": 0.6693584953124324,
+      "alignment_score": 0.071
+    },
+    {
+      "word": "el",
+      "start": 57.546,
+      "end": 57.587,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9975590705871582,
+      "alignment_score": 0.918
+    },
+    {
+      "word": "patrimonio",
+      "start": 57.627,
+      "end": 58.094,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9998370409011841,
+      "alignment_score": 0.839
+    },
+    {
+      "word": "económico",
+      "start": 58.155,
+      "end": 58.744,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9997362792491913,
+      "alignment_score": 0.455
+    },
+    {
+      "word": "de",
+      "start": 58.765,
+      "end": 58.947,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9942101240158081,
+      "alignment_score": 0.498
+    },
+    {
+      "word": "todos",
+      "start": 58.968,
+      "end": 59.211,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9994300007820129,
+      "alignment_score": 0.481
+    },
+    {
+      "word": "los",
+      "start": 59.232,
+      "end": 59.394,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9999313354492188,
+      "alignment_score": 0.282
+    },
+    {
+      "word": "chilenos,",
+      "start": 59.414,
+      "end": 59.8,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9996046225229899,
+      "alignment_score": 0.517
+    },
+    {
+      "word": "cuantos",
+      "start": 60.9,
+      "end": 61.612,
+      "speaker": "SPEAKER_00",
+      "probability": 0.8836849133173624,
+      "alignment_score": 0.816
+    },
+    {
+      "word": "medios",
+      "start": 61.714,
+      "end": 62.019,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9987092018127441,
+      "alignment_score": 0.568
+    },
+    {
+      "word": "estén",
+      "start": 62.06,
+      "end": 62.446,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9924812912940979,
+      "alignment_score": 0.598
+    },
+    {
+      "word": "a",
+      "start": 62.467,
+      "end": 62.487,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9988527297973633,
+      "alignment_score": 0.676
+    },
+    {
+      "word": "nuestro",
+      "start": 62.568,
+      "end": 62.833,
+      "speaker": "SPEAKER_00",
+      "probability": 0.999861478805542,
+      "alignment_score": 0.761
+    },
+    {
+      "word": "alcance.",
+      "start": 62.873,
+      "end": 63.28,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9999580383300781,
+      "alignment_score": 0.534
+    },
+    {
+      "word": "Todos",
+      "start": 63.44,
+      "end": 63.964,
+      "speaker": "SPEAKER_01",
+      "probability": 0.9981153011322021,
+      "alignment_score": 0.924
+    },
+    {
+      "word": "los",
+      "start": 64.025,
+      "end": 64.126,
+      "speaker": "SPEAKER_01",
+      "probability": 0.9999698400497437,
+      "alignment_score": 0.893
+    },
+    {
+      "word": "medios",
+      "start": 64.186,
+      "end": 64.509,
+      "speaker": "SPEAKER_01",
+      "probability": 0.999985933303833,
+      "alignment_score": 0.991
+    },
+    {
+      "word": "para",
+      "start": 64.549,
+      "end": 65.174,
+      "speaker": "SPEAKER_01",
+      "probability": 0.6204380393028259,
+      "alignment_score": 0.466
+    },
+    {
+      "word": "defender",
+      "start": 65.295,
+      "end": 65.698,
+      "speaker": "SPEAKER_01",
+      "probability": 0.9998914003372192,
+      "alignment_score": 0.92
+    },
+    {
+      "word": "libertades",
+      "start": 65.739,
+      "end": 66.364,
+      "speaker": "SPEAKER_01",
+      "probability": 0.9999703168869019,
+      "alignment_score": 0.719
+    },
+    {
+      "word": "que",
+      "start": 66.444,
+      "end": 66.585,
+      "speaker": "SPEAKER_01",
+      "probability": 0.9999293088912964,
+      "alignment_score": 0.664
+    },
+    {
+      "word": "en",
+      "start": 66.626,
+      "end": 66.706,
+      "speaker": "SPEAKER_01",
+      "probability": 0.9999197721481323,
+      "alignment_score": 0.625
+    },
+    {
+      "word": "Chile",
+      "start": 66.807,
+      "end": 67.029,
+      "speaker": "SPEAKER_01",
+      "probability": 0.9998050332069397,
+      "alignment_score": 0.655
+    },
+    {
+      "word": "tenían",
+      "start": 67.13,
+      "end": 67.432,
+      "speaker": "SPEAKER_01",
+      "probability": 0.9996552467346191,
+      "alignment_score": 0.905
+    },
+    {
+      "word": "plena",
+      "start": 67.694,
+      "end": 67.916,
+      "speaker": "SPEAKER_01",
+      "probability": 0.9999144673347473,
+      "alignment_score": 0.96
+    },
+    {
+      "word": "vigencia.",
+      "start": 67.977,
+      "end": 68.42,
+      "speaker": "SPEAKER_01",
+      "probability": 0.999900241692861,
+      "alignment_score": 0.853
+    },
+    {
+      "word": "Todos",
+      "start": 68.86,
+      "end": 69.625,
+      "speaker": "SPEAKER_01",
+      "probability": 0.9999445676803589,
+      "alignment_score": 0.954
+    },
+    {
+      "word": "los",
+      "start": 69.685,
+      "end": 69.785,
+      "speaker": "SPEAKER_01",
+      "probability": 0.9999961853027344,
+      "alignment_score": 0.839
+    },
+    {
+      "word": "medios",
+      "start": 69.886,
+      "end": 70.128,
+      "speaker": "SPEAKER_01",
+      "probability": 0.9999960660934448,
+      "alignment_score": 0.908
+    },
+    {
+      "word": "a",
+      "start": 70.148,
+      "end": 70.168,
+      "speaker": "SPEAKER_01",
+      "probability": 0.9999860525131226,
+      "alignment_score": 0.998
+    },
+    {
+      "word": "su",
+      "start": 70.349,
+      "end": 70.49,
+      "speaker": "SPEAKER_01",
+      "probability": 0.999992847442627,
+      "alignment_score": 0.988
+    },
+    {
+      "word": "alcance",
+      "start": 70.55,
+      "end": 71.174,
+      "speaker": "SPEAKER_01",
+      "probability": 0.9999895095825195,
+      "alignment_score": 0.916
+    },
+    {
+      "word": "para",
+      "start": 71.616,
+      "end": 71.717,
+      "speaker": "SPEAKER_01",
+      "probability": 0.9994232654571533,
+      "alignment_score": 0.942
+    },
+    {
+      "word": "terminar",
+      "start": 71.818,
+      "end": 72.18,
+      "speaker": "SPEAKER_01",
+      "probability": 0.9999741315841675,
+      "alignment_score": 0.934
+    },
+    {
+      "word": "con",
+      "start": 72.26,
+      "end": 72.361,
+      "speaker": "SPEAKER_01",
+      "probability": 0.9999910593032837,
+      "alignment_score": 0.994
+    },
+    {
+      "word": "la",
+      "start": 72.421,
+      "end": 72.481,
+      "speaker": "SPEAKER_01",
+      "probability": 0.999984622001648,
+      "alignment_score": 0.992
+    },
+    {
+      "word": "acción",
+      "start": 72.562,
+      "end": 72.783,
+      "speaker": "SPEAKER_01",
+      "probability": 0.999976634979248,
+      "alignment_score": 0.909
+    },
+    {
+      "word": "de",
+      "start": 72.844,
+      "end": 72.904,
+      "speaker": "SPEAKER_01",
+      "probability": 0.9998323917388916,
+      "alignment_score": 0.881
+    },
+    {
+      "word": "un",
+      "start": 72.964,
+      "end": 73.025,
+      "speaker": "SPEAKER_01",
+      "probability": 0.9999812841415405,
+      "alignment_score": 0.696
+    },
+    {
+      "word": "gobierno",
+      "start": 73.085,
+      "end": 73.447,
+      "speaker": "SPEAKER_01",
+      "probability": 0.9986875653266907,
+      "alignment_score": 0.63
+    },
+    {
+      "word": "que",
+      "start": 73.487,
+      "end": 73.548,
+      "speaker": "SPEAKER_01",
+      "probability": 0.9989066123962402,
+      "alignment_score": 0.333
+    },
+    {
+      "word": "ponía",
+      "start": 73.709,
+      "end": 73.97,
+      "speaker": "SPEAKER_01",
+      "probability": 0.9999696016311646,
+      "alignment_score": 0.802
+    },
+    {
+      "word": "en",
+      "start": 74.051,
+      "end": 74.111,
+      "speaker": "SPEAKER_01",
+      "probability": 0.9999716281890869,
+      "alignment_score": 0.863
+    },
+    {
+      "word": "peligro",
+      "start": 74.192,
+      "end": 74.554,
+      "speaker": "SPEAKER_01",
+      "probability": 0.9999936819076538,
+      "alignment_score": 0.92
+    },
+    {
+      "word": "sus",
+      "start": 74.594,
+      "end": 75.077,
+      "speaker": "SPEAKER_01",
+      "probability": 0.9998914003372192,
+      "alignment_score": 0.897
+    },
+    {
+      "word": "privilegios.",
+      "start": 75.137,
+      "end": 75.64,
+      "speaker": "SPEAKER_01",
+      "probability": 0.9999297062555949,
+      "alignment_score": 0.804
+    }
+  ]
+}

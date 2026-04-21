@@ -1,47 +1,39 @@
 FROM python:3.10-slim
 
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
+    PIP_NO_CACHE_DIR=1
+
 WORKDIR /app
 
-# Instala dependencias del sistema
-RUN apt-get update && apt-get install -y \
-    gcc libsqlite3-dev libpq-dev postgresql-client \
-    curl git && \
-    rm -rf /var/lib/apt/lists/* && \
-    apt-get clean
+# Dependencias del sistema requeridas por psycopg2, librosa/soundfile y healthchecks
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    gcc \
+    libsqlite3-dev \
+    libpq-dev \
+    postgresql-client \
+    curl \
+    libsndfile1 \
+    ffmpeg && \
+    rm -rf /var/lib/apt/lists/*
 
-# Crear directorios necesarios
-RUN mkdir -p /app/logs /app/data/backups
+# Directorios necesarios para logs y datos persistentes
+RUN mkdir -p /app/logs /app/src/logs /app/data/backups /app/data/transcription_projects
 
-# Copiar requirements
+# Dependencias Python
 COPY src/requirements/requirements.txt /app/requirements.txt
-
-# Actualizar pip e instalar paquetes
 RUN pip install --upgrade pip setuptools wheel && \
-    pip install --no-cache-dir -r requirements.txt gunicorn && \
-    rm -rf /root/.cache
+    pip install -r /app/requirements.txt
 
-# Copiar código de la aplicación
+# Código de aplicación
 COPY src /app/src
-COPY docker/web_app/gunicorn_config.py /app/gunicorn_config.py
 
-# Cambiar a directorio de app
 WORKDIR /app/src
 
-# Puerto expuesto
 EXPOSE 3000
 
-# Health check
 HEALTHCHECK --interval=30s --timeout=10s --start-period=40s --retries=3 \
     CMD curl -f http://localhost:3000/login || exit 1
 
-# Comando para arrancar Gunicorn
-CMD ["gunicorn", \
-     "--config", "/app/gunicorn_config.py", \
-     "--bind", "0.0.0.0:3000", \
-     "--workers", "4", \
-     "--worker-class", "sync", \
-     "--timeout", "60", \
-     "--access-logfile", "/app/logs/access.log", \
-     "--error-logfile", "/app/logs/error.log", \
-     "--log-level", "info", \
-     "app:app"]
+# Usa la app WSGI (wsgi.py) con configuración de Gunicorn versionada en src/
+CMD ["gunicorn", "--config", "/app/src/gunicorn.conf.py", "wsgi:app"]

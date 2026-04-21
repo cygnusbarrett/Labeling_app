@@ -15,9 +15,9 @@ try:
     import soundfile as sf
     import numpy as np
     LIBROSA_AVAILABLE = True
-except ImportError:
+except Exception as e:
     LIBROSA_AVAILABLE = False
-    print("WARNING: librosa/soundfile no disponibles. Audio processing deshabilitado.")
+    print(f"WARNING: librosa/soundfile no disponibles ({e}). Audio processing deshabilitado.")
 
 
 class AudioService:

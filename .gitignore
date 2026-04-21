@@ -76,3 +76,7 @@ certs/*.key
 *.mp3
 *.flac
 *.ogg
+
+.env.example
+# o, para todos:
+*.env.example

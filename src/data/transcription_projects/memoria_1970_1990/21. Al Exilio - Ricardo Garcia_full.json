@@ -1,0 +1,235 @@
+{
+  "segments": [
+    {
+      "start": 0.0,
+      "end": 4.14,
+      "text": " Miles y miles iniciaron el doloroso camino del exilio.",
+      "words": [
+        {
+          "word": "Miles",
+          "start": 0.0,
+          "end": 0.626,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9814674258232117,
+          "alignment_score": 0.865
+        },
+        {
+          "word": "y",
+          "start": 0.646,
+          "end": 0.666,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9999663829803467,
+          "alignment_score": 0.997
+        },
+        {
+          "word": "miles",
+          "start": 0.828,
+          "end": 1.091,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9997380375862122,
+          "alignment_score": 0.991
+        },
+        {
+          "word": "iniciaron",
+          "start": 1.131,
+          "end": 2.302,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9984302818775177,
+          "alignment_score": 0.63
+        },
+        {
+          "word": "el",
+          "start": 2.323,
+          "end": 2.444,
+          "speaker": "SPEAKER_00",
+          "probability": 0.999953031539917,
+          "alignment_score": 0.508
+        },
+        {
+          "word": "doloroso",
+          "start": 2.545,
+          "end": 3.05,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9999877214431763,
+          "alignment_score": 0.994
+        },
+        {
+          "word": "camino",
+          "start": 3.151,
+          "end": 3.494,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9998636245727539,
+          "alignment_score": 0.972
+        },
+        {
+          "word": "del",
+          "start": 3.575,
+          "end": 3.696,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9999661445617676,
+          "alignment_score": 0.865
+        },
+        {
+          "word": "exilio.",
+          "start": 3.736,
+          "end": 4.14,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9998994469642639,
+          "alignment_score": 0.675
+        }
+      ],
+      "speaker": "SPEAKER_00"
+    },
+    {
+      "start": 30.0,
+      "end": 30.881,
+      "text": " ¡Gracias por ver el video!",
+      "words": [
+        {
+          "word": "¡Gracias",
+          "start": 30.0,
+          "end": 30.378,
+          "probability": 0.6713606361299753,
+          "alignment_score": 0.096
+        },
+        {
+          "word": "por",
+          "start": 30.399,
+          "end": 30.461,
+          "probability": 0.11635299772024155,
+          "alignment_score": 0.304
+        },
+        {
+          "word": "ver",
+          "start": 30.524,
+          "end": 30.629,
+          "probability": 0.986078679561615,
+          "alignment_score": 0.251
+        },
+        {
+          "word": "el",
+          "start": 30.65,
+          "end": 30.734,
+          "probability": 0.8485167622566223,
+          "alignment_score": 0.302
+        },
+        {
+          "word": "video!",
+          "start": 30.755,
+          "end": 30.881,
+          "probability": 0.9662557244300842,
+          "alignment_score": 0.186
+        }
+      ]
+    }
+  ],
+  "word_segments": [
+    {
+      "word": "Miles",
+      "start": 0.0,
+      "end": 0.626,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9814674258232117,
+      "alignment_score": 0.865
+    },
+    {
+      "word": "y",
+      "start": 0.646,
+      "end": 0.666,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9999663829803467,
+      "alignment_score": 0.997
+    },
+    {
+      "word": "miles",
+      "start": 0.828,
+      "end": 1.091,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9997380375862122,
+      "alignment_score": 0.991
+    },
+    {
+      "word": "iniciaron",
+      "start": 1.131,
+      "end": 2.302,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9984302818775177,
+      "alignment_score": 0.63
+    },
+    {
+      "word": "el",
+      "start": 2.323,
+      "end": 2.444,
+      "speaker": "SPEAKER_00",
+      "probability": 0.999953031539917,
+      "alignment_score": 0.508
+    },
+    {
+      "word": "doloroso",
+      "start": 2.545,
+      "end": 3.05,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9999877214431763,
+      "alignment_score": 0.994
+    },
+    {
+      "word": "camino",
+      "start": 3.151,
+      "end": 3.494,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9998636245727539,
+      "alignment_score": 0.972
+    },
+    {
+      "word": "del",
+      "start": 3.575,
+      "end": 3.696,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9999661445617676,
+      "alignment_score": 0.865
+    },
+    {
+      "word": "exilio.",
+      "start": 3.736,
+      "end": 4.14,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9998994469642639,
+      "alignment_score": 0.675
+    },
+    {
+      "word": "¡Gracias",
+      "start": 30.0,
+      "end": 30.378,
+      "probability": 0.6713606361299753,
+      "alignment_score": 0.096
+    },
+    {
+      "word": "por",
+      "start": 30.399,
+      "end": 30.461,
+      "probability": 0.11635299772024155,
+      "alignment_score": 0.304
+    },
+    {
+      "word": "ver",
+      "start": 30.524,
+      "end": 30.629,
+      "probability": 0.986078679561615,
+      "alignment_score": 0.251
+    },
+    {
+      "word": "el",
+      "start": 30.65,
+      "end": 30.734,
+      "probability": 0.8485167622566223,
+      "alignment_score": 0.302
+    },
+    {
+      "word": "video!",
+      "start": 30.755,
+      "end": 30.881,
+      "probability": 0.9662557244300842,
+      "alignment_score": 0.186
+    }
+  ]
+}

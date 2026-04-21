@@ -1,0 +1,6940 @@
+{
+  "segments": [
+    {
+      "start": 0.0,
+      "end": 5.4,
+      "text": " ...con la parte del programa Escucha Chivo, que llega a ustedes diariamente por las ondas de Radio Moscú.",
+      "words": [
+        {
+          "word": "...con",
+          "start": 0.0,
+          "end": 0.242,
+          "speaker": "SPEAKER_00",
+          "probability": 0.5741397887468338,
+          "alignment_score": 0.175
+        },
+        {
+          "word": "la",
+          "start": 0.262,
+          "end": 0.343,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9993230104446411,
+          "alignment_score": 0.898
+        },
+        {
+          "word": "parte",
+          "start": 0.383,
+          "end": 0.584,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9998483657836914,
+          "alignment_score": 0.847
+        },
+        {
+          "word": "del",
+          "start": 0.645,
+          "end": 0.866,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9996987581253052,
+          "alignment_score": 0.625
+        },
+        {
+          "word": "programa",
+          "start": 0.907,
+          "end": 1.33,
+          "speaker": "SPEAKER_00",
+          "probability": 0.999907374382019,
+          "alignment_score": 0.796
+        },
+        {
+          "word": "Escucha",
+          "start": 1.39,
+          "end": 1.874,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9784162044525146,
+          "alignment_score": 0.61
+        },
+        {
+          "word": "Chivo,",
+          "start": 1.894,
+          "end": 2.156,
+          "speaker": "SPEAKER_00",
+          "probability": 0.6173475980758667,
+          "alignment_score": 0.779
+        },
+        {
+          "word": "que",
+          "start": 2.499,
+          "end": 2.579,
+          "speaker": "SPEAKER_00",
+          "probability": 0.999972939491272,
+          "alignment_score": 0.411
+        },
+        {
+          "word": "llega",
+          "start": 2.64,
+          "end": 2.821,
+          "speaker": "SPEAKER_00",
+          "probability": 0.997137188911438,
+          "alignment_score": 0.599
+        },
+        {
+          "word": "a",
+          "start": 2.861,
+          "end": 2.881,
+          "speaker": "SPEAKER_00",
+          "probability": 0.994649350643158,
+          "alignment_score": 0.017
+        },
+        {
+          "word": "ustedes",
+          "start": 2.902,
+          "end": 3.365,
+          "speaker": "SPEAKER_00",
+          "probability": 0.713248074054718,
+          "alignment_score": 0.445
+        },
+        {
+          "word": "diariamente",
+          "start": 3.385,
+          "end": 3.949,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9998591244220734,
+          "alignment_score": 0.811
+        },
+        {
+          "word": "por",
+          "start": 4.03,
+          "end": 4.131,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9999279975891113,
+          "alignment_score": 0.867
+        },
+        {
+          "word": "las",
+          "start": 4.171,
+          "end": 4.272,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9744028449058533,
+          "alignment_score": 0.707
+        },
+        {
+          "word": "ondas",
+          "start": 4.373,
+          "end": 4.574,
+          "speaker": "SPEAKER_00",
+          "probability": 0.8877873718738556,
+          "alignment_score": 0.511
+        },
+        {
+          "word": "de",
+          "start": 4.594,
+          "end": 4.776,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9978213310241699,
+          "alignment_score": 0.299
+        },
+        {
+          "word": "Radio",
+          "start": 4.796,
+          "end": 5.259,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9893504977226257,
+          "alignment_score": 0.782
+        },
+        {
+          "word": "Moscú.",
+          "start": 5.279,
+          "end": 5.4,
+          "speaker": "SPEAKER_00",
+          "probability": 0.994746595621109,
+          "alignment_score": 0.17
+        }
+      ],
+      "speaker": "SPEAKER_00"
+    },
+    {
+      "start": 5.68,
+      "end": 13.8,
+      "text": " Parece un poco increíble que a estas alturas de la situación haya quienes piensen en la oposición chilena en nuevos diálogos con el régimen de Pinochet.",
+      "words": [
+        {
+          "word": "Parece",
+          "start": 5.68,
+          "end": 6.504,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9998735189437866,
+          "alignment_score": 0.938
+        },
+        {
+          "word": "un",
+          "start": 6.584,
+          "end": 6.645,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9999957084655762,
+          "alignment_score": 0.871
+        },
+        {
+          "word": "poco",
+          "start": 6.685,
+          "end": 6.846,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9985287189483643,
+          "alignment_score": 0.904
+        },
+        {
+          "word": "increíble",
+          "start": 6.926,
+          "end": 7.348,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9999557137489319,
+          "alignment_score": 0.936
+        },
+        {
+          "word": "que",
+          "start": 7.368,
+          "end": 7.429,
+          "speaker": "SPEAKER_00",
+          "probability": 0.999993085861206,
+          "alignment_score": 0.32
+        },
+        {
+          "word": "a",
+          "start": 7.449,
+          "end": 7.469,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9998601675033569,
+          "alignment_score": 0.995
+        },
+        {
+          "word": "estas",
+          "start": 7.549,
+          "end": 7.971,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9999567270278931,
+          "alignment_score": 0.266
+        },
+        {
+          "word": "alturas",
+          "start": 7.991,
+          "end": 8.253,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9999645948410034,
+          "alignment_score": 0.911
+        },
+        {
+          "word": "de",
+          "start": 8.293,
+          "end": 8.353,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9999958276748657,
+          "alignment_score": 0.863
+        },
+        {
+          "word": "la",
+          "start": 8.393,
+          "end": 8.434,
+          "speaker": "SPEAKER_00",
+          "probability": 0.999990701675415,
+          "alignment_score": 0.948
+        },
+        {
+          "word": "situación",
+          "start": 8.514,
+          "end": 8.876,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9999724626541138,
+          "alignment_score": 0.976
+        },
+        {
+          "word": "haya",
+          "start": 8.916,
+          "end": 9.418,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9508576393127441,
+          "alignment_score": 0.376
+        },
+        {
+          "word": "quienes",
+          "start": 9.479,
+          "end": 9.8,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9992546439170837,
+          "alignment_score": 0.177
+        },
+        {
+          "word": "piensen",
+          "start": 9.82,
+          "end": 10.162,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9996692836284637,
+          "alignment_score": 0.57
+        },
+        {
+          "word": "en",
+          "start": 10.464,
+          "end": 10.524,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9958297610282898,
+          "alignment_score": 0.682
+        },
+        {
+          "word": "la",
+          "start": 10.564,
+          "end": 10.604,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9999953508377075,
+          "alignment_score": 0.818
+        },
+        {
+          "word": "oposición",
+          "start": 10.685,
+          "end": 11.147,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9999376932779948,
+          "alignment_score": 0.938
+        },
+        {
+          "word": "chilena",
+          "start": 11.167,
+          "end": 11.649,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9997842013835907,
+          "alignment_score": 0.376
+        },
+        {
+          "word": "en",
+          "start": 11.69,
+          "end": 11.951,
+          "speaker": "SPEAKER_00",
+          "probability": 0.8905380964279175,
+          "alignment_score": 0.842
+        },
+        {
+          "word": "nuevos",
+          "start": 12.011,
+          "end": 12.232,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9999841451644897,
+          "alignment_score": 0.831
+        },
+        {
+          "word": "diálogos",
+          "start": 12.252,
+          "end": 12.654,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9999693036079407,
+          "alignment_score": 0.85
+        },
+        {
+          "word": "con",
+          "start": 12.775,
+          "end": 12.916,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9999957084655762,
+          "alignment_score": 0.945
+        },
+        {
+          "word": "el",
+          "start": 12.956,
+          "end": 13.036,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9999980926513672,
+          "alignment_score": 0.728
+        },
+        {
+          "word": "régimen",
+          "start": 13.117,
+          "end": 13.398,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9999704360961914,
+          "alignment_score": 0.854
+        },
+        {
+          "word": "de",
+          "start": 13.438,
+          "end": 13.599,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9999911785125732,
+          "alignment_score": 0.89
+        },
+        {
+          "word": "Pinochet.",
+          "start": 13.619,
+          "end": 13.8,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9997026522954305,
+          "alignment_score": 0.111
+        }
+      ],
+      "speaker": "SPEAKER_00"
+    },
+    {
+      "start": 14.2,
+      "end": 16.12,
+      "text": " Pijarpa lo repita, claro, es lógico.",
+      "words": [
+        {
+          "word": "Pijarpa",
+          "start": 14.2,
+          "end": 14.854,
+          "speaker": "SPEAKER_00",
+          "probability": 0.552669569849968,
+          "alignment_score": 0.594
+        },
+        {
+          "word": "lo",
+          "start": 14.915,
+          "end": 14.976,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9902030229568481,
+          "alignment_score": 0.617
+        },
+        {
+          "word": "repita,",
+          "start": 15.038,
+          "end": 15.365,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9972092807292938,
+          "alignment_score": 0.821
+        },
+        {
+          "word": "claro,",
+          "start": 15.426,
+          "end": 15.671,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9999321699142456,
+          "alignment_score": 0.776
+        },
+        {
+          "word": "es",
+          "start": 15.691,
+          "end": 15.957,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9999815225601196,
+          "alignment_score": 0.302
+        },
+        {
+          "word": "lógico.",
+          "start": 15.977,
+          "end": 16.12,
+          "speaker": "SPEAKER_00",
+          "probability": 0.999976396560669,
+          "alignment_score": 0.145
+        }
+      ],
+      "speaker": "SPEAKER_00"
+    },
+    {
+      "start": 16.2,
+      "end": 23.24,
+      "text": " El año pasado, el truco del diálogo le sirvió a la dictadura para ganar tiempo y para debilitar temporalmente la lucha de la oposición.",
+      "words": [
+        {
+          "word": "El",
+          "start": 16.2,
+          "end": 16.783,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9999668598175049,
+          "alignment_score": 0.666
+        },
+        {
+          "word": "año",
+          "start": 16.844,
+          "end": 16.944,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9999966621398926,
+          "alignment_score": 0.887
+        },
+        {
+          "word": "pasado,",
+          "start": 17.025,
+          "end": 17.367,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9999957084655762,
+          "alignment_score": 0.997
+        },
+        {
+          "word": "el",
+          "start": 17.387,
+          "end": 17.507,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9964814186096191,
+          "alignment_score": 0.476
+        },
+        {
+          "word": "truco",
+          "start": 17.588,
+          "end": 17.87,
+          "speaker": "SPEAKER_00",
+          "probability": 0.999793807665507,
+          "alignment_score": 0.847
+        },
+        {
+          "word": "del",
+          "start": 17.91,
+          "end": 18.03,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9999980926513672,
+          "alignment_score": 0.783
+        },
+        {
+          "word": "diálogo",
+          "start": 18.091,
+          "end": 18.392,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9999881982803345,
+          "alignment_score": 0.978
+        },
+        {
+          "word": "le",
+          "start": 18.413,
+          "end": 18.453,
+          "speaker": "SPEAKER_00",
+          "probability": 0.32646554708480835,
+          "alignment_score": 0.5
+        },
+        {
+          "word": "sirvió",
+          "start": 18.895,
+          "end": 19.056,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9998070001602173,
+          "alignment_score": 0.548
+        },
+        {
+          "word": "a",
+          "start": 19.097,
+          "end": 19.117,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9999572038650513,
+          "alignment_score": 0.204
+        },
+        {
+          "word": "la",
+          "start": 19.157,
+          "end": 19.197,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9999922513961792,
+          "alignment_score": 0.964
+        },
+        {
+          "word": "dictadura",
+          "start": 19.257,
+          "end": 19.599,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9997718036174774,
+          "alignment_score": 0.911
+        },
+        {
+          "word": "para",
+          "start": 19.66,
+          "end": 19.76,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9999905824661255,
+          "alignment_score": 0.928
+        },
+        {
+          "word": "ganar",
+          "start": 19.841,
+          "end": 20.042,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9999676942825317,
+          "alignment_score": 0.799
+        },
+        {
+          "word": "tiempo",
+          "start": 20.223,
+          "end": 20.525,
+          "speaker": "SPEAKER_00",
+          "probability": 0.999981164932251,
+          "alignment_score": 0.982
+        },
+        {
+          "word": "y",
+          "start": 20.545,
+          "end": 20.565,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9999730587005615,
+          "alignment_score": 0.997
+        },
+        {
+          "word": "para",
+          "start": 20.706,
+          "end": 20.826,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9999880790710449,
+          "alignment_score": 0.97
+        },
+        {
+          "word": "debilitar",
+          "start": 20.927,
+          "end": 21.329,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9998835921287537,
+          "alignment_score": 0.854
+        },
+        {
+          "word": "temporalmente",
+          "start": 21.45,
+          "end": 22.073,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9999352693557739,
+          "alignment_score": 0.926
+        },
+        {
+          "word": "la",
+          "start": 22.234,
+          "end": 22.275,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9999783039093018,
+          "alignment_score": 0.84
+        },
+        {
+          "word": "lucha",
+          "start": 22.355,
+          "end": 22.596,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9999927282333374,
+          "alignment_score": 0.864
+        },
+        {
+          "word": "de",
+          "start": 22.637,
+          "end": 22.697,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9999988079071045,
+          "alignment_score": 0.746
+        },
+        {
+          "word": "la",
+          "start": 22.737,
+          "end": 22.777,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9999988079071045,
+          "alignment_score": 0.798
+        },
+        {
+          "word": "oposición.",
+          "start": 22.898,
+          "end": 23.24,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9999858935674032,
+          "alignment_score": 0.254
+        }
+      ],
+      "speaker": "SPEAKER_00"
+    },
+    {
+      "start": 23.7,
+      "end": 28.68,
+      "text": " Leyendo la entrevista que Pinochet concedió a la revista Newsweek el 19 de marzo pasado,",
+      "words": [
+        {
+          "word": "Leyendo",
+          "start": 23.7,
+          "end": 24.345,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9727809131145477,
+          "alignment_score": 0.769
+        },
+        {
+          "word": "la",
+          "start": 24.406,
+          "end": 24.466,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9999735355377197,
+          "alignment_score": 0.848
+        },
+        {
+          "word": "entrevista",
+          "start": 24.527,
+          "end": 24.89,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9998323023319244,
+          "alignment_score": 0.74
+        },
+        {
+          "word": "que",
+          "start": 24.95,
+          "end": 25.031,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9999837875366211,
+          "alignment_score": 0.778
+        },
+        {
+          "word": "Pinochet",
+          "start": 25.071,
+          "end": 25.676,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9999584754308065,
+          "alignment_score": 0.434
+        },
+        {
+          "word": "concedió",
+          "start": 25.817,
+          "end": 26.22,
+          "speaker": "SPEAKER_00",
+          "probability": 0.987069328625997,
+          "alignment_score": 0.49
+        },
+        {
+          "word": "a",
+          "start": 26.24,
+          "end": 26.261,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9994009733200073,
+          "alignment_score": 0.53
+        },
+        {
+          "word": "la",
+          "start": 26.281,
+          "end": 26.321,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9999908208847046,
+          "alignment_score": 0.505
+        },
+        {
+          "word": "revista",
+          "start": 26.361,
+          "end": 26.664,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9999565482139587,
+          "alignment_score": 0.822
+        },
+        {
+          "word": "Newsweek",
+          "start": 26.704,
+          "end": 27.591,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9981745779514313,
+          "alignment_score": 0.2
+        },
+        {
+          "word": "el",
+          "start": 27.612,
+          "end": 27.672,
+          "speaker": "SPEAKER_00",
+          "probability": 0.7842270135879517,
+          "alignment_score": 0.952
+        },
+        {
+          "word": "19",
+          "start": 27.692,
+          "end": 28.075,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9999300241470337,
+          "alignment_score": 0.644
+        },
+        {
+          "word": "de",
+          "start": 28.136,
+          "end": 28.196,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9999973773956299,
+          "alignment_score": 0.925
+        },
+        {
+          "word": "marzo",
+          "start": 28.257,
+          "end": 28.519,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9999549388885498,
+          "alignment_score": 0.843
+        },
+        {
+          "word": "pasado,",
+          "start": 28.539,
+          "end": 28.68,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9997335076332092,
+          "alignment_score": 0.143
+        }
+      ],
+      "speaker": "SPEAKER_00"
+    },
+    {
+      "start": 28.66,
+      "end": 32.7,
+      "text": " uno se da cuenta que no hay diálogo posible con semejante energúmeno,",
+      "words": [
+        {
+          "word": "uno",
+          "start": 28.66,
+          "end": 29.024,
+          "speaker": "SPEAKER_00",
+          "probability": 0.032709285616874695,
+          "alignment_score": 0.706
+        },
+        {
+          "word": "se",
+          "start": 29.71,
+          "end": 29.771,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9433338046073914,
+          "alignment_score": 0.58
+        },
+        {
+          "word": "da",
+          "start": 29.791,
+          "end": 29.872,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9954633116722107,
+          "alignment_score": 0.416
+        },
+        {
+          "word": "cuenta",
+          "start": 29.933,
+          "end": 30.094,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9995684027671814,
+          "alignment_score": 0.823
+        },
+        {
+          "word": "que",
+          "start": 30.114,
+          "end": 30.175,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9396341443061829,
+          "alignment_score": 0.315
+        },
+        {
+          "word": "no",
+          "start": 30.195,
+          "end": 30.377,
+          "speaker": "SPEAKER_00",
+          "probability": 0.997899055480957,
+          "alignment_score": 0.518
+        },
+        {
+          "word": "hay",
+          "start": 30.417,
+          "end": 30.518,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9991828799247742,
+          "alignment_score": 0.376
+        },
+        {
+          "word": "diálogo",
+          "start": 30.579,
+          "end": 30.882,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9876441359519958,
+          "alignment_score": 0.842
+        },
+        {
+          "word": "posible",
+          "start": 30.963,
+          "end": 31.327,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9972397089004517,
+          "alignment_score": 0.849
+        },
+        {
+          "word": "con",
+          "start": 31.428,
+          "end": 31.892,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9909510612487793,
+          "alignment_score": 0.782
+        },
+        {
+          "word": "semejante",
+          "start": 31.912,
+          "end": 32.215,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9971295744180679,
+          "alignment_score": 0.446
+        },
+        {
+          "word": "energúmeno,",
+          "start": 32.236,
+          "end": 32.7,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9695422053337097,
+          "alignment_score": 0.402
+        }
+      ],
+      "speaker": "SPEAKER_00"
+    },
+    {
+      "start": 32.86,
+      "end": 40.52,
+      "text": " que no solo es un fascista fanático, contumaz e irracional, sino que encima de eso se siente un enviado de Dios.",
+      "words": [
+        {
+          "word": "que",
+          "start": 32.86,
+          "end": 33.564,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9947718977928162,
+          "alignment_score": 0.857
+        },
+        {
+          "word": "no",
+          "start": 33.604,
+          "end": 33.664,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9993510842323303,
+          "alignment_score": 0.798
+        },
+        {
+          "word": "solo",
+          "start": 33.765,
+          "end": 33.905,
+          "speaker": "SPEAKER_00",
+          "probability": 0.46737003326416016,
+          "alignment_score": 0.672
+        },
+        {
+          "word": "es",
+          "start": 34.046,
+          "end": 34.107,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9989836812019348,
+          "alignment_score": 0.466
+        },
+        {
+          "word": "un",
+          "start": 34.569,
+          "end": 34.609,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9983487129211426,
+          "alignment_score": 0.019
+        },
+        {
+          "word": "fascista",
+          "start": 34.629,
+          "end": 34.871,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9968008399009705,
+          "alignment_score": 0.276
+        },
+        {
+          "word": "fanático,",
+          "start": 34.991,
+          "end": 35.514,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9968049824237823,
+          "alignment_score": 0.991
+        },
+        {
+          "word": "contumaz",
+          "start": 35.534,
+          "end": 36.539,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9603126843770345,
+          "alignment_score": 0.716
+        },
+        {
+          "word": "e",
+          "start": 36.841,
+          "end": 36.901,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9972842931747437,
+          "alignment_score": 0.815
+        },
+        {
+          "word": "irracional,",
+          "start": 36.982,
+          "end": 37.625,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9997807939847311,
+          "alignment_score": 0.847
+        },
+        {
+          "word": "sino",
+          "start": 38.148,
+          "end": 38.268,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9989151954650879,
+          "alignment_score": 0.501
+        },
+        {
+          "word": "que",
+          "start": 38.309,
+          "end": 38.369,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9998470544815063,
+          "alignment_score": 0.881
+        },
+        {
+          "word": "encima",
+          "start": 38.469,
+          "end": 38.691,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9994290471076965,
+          "alignment_score": 0.832
+        },
+        {
+          "word": "de",
+          "start": 38.731,
+          "end": 38.791,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9997606873512268,
+          "alignment_score": 0.613
+        },
+        {
+          "word": "eso",
+          "start": 38.871,
+          "end": 39.052,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9939047694206238,
+          "alignment_score": 0.576
+        },
+        {
+          "word": "se",
+          "start": 39.073,
+          "end": 39.193,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9955735206604004,
+          "alignment_score": 0.724
+        },
+        {
+          "word": "siente",
+          "start": 39.213,
+          "end": 39.455,
+          "speaker": "SPEAKER_00",
+          "probability": 0.999811440706253,
+          "alignment_score": 0.79
+        },
+        {
+          "word": "un",
+          "start": 39.635,
+          "end": 39.756,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9992088675498962,
+          "alignment_score": 0.796
+        },
+        {
+          "word": "enviado",
+          "start": 39.816,
+          "end": 40.319,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9984707633654276,
+          "alignment_score": 0.77
+        },
+        {
+          "word": "de",
+          "start": 40.339,
+          "end": 40.399,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9998133778572083,
+          "alignment_score": 0.525
+        },
+        {
+          "word": "Dios.",
+          "start": 40.42,
+          "end": 40.52,
+          "speaker": "SPEAKER_00",
+          "probability": 0.987928569316864,
+          "alignment_score": 0.196
+        }
+      ],
+      "speaker": "SPEAKER_00"
+    },
+    {
+      "start": 40.82,
+      "end": 49.28,
+      "text": " Por lo demás, él está demostrando con hechos, con balas, con violencia, con represión, con censura de prensa, que no está dispuesto a ceder en nada.",
+      "words": [
+        {
+          "word": "Por",
+          "start": 40.82,
+          "end": 41.523,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9985357522964478,
+          "alignment_score": 0.69
+        },
+        {
+          "word": "lo",
+          "start": 41.564,
+          "end": 41.624,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9999711513519287,
+          "alignment_score": 0.854
+        },
+        {
+          "word": "demás,",
+          "start": 41.684,
+          "end": 41.905,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9997748732566833,
+          "alignment_score": 0.873
+        },
+        {
+          "word": "él",
+          "start": 42.146,
+          "end": 42.247,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9960455298423767,
+          "alignment_score": 0.503
+        },
+        {
+          "word": "está",
+          "start": 42.287,
+          "end": 42.448,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9976258873939514,
+          "alignment_score": 0.43
+        },
+        {
+          "word": "demostrando",
+          "start": 42.468,
+          "end": 42.97,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9992538690567017,
+          "alignment_score": 0.729
+        },
+        {
+          "word": "con",
+          "start": 43.071,
+          "end": 43.171,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9961193799972534,
+          "alignment_score": 0.902
+        },
+        {
+          "word": "hechos,",
+          "start": 43.272,
+          "end": 43.513,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9980789124965668,
+          "alignment_score": 0.692
+        },
+        {
+          "word": "con",
+          "start": 43.814,
+          "end": 44.015,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9998694658279419,
+          "alignment_score": 0.81
+        },
+        {
+          "word": "balas,",
+          "start": 44.035,
+          "end": 44.337,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9918162822723389,
+          "alignment_score": 0.849
+        },
+        {
+          "word": "con",
+          "start": 44.658,
+          "end": 44.819,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9999071359634399,
+          "alignment_score": 0.934
+        },
+        {
+          "word": "violencia,",
+          "start": 44.879,
+          "end": 45.382,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9998143911361694,
+          "alignment_score": 0.957
+        },
+        {
+          "word": "con",
+          "start": 45.542,
+          "end": 45.683,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9995813965797424,
+          "alignment_score": 0.87
+        },
+        {
+          "word": "represión,",
+          "start": 45.703,
+          "end": 46.145,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9994136393070221,
+          "alignment_score": 0.627
+        },
+        {
+          "word": "con",
+          "start": 46.567,
+          "end": 46.748,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9997569918632507,
+          "alignment_score": 0.592
+        },
+        {
+          "word": "censura",
+          "start": 46.768,
+          "end": 47.029,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9985581934452057,
+          "alignment_score": 0.708
+        },
+        {
+          "word": "de",
+          "start": 47.07,
+          "end": 47.15,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9999498128890991,
+          "alignment_score": 0.875
+        },
+        {
+          "word": "prensa,",
+          "start": 47.21,
+          "end": 47.532,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9998389283816019,
+          "alignment_score": 0.666
+        },
+        {
+          "word": "que",
+          "start": 47.934,
+          "end": 48.014,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9991002082824707,
+          "alignment_score": 0.896
+        },
+        {
+          "word": "no",
+          "start": 48.054,
+          "end": 48.115,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9998718500137329,
+          "alignment_score": 0.808
+        },
+        {
+          "word": "está",
+          "start": 48.175,
+          "end": 48.436,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9990649819374084,
+          "alignment_score": 0.678
+        },
+        {
+          "word": "dispuesto",
+          "start": 48.476,
+          "end": 48.818,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9997791647911072,
+          "alignment_score": 0.522
+        },
+        {
+          "word": "a",
+          "start": 48.838,
+          "end": 48.858,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9997344613075256,
+          "alignment_score": 0.053
+        },
+        {
+          "word": "ceder",
+          "start": 48.878,
+          "end": 49.099,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9587774276733398,
+          "alignment_score": 0.635
+        },
+        {
+          "word": "en",
+          "start": 49.119,
+          "end": 49.16,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9993690848350525,
+          "alignment_score": 0.0
+        },
+        {
+          "word": "nada.",
+          "start": 49.18,
+          "end": 49.28,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9999197721481323,
+          "alignment_score": 0.201
+        }
+      ],
+      "speaker": "SPEAKER_00"
+    },
+    {
+      "start": 49.56,
+      "end": 54.1,
+      "text": " Sus declaraciones a la revista Newsweek son como para reproducirlas en extenso.",
+      "words": [
+        {
+          "word": "Sus",
+          "start": 49.56,
+          "end": 50.064,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9868164658546448,
+          "alignment_score": 0.637
+        },
+        {
+          "word": "declaraciones",
+          "start": 50.105,
+          "end": 50.589,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9999315142631531,
+          "alignment_score": 0.744
+        },
+        {
+          "word": "a",
+          "start": 50.67,
+          "end": 50.71,
+          "speaker": "SPEAKER_00",
+          "probability": 0.3364619314670563,
+          "alignment_score": 0.513
+        },
+        {
+          "word": "la",
+          "start": 50.73,
+          "end": 50.811,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9993357062339783,
+          "alignment_score": 0.758
+        },
+        {
+          "word": "revista",
+          "start": 50.872,
+          "end": 51.638,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9996946156024933,
+          "alignment_score": 0.786
+        },
+        {
+          "word": "Newsweek",
+          "start": 51.659,
+          "end": 51.82,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9960367679595947,
+          "alignment_score": 0.014
+        },
+        {
+          "word": "son",
+          "start": 51.84,
+          "end": 51.941,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9970476031303406,
+          "alignment_score": 0.488
+        },
+        {
+          "word": "como",
+          "start": 51.981,
+          "end": 52.143,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9999150037765503,
+          "alignment_score": 0.797
+        },
+        {
+          "word": "para",
+          "start": 52.224,
+          "end": 52.345,
+          "speaker": "SPEAKER_00",
+          "probability": 0.999971866607666,
+          "alignment_score": 0.881
+        },
+        {
+          "word": "reproducirlas",
+          "start": 52.486,
+          "end": 53.192,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9983104318380356,
+          "alignment_score": 0.853
+        },
+        {
+          "word": "en",
+          "start": 53.495,
+          "end": 53.596,
+          "speaker": "SPEAKER_00",
+          "probability": 0.5212072134017944,
+          "alignment_score": 0.926
+        },
+        {
+          "word": "extenso.",
+          "start": 53.656,
+          "end": 54.1,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9993017117182413,
+          "alignment_score": 0.652
+        }
+      ],
+      "speaker": "SPEAKER_00"
+    },
+    {
+      "start": 54.22,
+      "end": 56.14,
+      "text": " Son toda una lección política.",
+      "words": [
+        {
+          "word": "Son",
+          "start": 54.22,
+          "end": 54.955,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9905185103416443,
+          "alignment_score": 0.589
+        },
+        {
+          "word": "toda",
+          "start": 55.037,
+          "end": 55.221,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9960611462593079,
+          "alignment_score": 0.934
+        },
+        {
+          "word": "una",
+          "start": 55.405,
+          "end": 55.507,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9998038411140442,
+          "alignment_score": 0.854
+        },
+        {
+          "word": "lección",
+          "start": 55.589,
+          "end": 55.936,
+          "speaker": "SPEAKER_00",
+          "probability": 0.8687556684017181,
+          "alignment_score": 0.843
+        },
+        {
+          "word": "política.",
+          "start": 55.957,
+          "end": 56.14,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9995632767677307,
+          "alignment_score": 0.111
+        }
+      ],
+      "speaker": "SPEAKER_00"
+    },
+    {
+      "start": 56.92,
+      "end": 58.66,
+      "text": " Y son también como para someterlas...",
+      "words": [
+        {
+          "word": "Y",
+          "start": 56.92,
+          "end": 57.186,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9817283749580383,
+          "alignment_score": 0.447
+        },
+        {
+          "word": "son",
+          "start": 57.207,
+          "end": 57.37,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9981546998023987,
+          "alignment_score": 0.358
+        },
+        {
+          "word": "también",
+          "start": 57.411,
+          "end": 57.616,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9982501864433289,
+          "alignment_score": 0.787
+        },
+        {
+          "word": "como",
+          "start": 57.657,
+          "end": 57.862,
+          "speaker": "SPEAKER_00",
+          "probability": 0.999428927898407,
+          "alignment_score": 0.611
+        },
+        {
+          "word": "para",
+          "start": 57.903,
+          "end": 58.026,
+          "speaker": "SPEAKER_00",
+          "probability": 0.999744713306427,
+          "alignment_score": 0.66
+        },
+        {
+          "word": "someterlas...",
+          "start": 58.169,
+          "end": 58.66,
+          "speaker": "SPEAKER_00",
+          "probability": 0.6914736405014992,
+          "alignment_score": 0.359
+        }
+      ],
+      "speaker": "SPEAKER_00"
+    },
+    {
+      "start": 58.66,
+      "end": 59.721,
+      "text": " ...a un estudio psiquiátrico.",
+      "words": [
+        {
+          "word": "...a",
+          "start": 58.66,
+          "end": 58.847,
+          "speaker": "SPEAKER_00",
+          "probability": 0.283311546780169,
+          "alignment_score": 0.168
+        },
+        {
+          "word": "un",
+          "start": 58.868,
+          "end": 58.91,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9933620691299438,
+          "alignment_score": 0.229
+        },
+        {
+          "word": "estudio",
+          "start": 58.93,
+          "end": 59.18,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9993865489959717,
+          "alignment_score": 0.438
+        },
+        {
+          "word": "psiquiátrico.",
+          "start": 59.305,
+          "end": 59.721,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9995792627334594,
+          "alignment_score": 0.319
+        }
+      ],
+      "speaker": "SPEAKER_00"
+    },
+    {
+      "start": 59.82,
+      "end": 63.74,
+      "text": " Por ejemplo, mire estas frases para el bronce del señor Pinochet.",
+      "words": [
+        {
+          "word": "Por",
+          "start": 59.82,
+          "end": 61.174,
+          "speaker": "SPEAKER_00",
+          "probability": 0.990045964717865,
+          "alignment_score": 0.696
+        },
+        {
+          "word": "ejemplo,",
+          "start": 61.214,
+          "end": 61.437,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9994959831237793,
+          "alignment_score": 0.86
+        },
+        {
+          "word": "mire",
+          "start": 61.477,
+          "end": 61.659,
+          "speaker": "SPEAKER_00",
+          "probability": 0.8794312477111816,
+          "alignment_score": 0.351
+        },
+        {
+          "word": "estas",
+          "start": 61.679,
+          "end": 61.861,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9737291932106018,
+          "alignment_score": 0.708
+        },
+        {
+          "word": "frases",
+          "start": 62.002,
+          "end": 62.265,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9993510842323303,
+          "alignment_score": 0.566
+        },
+        {
+          "word": "para",
+          "start": 62.326,
+          "end": 62.427,
+          "speaker": "SPEAKER_00",
+          "probability": 0.976033627986908,
+          "alignment_score": 0.93
+        },
+        {
+          "word": "el",
+          "start": 62.467,
+          "end": 62.528,
+          "speaker": "SPEAKER_00",
+          "probability": 0.7634810209274292,
+          "alignment_score": 0.645
+        },
+        {
+          "word": "bronce",
+          "start": 62.588,
+          "end": 63.174,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9522849917411804,
+          "alignment_score": 0.355
+        },
+        {
+          "word": "del",
+          "start": 63.195,
+          "end": 63.296,
+          "speaker": "SPEAKER_00",
+          "probability": 0.8711785674095154,
+          "alignment_score": 0.811
+        },
+        {
+          "word": "señor",
+          "start": 63.376,
+          "end": 63.538,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9744814038276672,
+          "alignment_score": 0.428
+        },
+        {
+          "word": "Pinochet.",
+          "start": 63.558,
+          "end": 63.74,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9885187745094299,
+          "alignment_score": 0.111
+        }
+      ],
+      "speaker": "SPEAKER_00"
+    },
+    {
+      "start": 64.26,
+      "end": 64.802,
+      "text": " Comillas.",
+      "words": [
+        {
+          "word": "Comillas.",
+          "start": 64.26,
+          "end": 64.802,
+          "speaker": "SPEAKER_00",
+          "probability": 0.8643983602523804,
+          "alignment_score": 0.208
+        }
+      ],
+      "speaker": "SPEAKER_00"
+    },
+    {
+      "start": 65.24,
+      "end": 66.861,
+      "text": " Mi fuerza viene de Dios.",
+      "words": [
+        {
+          "word": "Mi",
+          "start": 65.24,
+          "end": 66.04,
+          "speaker": "SPEAKER_00",
+          "probability": 0.4514974057674408,
+          "alignment_score": 0.44
+        },
+        {
+          "word": "fuerza",
+          "start": 66.061,
+          "end": 66.409,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9975032210350037,
+          "alignment_score": 0.611
+        },
+        {
+          "word": "viene",
+          "start": 66.43,
+          "end": 66.676,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9618535041809082,
+          "alignment_score": 0.556
+        },
+        {
+          "word": "de",
+          "start": 66.696,
+          "end": 66.737,
+          "speaker": "SPEAKER_00",
+          "probability": 0.996131181716919,
+          "alignment_score": 0.006
+        },
+        {
+          "word": "Dios.",
+          "start": 66.758,
+          "end": 66.861,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9779691696166992,
+          "alignment_score": 0.198
+        }
+      ],
+      "speaker": "SPEAKER_00"
+    },
+    {
+      "start": 67.42,
+      "end": 71.5,
+      "text": " Y más adelante dice, ¿qué es esta enfermedad por la democracia?",
+      "words": [
+        {
+          "word": "Y",
+          "start": 67.42,
+          "end": 68.107,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9984714388847351,
+          "alignment_score": 0.709
+        },
+        {
+          "word": "más",
+          "start": 68.127,
+          "end": 68.309,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9997171759605408,
+          "alignment_score": 0.586
+        },
+        {
+          "word": "adelante",
+          "start": 68.329,
+          "end": 68.632,
+          "speaker": "SPEAKER_00",
+          "probability": 0.999988317489624,
+          "alignment_score": 0.906
+        },
+        {
+          "word": "dice,",
+          "start": 68.753,
+          "end": 69.056,
+          "speaker": "SPEAKER_00",
+          "probability": 0.984289824962616,
+          "alignment_score": 0.788
+        },
+        {
+          "word": "¿qué",
+          "start": 69.783,
+          "end": 69.925,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9955649971961975,
+          "alignment_score": 0.381
+        },
+        {
+          "word": "es",
+          "start": 69.985,
+          "end": 70.026,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9999338388442993,
+          "alignment_score": 0.5
+        },
+        {
+          "word": "esta",
+          "start": 70.046,
+          "end": 70.127,
+          "speaker": "SPEAKER_00",
+          "probability": 0.999897837638855,
+          "alignment_score": 0.391
+        },
+        {
+          "word": "enfermedad",
+          "start": 70.228,
+          "end": 70.733,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9999364614486694,
+          "alignment_score": 0.692
+        },
+        {
+          "word": "por",
+          "start": 70.813,
+          "end": 70.914,
+          "speaker": "SPEAKER_00",
+          "probability": 0.8936602473258972,
+          "alignment_score": 0.974
+        },
+        {
+          "word": "la",
+          "start": 70.975,
+          "end": 71.015,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9999023675918579,
+          "alignment_score": 0.68
+        },
+        {
+          "word": "democracia?",
+          "start": 71.278,
+          "end": 71.5,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9999687671661377,
+          "alignment_score": 0.092
+        }
+      ],
+      "speaker": "SPEAKER_00"
+    },
+    {
+      "start": 71.68,
+      "end": 73.021,
+      "text": " No la entiendo.",
+      "words": [
+        {
+          "word": "No",
+          "start": 71.68,
+          "end": 72.319,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9974576830863953,
+          "alignment_score": 0.937
+        },
+        {
+          "word": "la",
+          "start": 72.381,
+          "end": 72.443,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9996862411499023,
+          "alignment_score": 0.422
+        },
+        {
+          "word": "entiendo.",
+          "start": 72.505,
+          "end": 73.021,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9999737739562988,
+          "alignment_score": 0.465
+        }
+      ],
+      "speaker": "SPEAKER_00"
+    },
+    {
+      "start": 73.12,
+      "end": 78.88,
+      "text": " Yo creo en la democracia, pero también creo que dentro de la democracia están los gérmenes de su destrucción.",
+      "words": [
+        {
+          "word": "Yo",
+          "start": 73.12,
+          "end": 73.764,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9970748424530029,
+          "alignment_score": 0.589
+        },
+        {
+          "word": "creo",
+          "start": 73.845,
+          "end": 74.006,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9998770952224731,
+          "alignment_score": 0.91
+        },
+        {
+          "word": "en",
+          "start": 74.046,
+          "end": 74.087,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9999872446060181,
+          "alignment_score": 0.63
+        },
+        {
+          "word": "la",
+          "start": 74.147,
+          "end": 74.208,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9999905824661255,
+          "alignment_score": 0.313
+        },
+        {
+          "word": "democracia,",
+          "start": 74.248,
+          "end": 74.812,
+          "speaker": "SPEAKER_00",
+          "probability": 0.999995231628418,
+          "alignment_score": 0.874
+        },
+        {
+          "word": "pero",
+          "start": 75.194,
+          "end": 75.315,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9991890788078308,
+          "alignment_score": 0.965
+        },
+        {
+          "word": "también",
+          "start": 75.416,
+          "end": 75.617,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9999101161956787,
+          "alignment_score": 0.847
+        },
+        {
+          "word": "creo",
+          "start": 75.779,
+          "end": 75.98,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9999607801437378,
+          "alignment_score": 0.931
+        },
+        {
+          "word": "que",
+          "start": 76.06,
+          "end": 76.141,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9978740215301514,
+          "alignment_score": 0.909
+        },
+        {
+          "word": "dentro",
+          "start": 76.181,
+          "end": 76.524,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9988287091255188,
+          "alignment_score": 0.665
+        },
+        {
+          "word": "de",
+          "start": 76.544,
+          "end": 76.604,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9995692372322083,
+          "alignment_score": 0.579
+        },
+        {
+          "word": "la",
+          "start": 76.645,
+          "end": 76.705,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9999768733978271,
+          "alignment_score": 0.607
+        },
+        {
+          "word": "democracia",
+          "start": 76.725,
+          "end": 77.148,
+          "speaker": "SPEAKER_00",
+          "probability": 0.999993622303009,
+          "alignment_score": 0.783
+        },
+        {
+          "word": "están",
+          "start": 77.188,
+          "end": 77.45,
+          "speaker": "SPEAKER_00",
+          "probability": 0.20734472572803497,
+          "alignment_score": 0.464
+        },
+        {
+          "word": "los",
+          "start": 77.531,
+          "end": 77.611,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9951748847961426,
+          "alignment_score": 0.878
+        },
+        {
+          "word": "gérmenes",
+          "start": 77.712,
+          "end": 78.115,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9983399957418442,
+          "alignment_score": 0.78
+        },
+        {
+          "word": "de",
+          "start": 78.155,
+          "end": 78.316,
+          "speaker": "SPEAKER_00",
+          "probability": 0.982455849647522,
+          "alignment_score": 0.676
+        },
+        {
+          "word": "su",
+          "start": 78.336,
+          "end": 78.417,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9998475313186646,
+          "alignment_score": 0.596
+        },
+        {
+          "word": "destrucción.",
+          "start": 78.437,
+          "end": 78.88,
+          "speaker": "SPEAKER_00",
+          "probability": 0.999884158372879,
+          "alignment_score": 0.252
+        }
+      ],
+      "speaker": "SPEAKER_00"
+    },
+    {
+      "start": 79.3,
+      "end": 87.76,
+      "text": " Los marxistas saben perfectamente bien cómo usar los elementos de la democracia y la libertad que ofrece para destruir la democracia.",
+      "words": [
+        {
+          "word": "Los",
+          "start": 79.3,
+          "end": 80.003,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9960118532180786,
+          "alignment_score": 0.879
+        },
+        {
+          "word": "marxistas",
+          "start": 80.044,
+          "end": 80.526,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9962572654088339,
+          "alignment_score": 0.561
+        },
+        {
+          "word": "saben",
+          "start": 80.606,
+          "end": 80.827,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9999586343765259,
+          "alignment_score": 0.934
+        },
+        {
+          "word": "perfectamente",
+          "start": 80.928,
+          "end": 81.531,
+          "speaker": "SPEAKER_00",
+          "probability": 0.999976634979248,
+          "alignment_score": 0.911
+        },
+        {
+          "word": "bien",
+          "start": 81.772,
+          "end": 81.852,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9999866485595703,
+          "alignment_score": 0.218
+        },
+        {
+          "word": "cómo",
+          "start": 82.334,
+          "end": 82.515,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9959996938705444,
+          "alignment_score": 0.847
+        },
+        {
+          "word": "usar",
+          "start": 82.596,
+          "end": 82.897,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9998680353164673,
+          "alignment_score": 0.852
+        },
+        {
+          "word": "los",
+          "start": 82.977,
+          "end": 83.078,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9999395608901978,
+          "alignment_score": 0.959
+        },
+        {
+          "word": "elementos",
+          "start": 83.158,
+          "end": 83.6,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9999613761901855,
+          "alignment_score": 0.963
+        },
+        {
+          "word": "de",
+          "start": 83.661,
+          "end": 83.721,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9997360110282898,
+          "alignment_score": 0.916
+        },
+        {
+          "word": "la",
+          "start": 83.781,
+          "end": 83.821,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9999914169311523,
+          "alignment_score": 0.998
+        },
+        {
+          "word": "democracia",
+          "start": 83.882,
+          "end": 84.404,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9999926686286926,
+          "alignment_score": 0.844
+        },
+        {
+          "word": "y",
+          "start": 84.424,
+          "end": 84.444,
+          "speaker": "SPEAKER_00",
+          "probability": 0.31290513277053833,
+          "alignment_score": 0.996
+        },
+        {
+          "word": "la",
+          "start": 84.485,
+          "end": 84.967,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9994218349456787,
+          "alignment_score": 0.85
+        },
+        {
+          "word": "libertad",
+          "start": 85.027,
+          "end": 85.329,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9998668134212494,
+          "alignment_score": 0.838
+        },
+        {
+          "word": "que",
+          "start": 85.349,
+          "end": 85.489,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9997879862785339,
+          "alignment_score": 0.53
+        },
+        {
+          "word": "ofrece",
+          "start": 85.57,
+          "end": 85.911,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9986867606639862,
+          "alignment_score": 0.884
+        },
+        {
+          "word": "para",
+          "start": 86.333,
+          "end": 86.474,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9837632179260254,
+          "alignment_score": 0.962
+        },
+        {
+          "word": "destruir",
+          "start": 86.775,
+          "end": 87.459,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9999623894691467,
+          "alignment_score": 0.356
+        },
+        {
+          "word": "la",
+          "start": 87.479,
+          "end": 87.519,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9998564720153809,
+          "alignment_score": 0.0
+        },
+        {
+          "word": "democracia.",
+          "start": 87.539,
+          "end": 87.76,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9999900460243225,
+          "alignment_score": 0.095
+        }
+      ],
+      "speaker": "SPEAKER_00"
+    },
+    {
+      "start": 88.12,
+      "end": 88.662,
+      "text": " ¿Qué es la democracia?",
+      "words": [
+        {
+          "word": "¿Qué",
+          "start": 88.12,
+          "end": 88.228,
+          "probability": 0.11219326872378588,
+          "alignment_score": 0.119
+        },
+        {
+          "word": "es",
+          "start": 88.25,
+          "end": 88.293,
+          "probability": 0.747282862663269,
+          "alignment_score": 0.007
+        },
+        {
+          "word": "la",
+          "start": 88.315,
+          "end": 88.358,
+          "probability": 0.5979170203208923,
+          "alignment_score": 0.018
+        },
+        {
+          "word": "democracia?",
+          "start": 88.38,
+          "end": 88.662,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9702169597148895,
+          "alignment_score": 0.189
+        }
+      ],
+      "speaker": "SPEAKER_00"
+    },
+    {
+      "start": 88.64,
+      "end": 88.64,
+      "text": "",
+      "words": [],
+      "chars": null
+    },
+    {
+      "start": 88.64,
+      "end": 88.64,
+      "text": "",
+      "words": [],
+      "chars": null
+    },
+    {
+      "start": 88.64,
+      "end": 88.64,
+      "text": "",
+      "words": [],
+      "chars": null
+    },
+    {
+      "start": 88.64,
+      "end": 88.64,
+      "text": "",
+      "words": [],
+      "chars": null
+    },
+    {
+      "start": 88.64,
+      "end": 88.64,
+      "text": "",
+      "words": [],
+      "chars": null
+    },
+    {
+      "start": 88.64,
+      "end": 88.64,
+      "text": "",
+      "words": [],
+      "chars": null
+    },
+    {
+      "start": 88.64,
+      "end": 88.64,
+      "text": "",
+      "words": [],
+      "chars": null
+    },
+    {
+      "start": 88.64,
+      "end": 88.64,
+      "text": "",
+      "words": [],
+      "chars": null
+    },
+    {
+      "start": 88.64,
+      "end": 88.64,
+      "text": "",
+      "words": [],
+      "chars": null
+    },
+    {
+      "start": 88.64,
+      "end": 89.04,
+      "text": " ¿Qué es la democracia?",
+      "words": [],
+      "chars": null,
+      "speaker": "SPEAKER_00"
+    },
+    {
+      "start": 89.04,
+      "end": 89.04,
+      "text": "",
+      "words": [],
+      "chars": null
+    },
+    {
+      "start": 89.04,
+      "end": 89.04,
+      "text": "",
+      "words": [],
+      "chars": null
+    },
+    {
+      "start": 89.04,
+      "end": 92.16,
+      "text": " Vamos a terminar todos siendo países marxistas.",
+      "words": [
+        {
+          "word": "Vamos",
+          "start": 89.04,
+          "end": 89.425,
+          "speaker": "SPEAKER_00",
+          "probability": 0.19366262387484312,
+          "alignment_score": 0.706
+        },
+        {
+          "word": "a",
+          "start": 89.729,
+          "end": 89.81,
+          "speaker": "SPEAKER_00",
+          "probability": 0.06333737075328827,
+          "alignment_score": 0.478
+        },
+        {
+          "word": "terminar",
+          "start": 90.053,
+          "end": 90.398,
+          "speaker": "SPEAKER_00",
+          "probability": 0.03328097611665726,
+          "alignment_score": 0.847
+        },
+        {
+          "word": "todos",
+          "start": 90.438,
+          "end": 90.782,
+          "speaker": "SPEAKER_00",
+          "probability": 0.500712753739208,
+          "alignment_score": 0.438
+        },
+        {
+          "word": "siendo",
+          "start": 90.803,
+          "end": 91.046,
+          "speaker": "SPEAKER_00",
+          "probability": 0.000669627683237195,
+          "alignment_score": 0.45
+        },
+        {
+          "word": "países",
+          "start": 91.188,
+          "end": 91.532,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9647854566574097,
+          "alignment_score": 0.724
+        },
+        {
+          "word": "marxistas.",
+          "start": 91.613,
+          "end": 92.16,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9370477795600891,
+          "alignment_score": 0.46
+        }
+      ],
+      "speaker": "SPEAKER_00"
+    },
+    {
+      "start": 92.96,
+      "end": 97.86,
+      "text": " Y cuando la periodista le pregunta a Pinochet si ha pensado en retirarse, responde...",
+      "words": [
+        {
+          "word": "Y",
+          "start": 92.96,
+          "end": 93.545,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9460578560829163,
+          "alignment_score": 0.956
+        },
+        {
+          "word": "cuando",
+          "start": 93.585,
+          "end": 93.726,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9956574440002441,
+          "alignment_score": 0.809
+        },
+        {
+          "word": "la",
+          "start": 93.767,
+          "end": 93.867,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9967511892318726,
+          "alignment_score": 0.578
+        },
+        {
+          "word": "periodista",
+          "start": 93.928,
+          "end": 94.271,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9857089718182882,
+          "alignment_score": 0.527
+        },
+        {
+          "word": "le",
+          "start": 94.331,
+          "end": 94.392,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9596855044364929,
+          "alignment_score": 0.942
+        },
+        {
+          "word": "pregunta",
+          "start": 94.432,
+          "end": 94.714,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9987674951553345,
+          "alignment_score": 0.98
+        },
+        {
+          "word": "a",
+          "start": 94.735,
+          "end": 94.755,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9966179728507996,
+          "alignment_score": 0.908
+        },
+        {
+          "word": "Pinochet",
+          "start": 94.815,
+          "end": 95.219,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9993363916873932,
+          "alignment_score": 0.538
+        },
+        {
+          "word": "si",
+          "start": 95.602,
+          "end": 95.642,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9993700385093689,
+          "alignment_score": 0.474
+        },
+        {
+          "word": "ha",
+          "start": 95.662,
+          "end": 95.702,
+          "speaker": "SPEAKER_00",
+          "probability": 0.997899055480957,
+          "alignment_score": 0.714
+        },
+        {
+          "word": "pensado",
+          "start": 95.803,
+          "end": 96.065,
+          "speaker": "SPEAKER_00",
+          "probability": 0.992723286151886,
+          "alignment_score": 0.718
+        },
+        {
+          "word": "en",
+          "start": 96.086,
+          "end": 96.126,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9679276744524637,
+          "alignment_score": 0.452
+        },
+        {
+          "word": "retirarse,",
+          "start": 96.287,
+          "end": 96.933,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9536348581314087,
+          "alignment_score": 0.733
+        },
+        {
+          "word": "responde...",
+          "start": 97.356,
+          "end": 97.86,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9990717172622681,
+          "alignment_score": 0.776
+        }
+      ],
+      "speaker": "SPEAKER_00"
+    },
+    {
+      "start": 98.54,
+      "end": 101.28,
+      "text": " Estoy aquí porque mi pueblo me pide que me quede.",
+      "words": [
+        {
+          "word": "Estoy",
+          "start": 98.54,
+          "end": 99.291,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9939237534999847,
+          "alignment_score": 0.871
+        },
+        {
+          "word": "aquí",
+          "start": 99.413,
+          "end": 99.555,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9998149275779724,
+          "alignment_score": 0.252
+        },
+        {
+          "word": "porque",
+          "start": 99.575,
+          "end": 99.88,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9978321492671967,
+          "alignment_score": 0.812
+        },
+        {
+          "word": "mi",
+          "start": 99.941,
+          "end": 100.022,
+          "speaker": "SPEAKER_00",
+          "probability": 0.7207521547873815,
+          "alignment_score": 0.63
+        },
+        {
+          "word": "pueblo",
+          "start": 100.103,
+          "end": 100.489,
+          "speaker": "SPEAKER_00",
+          "probability": 0.96132892370224,
+          "alignment_score": 0.585
+        },
+        {
+          "word": "me",
+          "start": 100.509,
+          "end": 100.631,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9996016621589661,
+          "alignment_score": 0.826
+        },
+        {
+          "word": "pide",
+          "start": 100.651,
+          "end": 100.813,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9999067783355713,
+          "alignment_score": 0.733
+        },
+        {
+          "word": "que",
+          "start": 100.874,
+          "end": 101.077,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9997127652168274,
+          "alignment_score": 0.677
+        },
+        {
+          "word": "me",
+          "start": 101.098,
+          "end": 101.138,
+          "speaker": "SPEAKER_00",
+          "probability": 0.999984622001648,
+          "alignment_score": 0.0
+        },
+        {
+          "word": "quede.",
+          "start": 101.159,
+          "end": 101.28,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9996565580368042,
+          "alignment_score": 0.165
+        }
+      ],
+      "speaker": "SPEAKER_00"
+    },
+    {
+      "start": 102.08,
+      "end": 103.607,
+      "text": " Síganme, dicen.",
+      "words": [
+        {
+          "word": "Síganme,",
+          "start": 102.08,
+          "end": 102.711,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9998673498630524,
+          "alignment_score": 0.382
+        },
+        {
+          "word": "dicen.",
+          "start": 102.731,
+          "end": 103.607,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9999516010284424,
+          "alignment_score": 0.758
+        }
+      ],
+      "speaker": "SPEAKER_00"
+    },
+    {
+      "start": 103.627,
+      "end": 104.38,
+      "text": "Por favor, no nos deje.",
+      "words": [
+        {
+          "word": "Por",
+          "start": 103.627,
+          "end": 103.688,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9999868869781494,
+          "alignment_score": 0.006
+        },
+        {
+          "word": "favor,",
+          "start": 103.709,
+          "end": 103.953,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9993084371089935,
+          "alignment_score": 0.404
+        },
+        {
+          "word": "no",
+          "start": 103.973,
+          "end": 104.014,
+          "speaker": "SPEAKER_00",
+          "probability": 0.5814613699913025,
+          "alignment_score": 0.026
+        },
+        {
+          "word": "nos",
+          "start": 104.034,
+          "end": 104.258,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9986170530319214,
+          "alignment_score": 0.439
+        },
+        {
+          "word": "deje.",
+          "start": 104.279,
+          "end": 104.38,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9167821407318115,
+          "alignment_score": 0.191
+        }
+      ],
+      "speaker": "SPEAKER_00"
+    },
+    {
+      "start": 104.98,
+      "end": 107.124,
+      "text": " Yo no andaba buscando este puesto.",
+      "words": [
+        {
+          "word": "Yo",
+          "start": 104.98,
+          "end": 105.486,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9999662637710571,
+          "alignment_score": 0.436
+        },
+        {
+          "word": "no",
+          "start": 105.506,
+          "end": 105.587,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9990525841712952,
+          "alignment_score": 0.73
+        },
+        {
+          "word": "andaba",
+          "start": 105.627,
+          "end": 105.951,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9890182018280029,
+          "alignment_score": 0.717
+        },
+        {
+          "word": "buscando",
+          "start": 106.032,
+          "end": 106.436,
+          "speaker": "SPEAKER_00",
+          "probability": 0.7620689868927002,
+          "alignment_score": 0.941
+        },
+        {
+          "word": "este",
+          "start": 106.497,
+          "end": 106.699,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9787737727165222,
+          "alignment_score": 0.862
+        },
+        {
+          "word": "puesto.",
+          "start": 106.719,
+          "end": 107.124,
+          "speaker": "SPEAKER_00",
+          "probability": 0.8135355710983276,
+          "alignment_score": 0.87
+        }
+      ],
+      "speaker": "SPEAKER_00"
+    },
+    {
+      "start": 107.164,
+      "end": 108.62,
+      "text": "El destino me lo dio.",
+      "words": [
+        {
+          "word": "El",
+          "start": 107.164,
+          "end": 107.67,
+          "speaker": "SPEAKER_00",
+          "probability": 0.999243289232254,
+          "alignment_score": 0.846
+        },
+        {
+          "word": "destino",
+          "start": 107.73,
+          "end": 108.337,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9998996257781982,
+          "alignment_score": 0.954
+        },
+        {
+          "word": "me",
+          "start": 108.378,
+          "end": 108.458,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9794650673866272,
+          "alignment_score": 0.79
+        },
+        {
+          "word": "lo",
+          "start": 108.479,
+          "end": 108.519,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9998680353164673,
+          "alignment_score": 0.004
+        },
+        {
+          "word": "dio.",
+          "start": 108.539,
+          "end": 108.62,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9990922212600708,
+          "alignment_score": 0.25
+        }
+      ],
+      "speaker": "SPEAKER_00"
+    },
+    {
+      "start": 109.2,
+      "end": 111.18,
+      "text": " Así que el pueblo se lo pide, ¿ah?",
+      "words": [
+        {
+          "word": "Así",
+          "start": 109.2,
+          "end": 109.915,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9998621642589569,
+          "alignment_score": 0.361
+        },
+        {
+          "word": "que",
+          "start": 109.935,
+          "end": 110.037,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9998433589935303,
+          "alignment_score": 0.843
+        },
+        {
+          "word": "el",
+          "start": 110.078,
+          "end": 110.139,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9999656677246094,
+          "alignment_score": 0.936
+        },
+        {
+          "word": "pueblo",
+          "start": 110.221,
+          "end": 110.445,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9995390176773071,
+          "alignment_score": 0.606
+        },
+        {
+          "word": "se",
+          "start": 110.65,
+          "end": 110.711,
+          "speaker": "SPEAKER_00",
+          "probability": 0.998965859413147,
+          "alignment_score": 0.768
+        },
+        {
+          "word": "lo",
+          "start": 110.752,
+          "end": 110.813,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9996508359909058,
+          "alignment_score": 0.73
+        },
+        {
+          "word": "pide,",
+          "start": 110.976,
+          "end": 111.078,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9996911287307739,
+          "alignment_score": 0.001
+        },
+        {
+          "word": "¿ah?",
+          "start": 111.099,
+          "end": 111.18,
+          "speaker": "SPEAKER_00",
+          "probability": 0.999980092048645,
+          "alignment_score": 0.248
+        }
+      ],
+      "speaker": "SPEAKER_00"
+    },
+    {
+      "start": 111.36,
+      "end": 113.04,
+      "text": " Por favor, no nos deje.",
+      "words": [
+        {
+          "word": "Por",
+          "start": 111.36,
+          "end": 112.118,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9777979850769043,
+          "alignment_score": 0.268
+        },
+        {
+          "word": "favor,",
+          "start": 112.139,
+          "end": 112.549,
+          "speaker": "SPEAKER_00",
+          "probability": 0.8837565183639526,
+          "alignment_score": 0.186
+        },
+        {
+          "word": "no",
+          "start": 112.569,
+          "end": 112.61,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9990435242652893,
+          "alignment_score": 0.277
+        },
+        {
+          "word": "nos",
+          "start": 112.733,
+          "end": 112.918,
+          "speaker": "SPEAKER_00",
+          "probability": 0.775795191526413,
+          "alignment_score": 0.237
+        },
+        {
+          "word": "deje.",
+          "start": 112.938,
+          "end": 113.04,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9989141225814819,
+          "alignment_score": 0.225
+        }
+      ],
+      "speaker": "SPEAKER_00"
+    },
+    {
+      "start": 113.44,
+      "end": 116.64,
+      "text": " ¿Cómo se nota que el tipo está cada vez más al margen de la realidad?",
+      "words": [
+        {
+          "word": "¿Cómo",
+          "start": 113.44,
+          "end": 114.007,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9999747276306152,
+          "alignment_score": 0.914
+        },
+        {
+          "word": "se",
+          "start": 114.068,
+          "end": 114.129,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9999672174453735,
+          "alignment_score": 0.524
+        },
+        {
+          "word": "nota",
+          "start": 114.149,
+          "end": 114.392,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9997841715812683,
+          "alignment_score": 0.453
+        },
+        {
+          "word": "que",
+          "start": 114.412,
+          "end": 114.493,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9989282190799713,
+          "alignment_score": 0.254
+        },
+        {
+          "word": "el",
+          "start": 114.514,
+          "end": 114.554,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9448199570178986,
+          "alignment_score": 0.72
+        },
+        {
+          "word": "tipo",
+          "start": 114.595,
+          "end": 114.757,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9998855590820312,
+          "alignment_score": 0.798
+        },
+        {
+          "word": "está",
+          "start": 114.797,
+          "end": 114.979,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9999229907989502,
+          "alignment_score": 0.73
+        },
+        {
+          "word": "cada",
+          "start": 115.04,
+          "end": 115.202,
+          "speaker": "SPEAKER_00",
+          "probability": 0.8906099796295166,
+          "alignment_score": 0.851
+        },
+        {
+          "word": "vez",
+          "start": 115.243,
+          "end": 115.344,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9999326467514038,
+          "alignment_score": 0.98
+        },
+        {
+          "word": "más",
+          "start": 115.445,
+          "end": 115.567,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9996446371078491,
+          "alignment_score": 0.791
+        },
+        {
+          "word": "al",
+          "start": 115.607,
+          "end": 115.648,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9998792409896851,
+          "alignment_score": 0.489
+        },
+        {
+          "word": "margen",
+          "start": 115.83,
+          "end": 116.215,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9999645948410034,
+          "alignment_score": 0.758
+        },
+        {
+          "word": "de",
+          "start": 116.235,
+          "end": 116.336,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9999861717224121,
+          "alignment_score": 0.816
+        },
+        {
+          "word": "la",
+          "start": 116.357,
+          "end": 116.438,
+          "speaker": "SPEAKER_00",
+          "probability": 0.999887228012085,
+          "alignment_score": 0.73
+        },
+        {
+          "word": "realidad?",
+          "start": 116.458,
+          "end": 116.64,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9990870952606201,
+          "alignment_score": 0.112
+        }
+      ],
+      "speaker": "SPEAKER_00"
+    },
+    {
+      "start": 117.08,
+      "end": 118.261,
+      "text": " ¿Qué es la democracia?",
+      "words": [
+        {
+          "word": "¿Qué",
+          "start": 117.08,
+          "end": 117.846,
+          "speaker": "SPEAKER_00",
+          "probability": 0.999718189239502,
+          "alignment_score": 0.711
+        },
+        {
+          "word": "es",
+          "start": 117.867,
+          "end": 117.909,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9998313188552856,
+          "alignment_score": 0.309
+        },
+        {
+          "word": "la",
+          "start": 117.971,
+          "end": 118.012,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9999406337738037,
+          "alignment_score": 0.003
+        },
+        {
+          "word": "democracia?",
+          "start": 118.033,
+          "end": 118.261,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9997944235801697,
+          "alignment_score": 0.1
+        }
+      ],
+      "speaker": "SPEAKER_00"
+    },
+    {
+      "start": 118.32,
+      "end": 118.62,
+      "text": " ¿Qué es la democracia?",
+      "words": [],
+      "chars": null,
+      "speaker": "SPEAKER_00"
+    },
+    {
+      "start": 118.62,
+      "end": 118.62,
+      "text": "",
+      "words": [],
+      "chars": null
+    },
+    {
+      "start": 118.62,
+      "end": 118.62,
+      "text": "",
+      "words": [],
+      "chars": null
+    },
+    {
+      "start": 118.62,
+      "end": 118.62,
+      "text": "",
+      "words": [],
+      "chars": null
+    },
+    {
+      "start": 118.62,
+      "end": 118.62,
+      "text": "",
+      "words": [],
+      "chars": null
+    },
+    {
+      "start": 118.62,
+      "end": 118.62,
+      "text": "",
+      "words": [],
+      "chars": null
+    },
+    {
+      "start": 118.62,
+      "end": 125.68,
+      "text": " Si va a ir a la reelección cuando termine su periodo en 1989, Pinochet dice...",
+      "words": [
+        {
+          "word": "Si",
+          "start": 118.62,
+          "end": 118.721,
+          "speaker": "SPEAKER_00",
+          "probability": 0.09858767734840512,
+          "alignment_score": 0.576
+        },
+        {
+          "word": "va",
+          "start": 119.525,
+          "end": 119.585,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9432721734046936,
+          "alignment_score": 0.956
+        },
+        {
+          "word": "a",
+          "start": 119.626,
+          "end": 119.646,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9975652694702148,
+          "alignment_score": 0.174
+        },
+        {
+          "word": "ir",
+          "start": 119.767,
+          "end": 119.827,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9950958788394928,
+          "alignment_score": 0.71
+        },
+        {
+          "word": "a",
+          "start": 119.867,
+          "end": 119.887,
+          "speaker": "SPEAKER_00",
+          "probability": 0.6788677126169205,
+          "alignment_score": 0.949
+        },
+        {
+          "word": "la",
+          "start": 119.968,
+          "end": 120.028,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9995110034942627,
+          "alignment_score": 0.947
+        },
+        {
+          "word": "reelección",
+          "start": 120.149,
+          "end": 120.752,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9998131394386292,
+          "alignment_score": 0.966
+        },
+        {
+          "word": "cuando",
+          "start": 120.792,
+          "end": 121.396,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9971930980682373,
+          "alignment_score": 0.429
+        },
+        {
+          "word": "termine",
+          "start": 121.476,
+          "end": 121.778,
+          "speaker": "SPEAKER_00",
+          "probability": 0.1074545755982399,
+          "alignment_score": 0.901
+        },
+        {
+          "word": "su",
+          "start": 121.879,
+          "end": 121.999,
+          "speaker": "SPEAKER_00",
+          "probability": 0.7856046557426453,
+          "alignment_score": 0.736
+        },
+        {
+          "word": "periodo",
+          "start": 122.019,
+          "end": 122.401,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9901198148727417,
+          "alignment_score": 0.768
+        },
+        {
+          "word": "en",
+          "start": 122.643,
+          "end": 122.723,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9943236112594604,
+          "alignment_score": 0.91
+        },
+        {
+          "word": "1989,",
+          "start": 122.764,
+          "end": 123.407,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9969437718391418,
+          "alignment_score": 0.863
+        },
+        {
+          "word": "Pinochet",
+          "start": 123.468,
+          "end": 123.83,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9950183629989624,
+          "alignment_score": 0.581
+        },
+        {
+          "word": "dice...",
+          "start": 123.85,
+          "end": 125.68,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9845536947250366,
+          "alignment_score": 0.71
+        }
+      ],
+      "speaker": "SPEAKER_00"
+    },
+    {
+      "start": 126.3,
+      "end": 129.2,
+      "text": " ¿Será el pueblo soberano de Chile el que tendrá que decidir?",
+      "words": [
+        {
+          "word": "¿Será",
+          "start": 126.3,
+          "end": 126.543,
+          "speaker": "SPEAKER_00",
+          "probability": 0.7379387617111206,
+          "alignment_score": 0.726
+        },
+        {
+          "word": "el",
+          "start": 126.625,
+          "end": 126.685,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9951416552066803,
+          "alignment_score": 0.984
+        },
+        {
+          "word": "pueblo",
+          "start": 126.787,
+          "end": 127.03,
+          "speaker": "SPEAKER_00",
+          "probability": 0.992201566696167,
+          "alignment_score": 0.892
+        },
+        {
+          "word": "soberano",
+          "start": 127.071,
+          "end": 127.679,
+          "speaker": "SPEAKER_00",
+          "probability": 0.7172860205173492,
+          "alignment_score": 0.889
+        },
+        {
+          "word": "de",
+          "start": 127.72,
+          "end": 127.801,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9278260469436646,
+          "alignment_score": 0.735
+        },
+        {
+          "word": "Chile",
+          "start": 127.983,
+          "end": 128.085,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9973847270011902,
+          "alignment_score": 0.161
+        },
+        {
+          "word": "el",
+          "start": 128.125,
+          "end": 128.186,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9909733931223551,
+          "alignment_score": 0.73
+        },
+        {
+          "word": "que",
+          "start": 128.247,
+          "end": 128.328,
+          "speaker": "SPEAKER_00",
+          "probability": 0.5119685474783182,
+          "alignment_score": 0.953
+        },
+        {
+          "word": "tendrá",
+          "start": 128.409,
+          "end": 128.653,
+          "speaker": "SPEAKER_00",
+          "probability": 0.7332845479249954,
+          "alignment_score": 0.836
+        },
+        {
+          "word": "que",
+          "start": 128.714,
+          "end": 128.815,
+          "speaker": "SPEAKER_00",
+          "probability": 0.999849796295166,
+          "alignment_score": 0.855
+        },
+        {
+          "word": "decidir?",
+          "start": 128.876,
+          "end": 129.2,
+          "speaker": "SPEAKER_00",
+          "probability": 0.999721348285675,
+          "alignment_score": 0.221
+        }
+      ],
+      "speaker": "SPEAKER_00"
+    },
+    {
+      "start": 129.3,
+      "end": 131.863,
+      "text": " En este momento mi posición es fuerte.",
+      "words": [
+        {
+          "word": "En",
+          "start": 129.3,
+          "end": 130.027,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9999154210090637,
+          "alignment_score": 0.596
+        },
+        {
+          "word": "este",
+          "start": 130.067,
+          "end": 130.228,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9816110134124756,
+          "alignment_score": 0.926
+        },
+        {
+          "word": "momento",
+          "start": 130.289,
+          "end": 130.572,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9952700734138489,
+          "alignment_score": 0.746
+        },
+        {
+          "word": "mi",
+          "start": 130.612,
+          "end": 130.652,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9995309114456177,
+          "alignment_score": 0.469
+        },
+        {
+          "word": "posición",
+          "start": 130.874,
+          "end": 131.238,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9999868869781494,
+          "alignment_score": 0.84
+        },
+        {
+          "word": "es",
+          "start": 131.258,
+          "end": 131.318,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9999538064002991,
+          "alignment_score": 0.531
+        },
+        {
+          "word": "fuerte.",
+          "start": 131.44,
+          "end": 131.863,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9999029636383057,
+          "alignment_score": 0.903
+        }
+      ],
+      "speaker": "SPEAKER_00"
+    },
+    {
+      "start": 132.287,
+      "end": 133.7,
+      "text": "Tengo todo marchando a mi favor.",
+      "words": [
+        {
+          "word": "Tengo",
+          "start": 132.287,
+          "end": 132.489,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9994768798351288,
+          "alignment_score": 0.893
+        },
+        {
+          "word": "todo",
+          "start": 132.63,
+          "end": 132.812,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9979943037033081,
+          "alignment_score": 0.683
+        },
+        {
+          "word": "marchando",
+          "start": 132.873,
+          "end": 133.458,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9997758269309998,
+          "alignment_score": 0.664
+        },
+        {
+          "word": "a",
+          "start": 133.478,
+          "end": 133.498,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9999880790710449,
+          "alignment_score": 0.002
+        },
+        {
+          "word": "mi",
+          "start": 133.519,
+          "end": 133.559,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9970165491104126,
+          "alignment_score": 0.0
+        },
+        {
+          "word": "favor.",
+          "start": 133.579,
+          "end": 133.7,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9998550415039062,
+          "alignment_score": 0.164
+        }
+      ],
+      "speaker": "SPEAKER_00"
+    },
+    {
+      "start": 134.36,
+      "end": 138.06,
+      "text": " Dentro de cinco años más por el camino, las cosas podrían ser diferentes.",
+      "words": [
+        {
+          "word": "Dentro",
+          "start": 134.36,
+          "end": 135.088,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9999724626541138,
+          "alignment_score": 0.442
+        },
+        {
+          "word": "de",
+          "start": 135.128,
+          "end": 135.209,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9998076558113098,
+          "alignment_score": 0.732
+        },
+        {
+          "word": "cinco",
+          "start": 135.229,
+          "end": 135.432,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9998463094234467,
+          "alignment_score": 0.775
+        },
+        {
+          "word": "años",
+          "start": 135.472,
+          "end": 135.614,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9997466206550598,
+          "alignment_score": 0.795
+        },
+        {
+          "word": "más",
+          "start": 135.695,
+          "end": 135.836,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9170835316181183,
+          "alignment_score": 0.652
+        },
+        {
+          "word": "por",
+          "start": 135.856,
+          "end": 135.957,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9998821020126343,
+          "alignment_score": 0.956
+        },
+        {
+          "word": "el",
+          "start": 135.998,
+          "end": 136.079,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9999170303344727,
+          "alignment_score": 0.793
+        },
+        {
+          "word": "camino,",
+          "start": 136.139,
+          "end": 136.443,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9999452829360962,
+          "alignment_score": 0.959
+        },
+        {
+          "word": "las",
+          "start": 136.483,
+          "end": 136.968,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9996854960918427,
+          "alignment_score": 0.848
+        },
+        {
+          "word": "cosas",
+          "start": 137.029,
+          "end": 137.292,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9999943971633911,
+          "alignment_score": 0.69
+        },
+        {
+          "word": "podrían",
+          "start": 137.332,
+          "end": 137.615,
+          "speaker": "SPEAKER_00",
+          "probability": 0.887933611869812,
+          "alignment_score": 0.856
+        },
+        {
+          "word": "ser",
+          "start": 137.737,
+          "end": 137.818,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9999864101409912,
+          "alignment_score": 0.614
+        },
+        {
+          "word": "diferentes.",
+          "start": 137.838,
+          "end": 138.06,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9999663829803467,
+          "alignment_score": 0.093
+        }
+      ],
+      "speaker": "SPEAKER_00"
+    },
+    {
+      "start": 138.58,
+      "end": 141.9,
+      "text": " Así que es demasiado temprano para pensar en 1989.",
+      "words": [
+        {
+          "word": "Así",
+          "start": 138.58,
+          "end": 139.39,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9999020099639893,
+          "alignment_score": 0.412
+        },
+        {
+          "word": "que",
+          "start": 139.41,
+          "end": 139.511,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9999643564224243,
+          "alignment_score": 0.593
+        },
+        {
+          "word": "es",
+          "start": 139.532,
+          "end": 139.572,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9998470544815063,
+          "alignment_score": 0.406
+        },
+        {
+          "word": "demasiado",
+          "start": 139.613,
+          "end": 140.017,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9997645020484924,
+          "alignment_score": 0.94
+        },
+        {
+          "word": "temprano",
+          "start": 140.098,
+          "end": 140.564,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9999879598617554,
+          "alignment_score": 0.831
+        },
+        {
+          "word": "para",
+          "start": 140.645,
+          "end": 140.726,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9998402297496796,
+          "alignment_score": 0.922
+        },
+        {
+          "word": "pensar",
+          "start": 140.827,
+          "end": 141.131,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9997276663780212,
+          "alignment_score": 0.81
+        },
+        {
+          "word": "en",
+          "start": 141.212,
+          "end": 141.273,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9997016787528992,
+          "alignment_score": 0.466
+        },
+        {
+          "word": "1989.",
+          "start": 141.293,
+          "end": 141.9,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9992006421089172,
+          "alignment_score": 0.781
+        }
+      ],
+      "speaker": "SPEAKER_00"
+    },
+    {
+      "start": 149.92,
+      "end": 152.74,
+      "text": " La España",
+      "words": [
+        {
+          "word": "La",
+          "start": 149.92,
+          "end": 150.448,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9999706745147705,
+          "alignment_score": 0.492
+        },
+        {
+          "word": "España",
+          "start": 150.468,
+          "end": 152.74,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9999254941940308,
+          "alignment_score": 0.632
+        }
+      ],
+      "speaker": "SPEAKER_00"
+    },
+    {
+      "start": 152.72,
+      "end": 153.381,
+      "text": " La Política",
+      "words": [
+        {
+          "word": "La",
+          "start": 152.72,
+          "end": 153.168,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9999802112579346,
+          "alignment_score": 0.305
+        },
+        {
+          "word": "Política",
+          "start": 153.189,
+          "end": 153.381,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9999704360961914,
+          "alignment_score": 0.353
+        }
+      ],
+      "speaker": "SPEAKER_00"
+    },
+    {
+      "start": 153.36,
+      "end": 154.621,
+      "text": " La Lausana",
+      "words": [
+        {
+          "word": "La",
+          "start": 153.36,
+          "end": 154.083,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9999455213546753,
+          "alignment_score": 0.643
+        },
+        {
+          "word": "Lausana",
+          "start": 154.125,
+          "end": 154.621,
+          "probability": 0.9998090863227844,
+          "alignment_score": 0.257
+        }
+      ],
+      "speaker": "SPEAKER_00"
+    },
+    {
+      "start": 154.6,
+      "end": 155.761,
+      "text": " La Política",
+      "words": [
+        {
+          "word": "La",
+          "start": 154.6,
+          "end": 155.574,
+          "probability": 0.9996163845062256,
+          "alignment_score": 0.448
+        },
+        {
+          "word": "Política",
+          "start": 155.595,
+          "end": 155.761,
+          "probability": 0.9996825456619263,
+          "alignment_score": 0.125
+        }
+      ]
+    },
+    {
+      "start": 155.74,
+      "end": 156.162,
+      "text": " La Máxima",
+      "words": [
+        {
+          "word": "La",
+          "start": 155.74,
+          "end": 156.007,
+          "probability": 0.00014985589950811118,
+          "alignment_score": 0.452
+        },
+        {
+          "word": "Máxima",
+          "start": 156.029,
+          "end": 156.162,
+          "probability": 5.647820216836408e-05,
+          "alignment_score": 0.166
+        }
+      ]
+    },
+    {
+      "start": 156.14,
+      "end": 156.14,
+      "text": "",
+      "words": [],
+      "chars": null
+    },
+    {
+      "start": 156.14,
+      "end": 156.14,
+      "text": "",
+      "words": [],
+      "chars": null
+    },
+    {
+      "start": 156.14,
+      "end": 156.14,
+      "text": "",
+      "words": [],
+      "chars": null
+    },
+    {
+      "start": 156.14,
+      "end": 156.14,
+      "text": "",
+      "words": [],
+      "chars": null
+    },
+    {
+      "start": 156.14,
+      "end": 156.14,
+      "text": "",
+      "words": [],
+      "chars": null
+    },
+    {
+      "start": 156.14,
+      "end": 156.14,
+      "text": "",
+      "words": [],
+      "chars": null
+    },
+    {
+      "start": 156.14,
+      "end": 156.14,
+      "text": "",
+      "words": [],
+      "chars": null
+    },
+    {
+      "start": 156.12,
+      "end": 156.12,
+      "text": "",
+      "words": [],
+      "chars": null
+    }
+  ],
+  "word_segments": [
+    {
+      "word": "...con",
+      "start": 0.0,
+      "end": 0.242,
+      "speaker": "SPEAKER_00",
+      "probability": 0.5741397887468338,
+      "alignment_score": 0.175
+    },
+    {
+      "word": "la",
+      "start": 0.262,
+      "end": 0.343,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9993230104446411,
+      "alignment_score": 0.898
+    },
+    {
+      "word": "parte",
+      "start": 0.383,
+      "end": 0.584,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9998483657836914,
+      "alignment_score": 0.847
+    },
+    {
+      "word": "del",
+      "start": 0.645,
+      "end": 0.866,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9996987581253052,
+      "alignment_score": 0.625
+    },
+    {
+      "word": "programa",
+      "start": 0.907,
+      "end": 1.33,
+      "speaker": "SPEAKER_00",
+      "probability": 0.999907374382019,
+      "alignment_score": 0.796
+    },
+    {
+      "word": "Escucha",
+      "start": 1.39,
+      "end": 1.874,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9784162044525146,
+      "alignment_score": 0.61
+    },
+    {
+      "word": "Chivo,",
+      "start": 1.894,
+      "end": 2.156,
+      "speaker": "SPEAKER_00",
+      "probability": 0.6173475980758667,
+      "alignment_score": 0.779
+    },
+    {
+      "word": "que",
+      "start": 2.499,
+      "end": 2.579,
+      "speaker": "SPEAKER_00",
+      "probability": 0.999972939491272,
+      "alignment_score": 0.411
+    },
+    {
+      "word": "llega",
+      "start": 2.64,
+      "end": 2.821,
+      "speaker": "SPEAKER_00",
+      "probability": 0.997137188911438,
+      "alignment_score": 0.599
+    },
+    {
+      "word": "a",
+      "start": 2.861,
+      "end": 2.881,
+      "speaker": "SPEAKER_00",
+      "probability": 0.994649350643158,
+      "alignment_score": 0.017
+    },
+    {
+      "word": "ustedes",
+      "start": 2.902,
+      "end": 3.365,
+      "speaker": "SPEAKER_00",
+      "probability": 0.713248074054718,
+      "alignment_score": 0.445
+    },
+    {
+      "word": "diariamente",
+      "start": 3.385,
+      "end": 3.949,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9998591244220734,
+      "alignment_score": 0.811
+    },
+    {
+      "word": "por",
+      "start": 4.03,
+      "end": 4.131,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9999279975891113,
+      "alignment_score": 0.867
+    },
+    {
+      "word": "las",
+      "start": 4.171,
+      "end": 4.272,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9744028449058533,
+      "alignment_score": 0.707
+    },
+    {
+      "word": "ondas",
+      "start": 4.373,
+      "end": 4.574,
+      "speaker": "SPEAKER_00",
+      "probability": 0.8877873718738556,
+      "alignment_score": 0.511
+    },
+    {
+      "word": "de",
+      "start": 4.594,
+      "end": 4.776,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9978213310241699,
+      "alignment_score": 0.299
+    },
+    {
+      "word": "Radio",
+      "start": 4.796,
+      "end": 5.259,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9893504977226257,
+      "alignment_score": 0.782
+    },
+    {
+      "word": "Moscú.",
+      "start": 5.279,
+      "end": 5.4,
+      "speaker": "SPEAKER_00",
+      "probability": 0.994746595621109,
+      "alignment_score": 0.17
+    },
+    {
+      "word": "Parece",
+      "start": 5.68,
+      "end": 6.504,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9998735189437866,
+      "alignment_score": 0.938
+    },
+    {
+      "word": "un",
+      "start": 6.584,
+      "end": 6.645,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9999957084655762,
+      "alignment_score": 0.871
+    },
+    {
+      "word": "poco",
+      "start": 6.685,
+      "end": 6.846,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9985287189483643,
+      "alignment_score": 0.904
+    },
+    {
+      "word": "increíble",
+      "start": 6.926,
+      "end": 7.348,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9999557137489319,
+      "alignment_score": 0.936
+    },
+    {
+      "word": "que",
+      "start": 7.368,
+      "end": 7.429,
+      "speaker": "SPEAKER_00",
+      "probability": 0.999993085861206,
+      "alignment_score": 0.32
+    },
+    {
+      "word": "a",
+      "start": 7.449,
+      "end": 7.469,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9998601675033569,
+      "alignment_score": 0.995
+    },
+    {
+      "word": "estas",
+      "start": 7.549,
+      "end": 7.971,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9999567270278931,
+      "alignment_score": 0.266
+    },
+    {
+      "word": "alturas",
+      "start": 7.991,
+      "end": 8.253,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9999645948410034,
+      "alignment_score": 0.911
+    },
+    {
+      "word": "de",
+      "start": 8.293,
+      "end": 8.353,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9999958276748657,
+      "alignment_score": 0.863
+    },
+    {
+      "word": "la",
+      "start": 8.393,
+      "end": 8.434,
+      "speaker": "SPEAKER_00",
+      "probability": 0.999990701675415,
+      "alignment_score": 0.948
+    },
+    {
+      "word": "situación",
+      "start": 8.514,
+      "end": 8.876,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9999724626541138,
+      "alignment_score": 0.976
+    },
+    {
+      "word": "haya",
+      "start": 8.916,
+      "end": 9.418,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9508576393127441,
+      "alignment_score": 0.376
+    },
+    {
+      "word": "quienes",
+      "start": 9.479,
+      "end": 9.8,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9992546439170837,
+      "alignment_score": 0.177
+    },
+    {
+      "word": "piensen",
+      "start": 9.82,
+      "end": 10.162,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9996692836284637,
+      "alignment_score": 0.57
+    },
+    {
+      "word": "en",
+      "start": 10.464,
+      "end": 10.524,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9958297610282898,
+      "alignment_score": 0.682
+    },
+    {
+      "word": "la",
+      "start": 10.564,
+      "end": 10.604,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9999953508377075,
+      "alignment_score": 0.818
+    },
+    {
+      "word": "oposición",
+      "start": 10.685,
+      "end": 11.147,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9999376932779948,
+      "alignment_score": 0.938
+    },
+    {
+      "word": "chilena",
+      "start": 11.167,
+      "end": 11.649,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9997842013835907,
+      "alignment_score": 0.376
+    },
+    {
+      "word": "en",
+      "start": 11.69,
+      "end": 11.951,
+      "speaker": "SPEAKER_00",
+      "probability": 0.8905380964279175,
+      "alignment_score": 0.842
+    },
+    {
+      "word": "nuevos",
+      "start": 12.011,
+      "end": 12.232,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9999841451644897,
+      "alignment_score": 0.831
+    },
+    {
+      "word": "diálogos",
+      "start": 12.252,
+      "end": 12.654,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9999693036079407,
+      "alignment_score": 0.85
+    },
+    {
+      "word": "con",
+      "start": 12.775,
+      "end": 12.916,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9999957084655762,
+      "alignment_score": 0.945
+    },
+    {
+      "word": "el",
+      "start": 12.956,
+      "end": 13.036,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9999980926513672,
+      "alignment_score": 0.728
+    },
+    {
+      "word": "régimen",
+      "start": 13.117,
+      "end": 13.398,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9999704360961914,
+      "alignment_score": 0.854
+    },
+    {
+      "word": "de",
+      "start": 13.438,
+      "end": 13.599,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9999911785125732,
+      "alignment_score": 0.89
+    },
+    {
+      "word": "Pinochet.",
+      "start": 13.619,
+      "end": 13.8,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9997026522954305,
+      "alignment_score": 0.111
+    },
+    {
+      "word": "Pijarpa",
+      "start": 14.2,
+      "end": 14.854,
+      "speaker": "SPEAKER_00",
+      "probability": 0.552669569849968,
+      "alignment_score": 0.594
+    },
+    {
+      "word": "lo",
+      "start": 14.915,
+      "end": 14.976,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9902030229568481,
+      "alignment_score": 0.617
+    },
+    {
+      "word": "repita,",
+      "start": 15.038,
+      "end": 15.365,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9972092807292938,
+      "alignment_score": 0.821
+    },
+    {
+      "word": "claro,",
+      "start": 15.426,
+      "end": 15.671,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9999321699142456,
+      "alignment_score": 0.776
+    },
+    {
+      "word": "es",
+      "start": 15.691,
+      "end": 15.957,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9999815225601196,
+      "alignment_score": 0.302
+    },
+    {
+      "word": "lógico.",
+      "start": 15.977,
+      "end": 16.12,
+      "speaker": "SPEAKER_00",
+      "probability": 0.999976396560669,
+      "alignment_score": 0.145
+    },
+    {
+      "word": "El",
+      "start": 16.2,
+      "end": 16.783,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9999668598175049,
+      "alignment_score": 0.666
+    },
+    {
+      "word": "año",
+      "start": 16.844,
+      "end": 16.944,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9999966621398926,
+      "alignment_score": 0.887
+    },
+    {
+      "word": "pasado,",
+      "start": 17.025,
+      "end": 17.367,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9999957084655762,
+      "alignment_score": 0.997
+    },
+    {
+      "word": "el",
+      "start": 17.387,
+      "end": 17.507,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9964814186096191,
+      "alignment_score": 0.476
+    },
+    {
+      "word": "truco",
+      "start": 17.588,
+      "end": 17.87,
+      "speaker": "SPEAKER_00",
+      "probability": 0.999793807665507,
+      "alignment_score": 0.847
+    },
+    {
+      "word": "del",
+      "start": 17.91,
+      "end": 18.03,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9999980926513672,
+      "alignment_score": 0.783
+    },
+    {
+      "word": "diálogo",
+      "start": 18.091,
+      "end": 18.392,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9999881982803345,
+      "alignment_score": 0.978
+    },
+    {
+      "word": "le",
+      "start": 18.413,
+      "end": 18.453,
+      "speaker": "SPEAKER_00",
+      "probability": 0.32646554708480835,
+      "alignment_score": 0.5
+    },
+    {
+      "word": "sirvió",
+      "start": 18.895,
+      "end": 19.056,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9998070001602173,
+      "alignment_score": 0.548
+    },
+    {
+      "word": "a",
+      "start": 19.097,
+      "end": 19.117,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9999572038650513,
+      "alignment_score": 0.204
+    },
+    {
+      "word": "la",
+      "start": 19.157,
+      "end": 19.197,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9999922513961792,
+      "alignment_score": 0.964
+    },
+    {
+      "word": "dictadura",
+      "start": 19.257,
+      "end": 19.599,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9997718036174774,
+      "alignment_score": 0.911
+    },
+    {
+      "word": "para",
+      "start": 19.66,
+      "end": 19.76,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9999905824661255,
+      "alignment_score": 0.928
+    },
+    {
+      "word": "ganar",
+      "start": 19.841,
+      "end": 20.042,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9999676942825317,
+      "alignment_score": 0.799
+    },
+    {
+      "word": "tiempo",
+      "start": 20.223,
+      "end": 20.525,
+      "speaker": "SPEAKER_00",
+      "probability": 0.999981164932251,
+      "alignment_score": 0.982
+    },
+    {
+      "word": "y",
+      "start": 20.545,
+      "end": 20.565,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9999730587005615,
+      "alignment_score": 0.997
+    },
+    {
+      "word": "para",
+      "start": 20.706,
+      "end": 20.826,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9999880790710449,
+      "alignment_score": 0.97
+    },
+    {
+      "word": "debilitar",
+      "start": 20.927,
+      "end": 21.329,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9998835921287537,
+      "alignment_score": 0.854
+    },
+    {
+      "word": "temporalmente",
+      "start": 21.45,
+      "end": 22.073,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9999352693557739,
+      "alignment_score": 0.926
+    },
+    {
+      "word": "la",
+      "start": 22.234,
+      "end": 22.275,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9999783039093018,
+      "alignment_score": 0.84
+    },
+    {
+      "word": "lucha",
+      "start": 22.355,
+      "end": 22.596,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9999927282333374,
+      "alignment_score": 0.864
+    },
+    {
+      "word": "de",
+      "start": 22.637,
+      "end": 22.697,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9999988079071045,
+      "alignment_score": 0.746
+    },
+    {
+      "word": "la",
+      "start": 22.737,
+      "end": 22.777,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9999988079071045,
+      "alignment_score": 0.798
+    },
+    {
+      "word": "oposición.",
+      "start": 22.898,
+      "end": 23.24,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9999858935674032,
+      "alignment_score": 0.254
+    },
+    {
+      "word": "Leyendo",
+      "start": 23.7,
+      "end": 24.345,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9727809131145477,
+      "alignment_score": 0.769
+    },
+    {
+      "word": "la",
+      "start": 24.406,
+      "end": 24.466,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9999735355377197,
+      "alignment_score": 0.848
+    },
+    {
+      "word": "entrevista",
+      "start": 24.527,
+      "end": 24.89,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9998323023319244,
+      "alignment_score": 0.74
+    },
+    {
+      "word": "que",
+      "start": 24.95,
+      "end": 25.031,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9999837875366211,
+      "alignment_score": 0.778
+    },
+    {
+      "word": "Pinochet",
+      "start": 25.071,
+      "end": 25.676,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9999584754308065,
+      "alignment_score": 0.434
+    },
+    {
+      "word": "concedió",
+      "start": 25.817,
+      "end": 26.22,
+      "speaker": "SPEAKER_00",
+      "probability": 0.987069328625997,
+      "alignment_score": 0.49
+    },
+    {
+      "word": "a",
+      "start": 26.24,
+      "end": 26.261,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9994009733200073,
+      "alignment_score": 0.53
+    },
+    {
+      "word": "la",
+      "start": 26.281,
+      "end": 26.321,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9999908208847046,
+      "alignment_score": 0.505
+    },
+    {
+      "word": "revista",
+      "start": 26.361,
+      "end": 26.664,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9999565482139587,
+      "alignment_score": 0.822
+    },
+    {
+      "word": "Newsweek",
+      "start": 26.704,
+      "end": 27.591,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9981745779514313,
+      "alignment_score": 0.2
+    },
+    {
+      "word": "el",
+      "start": 27.612,
+      "end": 27.672,
+      "speaker": "SPEAKER_00",
+      "probability": 0.7842270135879517,
+      "alignment_score": 0.952
+    },
+    {
+      "word": "19",
+      "start": 27.692,
+      "end": 28.075,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9999300241470337,
+      "alignment_score": 0.644
+    },
+    {
+      "word": "de",
+      "start": 28.136,
+      "end": 28.196,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9999973773956299,
+      "alignment_score": 0.925
+    },
+    {
+      "word": "marzo",
+      "start": 28.257,
+      "end": 28.519,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9999549388885498,
+      "alignment_score": 0.843
+    },
+    {
+      "word": "pasado,",
+      "start": 28.539,
+      "end": 28.68,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9997335076332092,
+      "alignment_score": 0.143
+    },
+    {
+      "word": "uno",
+      "start": 28.66,
+      "end": 29.024,
+      "speaker": "SPEAKER_00",
+      "probability": 0.032709285616874695,
+      "alignment_score": 0.706
+    },
+    {
+      "word": "se",
+      "start": 29.71,
+      "end": 29.771,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9433338046073914,
+      "alignment_score": 0.58
+    },
+    {
+      "word": "da",
+      "start": 29.791,
+      "end": 29.872,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9954633116722107,
+      "alignment_score": 0.416
+    },
+    {
+      "word": "cuenta",
+      "start": 29.933,
+      "end": 30.094,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9995684027671814,
+      "alignment_score": 0.823
+    },
+    {
+      "word": "que",
+      "start": 30.114,
+      "end": 30.175,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9396341443061829,
+      "alignment_score": 0.315
+    },
+    {
+      "word": "no",
+      "start": 30.195,
+      "end": 30.377,
+      "speaker": "SPEAKER_00",
+      "probability": 0.997899055480957,
+      "alignment_score": 0.518
+    },
+    {
+      "word": "hay",
+      "start": 30.417,
+      "end": 30.518,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9991828799247742,
+      "alignment_score": 0.376
+    },
+    {
+      "word": "diálogo",
+      "start": 30.579,
+      "end": 30.882,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9876441359519958,
+      "alignment_score": 0.842
+    },
+    {
+      "word": "posible",
+      "start": 30.963,
+      "end": 31.327,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9972397089004517,
+      "alignment_score": 0.849
+    },
+    {
+      "word": "con",
+      "start": 31.428,
+      "end": 31.892,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9909510612487793,
+      "alignment_score": 0.782
+    },
+    {
+      "word": "semejante",
+      "start": 31.912,
+      "end": 32.215,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9971295744180679,
+      "alignment_score": 0.446
+    },
+    {
+      "word": "energúmeno,",
+      "start": 32.236,
+      "end": 32.7,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9695422053337097,
+      "alignment_score": 0.402
+    },
+    {
+      "word": "que",
+      "start": 32.86,
+      "end": 33.564,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9947718977928162,
+      "alignment_score": 0.857
+    },
+    {
+      "word": "no",
+      "start": 33.604,
+      "end": 33.664,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9993510842323303,
+      "alignment_score": 0.798
+    },
+    {
+      "word": "solo",
+      "start": 33.765,
+      "end": 33.905,
+      "speaker": "SPEAKER_00",
+      "probability": 0.46737003326416016,
+      "alignment_score": 0.672
+    },
+    {
+      "word": "es",
+      "start": 34.046,
+      "end": 34.107,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9989836812019348,
+      "alignment_score": 0.466
+    },
+    {
+      "word": "un",
+      "start": 34.569,
+      "end": 34.609,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9983487129211426,
+      "alignment_score": 0.019
+    },
+    {
+      "word": "fascista",
+      "start": 34.629,
+      "end": 34.871,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9968008399009705,
+      "alignment_score": 0.276
+    },
+    {
+      "word": "fanático,",
+      "start": 34.991,
+      "end": 35.514,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9968049824237823,
+      "alignment_score": 0.991
+    },
+    {
+      "word": "contumaz",
+      "start": 35.534,
+      "end": 36.539,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9603126843770345,
+      "alignment_score": 0.716
+    },
+    {
+      "word": "e",
+      "start": 36.841,
+      "end": 36.901,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9972842931747437,
+      "alignment_score": 0.815
+    },
+    {
+      "word": "irracional,",
+      "start": 36.982,
+      "end": 37.625,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9997807939847311,
+      "alignment_score": 0.847
+    },
+    {
+      "word": "sino",
+      "start": 38.148,
+      "end": 38.268,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9989151954650879,
+      "alignment_score": 0.501
+    },
+    {
+      "word": "que",
+      "start": 38.309,
+      "end": 38.369,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9998470544815063,
+      "alignment_score": 0.881
+    },
+    {
+      "word": "encima",
+      "start": 38.469,
+      "end": 38.691,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9994290471076965,
+      "alignment_score": 0.832
+    },
+    {
+      "word": "de",
+      "start": 38.731,
+      "end": 38.791,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9997606873512268,
+      "alignment_score": 0.613
+    },
+    {
+      "word": "eso",
+      "start": 38.871,
+      "end": 39.052,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9939047694206238,
+      "alignment_score": 0.576
+    },
+    {
+      "word": "se",
+      "start": 39.073,
+      "end": 39.193,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9955735206604004,
+      "alignment_score": 0.724
+    },
+    {
+      "word": "siente",
+      "start": 39.213,
+      "end": 39.455,
+      "speaker": "SPEAKER_00",
+      "probability": 0.999811440706253,
+      "alignment_score": 0.79
+    },
+    {
+      "word": "un",
+      "start": 39.635,
+      "end": 39.756,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9992088675498962,
+      "alignment_score": 0.796
+    },
+    {
+      "word": "enviado",
+      "start": 39.816,
+      "end": 40.319,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9984707633654276,
+      "alignment_score": 0.77
+    },
+    {
+      "word": "de",
+      "start": 40.339,
+      "end": 40.399,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9998133778572083,
+      "alignment_score": 0.525
+    },
+    {
+      "word": "Dios.",
+      "start": 40.42,
+      "end": 40.52,
+      "speaker": "SPEAKER_00",
+      "probability": 0.987928569316864,
+      "alignment_score": 0.196
+    },
+    {
+      "word": "Por",
+      "start": 40.82,
+      "end": 41.523,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9985357522964478,
+      "alignment_score": 0.69
+    },
+    {
+      "word": "lo",
+      "start": 41.564,
+      "end": 41.624,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9999711513519287,
+      "alignment_score": 0.854
+    },
+    {
+      "word": "demás,",
+      "start": 41.684,
+      "end": 41.905,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9997748732566833,
+      "alignment_score": 0.873
+    },
+    {
+      "word": "él",
+      "start": 42.146,
+      "end": 42.247,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9960455298423767,
+      "alignment_score": 0.503
+    },
+    {
+      "word": "está",
+      "start": 42.287,
+      "end": 42.448,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9976258873939514,
+      "alignment_score": 0.43
+    },
+    {
+      "word": "demostrando",
+      "start": 42.468,
+      "end": 42.97,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9992538690567017,
+      "alignment_score": 0.729
+    },
+    {
+      "word": "con",
+      "start": 43.071,
+      "end": 43.171,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9961193799972534,
+      "alignment_score": 0.902
+    },
+    {
+      "word": "hechos,",
+      "start": 43.272,
+      "end": 43.513,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9980789124965668,
+      "alignment_score": 0.692
+    },
+    {
+      "word": "con",
+      "start": 43.814,
+      "end": 44.015,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9998694658279419,
+      "alignment_score": 0.81
+    },
+    {
+      "word": "balas,",
+      "start": 44.035,
+      "end": 44.337,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9918162822723389,
+      "alignment_score": 0.849
+    },
+    {
+      "word": "con",
+      "start": 44.658,
+      "end": 44.819,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9999071359634399,
+      "alignment_score": 0.934
+    },
+    {
+      "word": "violencia,",
+      "start": 44.879,
+      "end": 45.382,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9998143911361694,
+      "alignment_score": 0.957
+    },
+    {
+      "word": "con",
+      "start": 45.542,
+      "end": 45.683,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9995813965797424,
+      "alignment_score": 0.87
+    },
+    {
+      "word": "represión,",
+      "start": 45.703,
+      "end": 46.145,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9994136393070221,
+      "alignment_score": 0.627
+    },
+    {
+      "word": "con",
+      "start": 46.567,
+      "end": 46.748,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9997569918632507,
+      "alignment_score": 0.592
+    },
+    {
+      "word": "censura",
+      "start": 46.768,
+      "end": 47.029,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9985581934452057,
+      "alignment_score": 0.708
+    },
+    {
+      "word": "de",
+      "start": 47.07,
+      "end": 47.15,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9999498128890991,
+      "alignment_score": 0.875
+    },
+    {
+      "word": "prensa,",
+      "start": 47.21,
+      "end": 47.532,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9998389283816019,
+      "alignment_score": 0.666
+    },
+    {
+      "word": "que",
+      "start": 47.934,
+      "end": 48.014,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9991002082824707,
+      "alignment_score": 0.896
+    },
+    {
+      "word": "no",
+      "start": 48.054,
+      "end": 48.115,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9998718500137329,
+      "alignment_score": 0.808
+    },
+    {
+      "word": "está",
+      "start": 48.175,
+      "end": 48.436,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9990649819374084,
+      "alignment_score": 0.678
+    },
+    {
+      "word": "dispuesto",
+      "start": 48.476,
+      "end": 48.818,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9997791647911072,
+      "alignment_score": 0.522
+    },
+    {
+      "word": "a",
+      "start": 48.838,
+      "end": 48.858,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9997344613075256,
+      "alignment_score": 0.053
+    },
+    {
+      "word": "ceder",
+      "start": 48.878,
+      "end": 49.099,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9587774276733398,
+      "alignment_score": 0.635
+    },
+    {
+      "word": "en",
+      "start": 49.119,
+      "end": 49.16,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9993690848350525,
+      "alignment_score": 0.0
+    },
+    {
+      "word": "nada.",
+      "start": 49.18,
+      "end": 49.28,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9999197721481323,
+      "alignment_score": 0.201
+    },
+    {
+      "word": "Sus",
+      "start": 49.56,
+      "end": 50.064,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9868164658546448,
+      "alignment_score": 0.637
+    },
+    {
+      "word": "declaraciones",
+      "start": 50.105,
+      "end": 50.589,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9999315142631531,
+      "alignment_score": 0.744
+    },
+    {
+      "word": "a",
+      "start": 50.67,
+      "end": 50.71,
+      "speaker": "SPEAKER_00",
+      "probability": 0.3364619314670563,
+      "alignment_score": 0.513
+    },
+    {
+      "word": "la",
+      "start": 50.73,
+      "end": 50.811,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9993357062339783,
+      "alignment_score": 0.758
+    },
+    {
+      "word": "revista",
+      "start": 50.872,
+      "end": 51.638,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9996946156024933,
+      "alignment_score": 0.786
+    },
+    {
+      "word": "Newsweek",
+      "start": 51.659,
+      "end": 51.82,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9960367679595947,
+      "alignment_score": 0.014
+    },
+    {
+      "word": "son",
+      "start": 51.84,
+      "end": 51.941,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9970476031303406,
+      "alignment_score": 0.488
+    },
+    {
+      "word": "como",
+      "start": 51.981,
+      "end": 52.143,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9999150037765503,
+      "alignment_score": 0.797
+    },
+    {
+      "word": "para",
+      "start": 52.224,
+      "end": 52.345,
+      "speaker": "SPEAKER_00",
+      "probability": 0.999971866607666,
+      "alignment_score": 0.881
+    },
+    {
+      "word": "reproducirlas",
+      "start": 52.486,
+      "end": 53.192,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9983104318380356,
+      "alignment_score": 0.853
+    },
+    {
+      "word": "en",
+      "start": 53.495,
+      "end": 53.596,
+      "speaker": "SPEAKER_00",
+      "probability": 0.5212072134017944,
+      "alignment_score": 0.926
+    },
+    {
+      "word": "extenso.",
+      "start": 53.656,
+      "end": 54.1,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9993017117182413,
+      "alignment_score": 0.652
+    },
+    {
+      "word": "Son",
+      "start": 54.22,
+      "end": 54.955,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9905185103416443,
+      "alignment_score": 0.589
+    },
+    {
+      "word": "toda",
+      "start": 55.037,
+      "end": 55.221,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9960611462593079,
+      "alignment_score": 0.934
+    },
+    {
+      "word": "una",
+      "start": 55.405,
+      "end": 55.507,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9998038411140442,
+      "alignment_score": 0.854
+    },
+    {
+      "word": "lección",
+      "start": 55.589,
+      "end": 55.936,
+      "speaker": "SPEAKER_00",
+      "probability": 0.8687556684017181,
+      "alignment_score": 0.843
+    },
+    {
+      "word": "política.",
+      "start": 55.957,
+      "end": 56.14,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9995632767677307,
+      "alignment_score": 0.111
+    },
+    {
+      "word": "Y",
+      "start": 56.92,
+      "end": 57.186,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9817283749580383,
+      "alignment_score": 0.447
+    },
+    {
+      "word": "son",
+      "start": 57.207,
+      "end": 57.37,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9981546998023987,
+      "alignment_score": 0.358
+    },
+    {
+      "word": "también",
+      "start": 57.411,
+      "end": 57.616,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9982501864433289,
+      "alignment_score": 0.787
+    },
+    {
+      "word": "como",
+      "start": 57.657,
+      "end": 57.862,
+      "speaker": "SPEAKER_00",
+      "probability": 0.999428927898407,
+      "alignment_score": 0.611
+    },
+    {
+      "word": "para",
+      "start": 57.903,
+      "end": 58.026,
+      "speaker": "SPEAKER_00",
+      "probability": 0.999744713306427,
+      "alignment_score": 0.66
+    },
+    {
+      "word": "someterlas...",
+      "start": 58.169,
+      "end": 58.66,
+      "speaker": "SPEAKER_00",
+      "probability": 0.6914736405014992,
+      "alignment_score": 0.359
+    },
+    {
+      "word": "...a",
+      "start": 58.66,
+      "end": 58.847,
+      "speaker": "SPEAKER_00",
+      "probability": 0.283311546780169,
+      "alignment_score": 0.168
+    },
+    {
+      "word": "un",
+      "start": 58.868,
+      "end": 58.91,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9933620691299438,
+      "alignment_score": 0.229
+    },
+    {
+      "word": "estudio",
+      "start": 58.93,
+      "end": 59.18,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9993865489959717,
+      "alignment_score": 0.438
+    },
+    {
+      "word": "psiquiátrico.",
+      "start": 59.305,
+      "end": 59.721,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9995792627334594,
+      "alignment_score": 0.319
+    },
+    {
+      "word": "Por",
+      "start": 59.82,
+      "end": 61.174,
+      "speaker": "SPEAKER_00",
+      "probability": 0.990045964717865,
+      "alignment_score": 0.696
+    },
+    {
+      "word": "ejemplo,",
+      "start": 61.214,
+      "end": 61.437,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9994959831237793,
+      "alignment_score": 0.86
+    },
+    {
+      "word": "mire",
+      "start": 61.477,
+      "end": 61.659,
+      "speaker": "SPEAKER_00",
+      "probability": 0.8794312477111816,
+      "alignment_score": 0.351
+    },
+    {
+      "word": "estas",
+      "start": 61.679,
+      "end": 61.861,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9737291932106018,
+      "alignment_score": 0.708
+    },
+    {
+      "word": "frases",
+      "start": 62.002,
+      "end": 62.265,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9993510842323303,
+      "alignment_score": 0.566
+    },
+    {
+      "word": "para",
+      "start": 62.326,
+      "end": 62.427,
+      "speaker": "SPEAKER_00",
+      "probability": 0.976033627986908,
+      "alignment_score": 0.93
+    },
+    {
+      "word": "el",
+      "start": 62.467,
+      "end": 62.528,
+      "speaker": "SPEAKER_00",
+      "probability": 0.7634810209274292,
+      "alignment_score": 0.645
+    },
+    {
+      "word": "bronce",
+      "start": 62.588,
+      "end": 63.174,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9522849917411804,
+      "alignment_score": 0.355
+    },
+    {
+      "word": "del",
+      "start": 63.195,
+      "end": 63.296,
+      "speaker": "SPEAKER_00",
+      "probability": 0.8711785674095154,
+      "alignment_score": 0.811
+    },
+    {
+      "word": "señor",
+      "start": 63.376,
+      "end": 63.538,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9744814038276672,
+      "alignment_score": 0.428
+    },
+    {
+      "word": "Pinochet.",
+      "start": 63.558,
+      "end": 63.74,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9885187745094299,
+      "alignment_score": 0.111
+    },
+    {
+      "word": "Comillas.",
+      "start": 64.26,
+      "end": 64.802,
+      "speaker": "SPEAKER_00",
+      "probability": 0.8643983602523804,
+      "alignment_score": 0.208
+    },
+    {
+      "word": "Mi",
+      "start": 65.24,
+      "end": 66.04,
+      "speaker": "SPEAKER_00",
+      "probability": 0.4514974057674408,
+      "alignment_score": 0.44
+    },
+    {
+      "word": "fuerza",
+      "start": 66.061,
+      "end": 66.409,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9975032210350037,
+      "alignment_score": 0.611
+    },
+    {
+      "word": "viene",
+      "start": 66.43,
+      "end": 66.676,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9618535041809082,
+      "alignment_score": 0.556
+    },
+    {
+      "word": "de",
+      "start": 66.696,
+      "end": 66.737,
+      "speaker": "SPEAKER_00",
+      "probability": 0.996131181716919,
+      "alignment_score": 0.006
+    },
+    {
+      "word": "Dios.",
+      "start": 66.758,
+      "end": 66.861,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9779691696166992,
+      "alignment_score": 0.198
+    },
+    {
+      "word": "Y",
+      "start": 67.42,
+      "end": 68.107,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9984714388847351,
+      "alignment_score": 0.709
+    },
+    {
+      "word": "más",
+      "start": 68.127,
+      "end": 68.309,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9997171759605408,
+      "alignment_score": 0.586
+    },
+    {
+      "word": "adelante",
+      "start": 68.329,
+      "end": 68.632,
+      "speaker": "SPEAKER_00",
+      "probability": 0.999988317489624,
+      "alignment_score": 0.906
+    },
+    {
+      "word": "dice,",
+      "start": 68.753,
+      "end": 69.056,
+      "speaker": "SPEAKER_00",
+      "probability": 0.984289824962616,
+      "alignment_score": 0.788
+    },
+    {
+      "word": "¿qué",
+      "start": 69.783,
+      "end": 69.925,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9955649971961975,
+      "alignment_score": 0.381
+    },
+    {
+      "word": "es",
+      "start": 69.985,
+      "end": 70.026,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9999338388442993,
+      "alignment_score": 0.5
+    },
+    {
+      "word": "esta",
+      "start": 70.046,
+      "end": 70.127,
+      "speaker": "SPEAKER_00",
+      "probability": 0.999897837638855,
+      "alignment_score": 0.391
+    },
+    {
+      "word": "enfermedad",
+      "start": 70.228,
+      "end": 70.733,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9999364614486694,
+      "alignment_score": 0.692
+    },
+    {
+      "word": "por",
+      "start": 70.813,
+      "end": 70.914,
+      "speaker": "SPEAKER_00",
+      "probability": 0.8936602473258972,
+      "alignment_score": 0.974
+    },
+    {
+      "word": "la",
+      "start": 70.975,
+      "end": 71.015,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9999023675918579,
+      "alignment_score": 0.68
+    },
+    {
+      "word": "democracia?",
+      "start": 71.278,
+      "end": 71.5,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9999687671661377,
+      "alignment_score": 0.092
+    },
+    {
+      "word": "No",
+      "start": 71.68,
+      "end": 72.319,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9974576830863953,
+      "alignment_score": 0.937
+    },
+    {
+      "word": "la",
+      "start": 72.381,
+      "end": 72.443,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9996862411499023,
+      "alignment_score": 0.422
+    },
+    {
+      "word": "entiendo.",
+      "start": 72.505,
+      "end": 73.021,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9999737739562988,
+      "alignment_score": 0.465
+    },
+    {
+      "word": "Yo",
+      "start": 73.12,
+      "end": 73.764,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9970748424530029,
+      "alignment_score": 0.589
+    },
+    {
+      "word": "creo",
+      "start": 73.845,
+      "end": 74.006,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9998770952224731,
+      "alignment_score": 0.91
+    },
+    {
+      "word": "en",
+      "start": 74.046,
+      "end": 74.087,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9999872446060181,
+      "alignment_score": 0.63
+    },
+    {
+      "word": "la",
+      "start": 74.147,
+      "end": 74.208,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9999905824661255,
+      "alignment_score": 0.313
+    },
+    {
+      "word": "democracia,",
+      "start": 74.248,
+      "end": 74.812,
+      "speaker": "SPEAKER_00",
+      "probability": 0.999995231628418,
+      "alignment_score": 0.874
+    },
+    {
+      "word": "pero",
+      "start": 75.194,
+      "end": 75.315,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9991890788078308,
+      "alignment_score": 0.965
+    },
+    {
+      "word": "también",
+      "start": 75.416,
+      "end": 75.617,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9999101161956787,
+      "alignment_score": 0.847
+    },
+    {
+      "word": "creo",
+      "start": 75.779,
+      "end": 75.98,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9999607801437378,
+      "alignment_score": 0.931
+    },
+    {
+      "word": "que",
+      "start": 76.06,
+      "end": 76.141,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9978740215301514,
+      "alignment_score": 0.909
+    },
+    {
+      "word": "dentro",
+      "start": 76.181,
+      "end": 76.524,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9988287091255188,
+      "alignment_score": 0.665
+    },
+    {
+      "word": "de",
+      "start": 76.544,
+      "end": 76.604,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9995692372322083,
+      "alignment_score": 0.579
+    },
+    {
+      "word": "la",
+      "start": 76.645,
+      "end": 76.705,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9999768733978271,
+      "alignment_score": 0.607
+    },
+    {
+      "word": "democracia",
+      "start": 76.725,
+      "end": 77.148,
+      "speaker": "SPEAKER_00",
+      "probability": 0.999993622303009,
+      "alignment_score": 0.783
+    },
+    {
+      "word": "están",
+      "start": 77.188,
+      "end": 77.45,
+      "speaker": "SPEAKER_00",
+      "probability": 0.20734472572803497,
+      "alignment_score": 0.464
+    },
+    {
+      "word": "los",
+      "start": 77.531,
+      "end": 77.611,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9951748847961426,
+      "alignment_score": 0.878
+    },
+    {
+      "word": "gérmenes",
+      "start": 77.712,
+      "end": 78.115,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9983399957418442,
+      "alignment_score": 0.78
+    },
+    {
+      "word": "de",
+      "start": 78.155,
+      "end": 78.316,
+      "speaker": "SPEAKER_00",
+      "probability": 0.982455849647522,
+      "alignment_score": 0.676
+    },
+    {
+      "word": "su",
+      "start": 78.336,
+      "end": 78.417,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9998475313186646,
+      "alignment_score": 0.596
+    },
+    {
+      "word": "destrucción.",
+      "start": 78.437,
+      "end": 78.88,
+      "speaker": "SPEAKER_00",
+      "probability": 0.999884158372879,
+      "alignment_score": 0.252
+    },
+    {
+      "word": "Los",
+      "start": 79.3,
+      "end": 80.003,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9960118532180786,
+      "alignment_score": 0.879
+    },
+    {
+      "word": "marxistas",
+      "start": 80.044,
+      "end": 80.526,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9962572654088339,
+      "alignment_score": 0.561
+    },
+    {
+      "word": "saben",
+      "start": 80.606,
+      "end": 80.827,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9999586343765259,
+      "alignment_score": 0.934
+    },
+    {
+      "word": "perfectamente",
+      "start": 80.928,
+      "end": 81.531,
+      "speaker": "SPEAKER_00",
+      "probability": 0.999976634979248,
+      "alignment_score": 0.911
+    },
+    {
+      "word": "bien",
+      "start": 81.772,
+      "end": 81.852,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9999866485595703,
+      "alignment_score": 0.218
+    },
+    {
+      "word": "cómo",
+      "start": 82.334,
+      "end": 82.515,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9959996938705444,
+      "alignment_score": 0.847
+    },
+    {
+      "word": "usar",
+      "start": 82.596,
+      "end": 82.897,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9998680353164673,
+      "alignment_score": 0.852
+    },
+    {
+      "word": "los",
+      "start": 82.977,
+      "end": 83.078,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9999395608901978,
+      "alignment_score": 0.959
+    },
+    {
+      "word": "elementos",
+      "start": 83.158,
+      "end": 83.6,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9999613761901855,
+      "alignment_score": 0.963
+    },
+    {
+      "word": "de",
+      "start": 83.661,
+      "end": 83.721,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9997360110282898,
+      "alignment_score": 0.916
+    },
+    {
+      "word": "la",
+      "start": 83.781,
+      "end": 83.821,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9999914169311523,
+      "alignment_score": 0.998
+    },
+    {
+      "word": "democracia",
+      "start": 83.882,
+      "end": 84.404,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9999926686286926,
+      "alignment_score": 0.844
+    },
+    {
+      "word": "y",
+      "start": 84.424,
+      "end": 84.444,
+      "speaker": "SPEAKER_00",
+      "probability": 0.31290513277053833,
+      "alignment_score": 0.996
+    },
+    {
+      "word": "la",
+      "start": 84.485,
+      "end": 84.967,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9994218349456787,
+      "alignment_score": 0.85
+    },
+    {
+      "word": "libertad",
+      "start": 85.027,
+      "end": 85.329,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9998668134212494,
+      "alignment_score": 0.838
+    },
+    {
+      "word": "que",
+      "start": 85.349,
+      "end": 85.489,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9997879862785339,
+      "alignment_score": 0.53
+    },
+    {
+      "word": "ofrece",
+      "start": 85.57,
+      "end": 85.911,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9986867606639862,
+      "alignment_score": 0.884
+    },
+    {
+      "word": "para",
+      "start": 86.333,
+      "end": 86.474,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9837632179260254,
+      "alignment_score": 0.962
+    },
+    {
+      "word": "destruir",
+      "start": 86.775,
+      "end": 87.459,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9999623894691467,
+      "alignment_score": 0.356
+    },
+    {
+      "word": "la",
+      "start": 87.479,
+      "end": 87.519,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9998564720153809,
+      "alignment_score": 0.0
+    },
+    {
+      "word": "democracia.",
+      "start": 87.539,
+      "end": 87.76,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9999900460243225,
+      "alignment_score": 0.095
+    },
+    {
+      "word": "¿Qué",
+      "start": 88.12,
+      "end": 88.228,
+      "probability": 0.11219326872378588,
+      "alignment_score": 0.119
+    },
+    {
+      "word": "es",
+      "start": 88.25,
+      "end": 88.293,
+      "probability": 0.747282862663269,
+      "alignment_score": 0.007
+    },
+    {
+      "word": "la",
+      "start": 88.315,
+      "end": 88.358,
+      "probability": 0.5979170203208923,
+      "alignment_score": 0.018
+    },
+    {
+      "word": "democracia?",
+      "start": 88.38,
+      "end": 88.662,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9702169597148895,
+      "alignment_score": 0.189
+    },
+    {
+      "word": "Vamos",
+      "start": 89.04,
+      "end": 89.425,
+      "speaker": "SPEAKER_00",
+      "probability": 0.19366262387484312,
+      "alignment_score": 0.706
+    },
+    {
+      "word": "a",
+      "start": 89.729,
+      "end": 89.81,
+      "speaker": "SPEAKER_00",
+      "probability": 0.06333737075328827,
+      "alignment_score": 0.478
+    },
+    {
+      "word": "terminar",
+      "start": 90.053,
+      "end": 90.398,
+      "speaker": "SPEAKER_00",
+      "probability": 0.03328097611665726,
+      "alignment_score": 0.847
+    },
+    {
+      "word": "todos",
+      "start": 90.438,
+      "end": 90.782,
+      "speaker": "SPEAKER_00",
+      "probability": 0.500712753739208,
+      "alignment_score": 0.438
+    },
+    {
+      "word": "siendo",
+      "start": 90.803,
+      "end": 91.046,
+      "speaker": "SPEAKER_00",
+      "probability": 0.000669627683237195,
+      "alignment_score": 0.45
+    },
+    {
+      "word": "países",
+      "start": 91.188,
+      "end": 91.532,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9647854566574097,
+      "alignment_score": 0.724
+    },
+    {
+      "word": "marxistas.",
+      "start": 91.613,
+      "end": 92.16,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9370477795600891,
+      "alignment_score": 0.46
+    },
+    {
+      "word": "Y",
+      "start": 92.96,
+      "end": 93.545,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9460578560829163,
+      "alignment_score": 0.956
+    },
+    {
+      "word": "cuando",
+      "start": 93.585,
+      "end": 93.726,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9956574440002441,
+      "alignment_score": 0.809
+    },
+    {
+      "word": "la",
+      "start": 93.767,
+      "end": 93.867,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9967511892318726,
+      "alignment_score": 0.578
+    },
+    {
+      "word": "periodista",
+      "start": 93.928,
+      "end": 94.271,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9857089718182882,
+      "alignment_score": 0.527
+    },
+    {
+      "word": "le",
+      "start": 94.331,
+      "end": 94.392,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9596855044364929,
+      "alignment_score": 0.942
+    },
+    {
+      "word": "pregunta",
+      "start": 94.432,
+      "end": 94.714,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9987674951553345,
+      "alignment_score": 0.98
+    },
+    {
+      "word": "a",
+      "start": 94.735,
+      "end": 94.755,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9966179728507996,
+      "alignment_score": 0.908
+    },
+    {
+      "word": "Pinochet",
+      "start": 94.815,
+      "end": 95.219,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9993363916873932,
+      "alignment_score": 0.538
+    },
+    {
+      "word": "si",
+      "start": 95.602,
+      "end": 95.642,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9993700385093689,
+      "alignment_score": 0.474
+    },
+    {
+      "word": "ha",
+      "start": 95.662,
+      "end": 95.702,
+      "speaker": "SPEAKER_00",
+      "probability": 0.997899055480957,
+      "alignment_score": 0.714
+    },
+    {
+      "word": "pensado",
+      "start": 95.803,
+      "end": 96.065,
+      "speaker": "SPEAKER_00",
+      "probability": 0.992723286151886,
+      "alignment_score": 0.718
+    },
+    {
+      "word": "en",
+      "start": 96.086,
+      "end": 96.126,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9679276744524637,
+      "alignment_score": 0.452
+    },
+    {
+      "word": "retirarse,",
+      "start": 96.287,
+      "end": 96.933,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9536348581314087,
+      "alignment_score": 0.733
+    },
+    {
+      "word": "responde...",
+      "start": 97.356,
+      "end": 97.86,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9990717172622681,
+      "alignment_score": 0.776
+    },
+    {
+      "word": "Estoy",
+      "start": 98.54,
+      "end": 99.291,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9939237534999847,
+      "alignment_score": 0.871
+    },
+    {
+      "word": "aquí",
+      "start": 99.413,
+      "end": 99.555,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9998149275779724,
+      "alignment_score": 0.252
+    },
+    {
+      "word": "porque",
+      "start": 99.575,
+      "end": 99.88,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9978321492671967,
+      "alignment_score": 0.812
+    },
+    {
+      "word": "mi",
+      "start": 99.941,
+      "end": 100.022,
+      "speaker": "SPEAKER_00",
+      "probability": 0.7207521547873815,
+      "alignment_score": 0.63
+    },
+    {
+      "word": "pueblo",
+      "start": 100.103,
+      "end": 100.489,
+      "speaker": "SPEAKER_00",
+      "probability": 0.96132892370224,
+      "alignment_score": 0.585
+    },
+    {
+      "word": "me",
+      "start": 100.509,
+      "end": 100.631,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9996016621589661,
+      "alignment_score": 0.826
+    },
+    {
+      "word": "pide",
+      "start": 100.651,
+      "end": 100.813,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9999067783355713,
+      "alignment_score": 0.733
+    },
+    {
+      "word": "que",
+      "start": 100.874,
+      "end": 101.077,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9997127652168274,
+      "alignment_score": 0.677
+    },
+    {
+      "word": "me",
+      "start": 101.098,
+      "end": 101.138,
+      "speaker": "SPEAKER_00",
+      "probability": 0.999984622001648,
+      "alignment_score": 0.0
+    },
+    {
+      "word": "quede.",
+      "start": 101.159,
+      "end": 101.28,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9996565580368042,
+      "alignment_score": 0.165
+    },
+    {
+      "word": "Síganme,",
+      "start": 102.08,
+      "end": 102.711,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9998673498630524,
+      "alignment_score": 0.382
+    },
+    {
+      "word": "dicen.",
+      "start": 102.731,
+      "end": 103.607,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9999516010284424,
+      "alignment_score": 0.758
+    },
+    {
+      "word": "Por",
+      "start": 103.627,
+      "end": 103.688,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9999868869781494,
+      "alignment_score": 0.006
+    },
+    {
+      "word": "favor,",
+      "start": 103.709,
+      "end": 103.953,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9993084371089935,
+      "alignment_score": 0.404
+    },
+    {
+      "word": "no",
+      "start": 103.973,
+      "end": 104.014,
+      "speaker": "SPEAKER_00",
+      "probability": 0.5814613699913025,
+      "alignment_score": 0.026
+    },
+    {
+      "word": "nos",
+      "start": 104.034,
+      "end": 104.258,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9986170530319214,
+      "alignment_score": 0.439
+    },
+    {
+      "word": "deje.",
+      "start": 104.279,
+      "end": 104.38,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9167821407318115,
+      "alignment_score": 0.191
+    },
+    {
+      "word": "Yo",
+      "start": 104.98,
+      "end": 105.486,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9999662637710571,
+      "alignment_score": 0.436
+    },
+    {
+      "word": "no",
+      "start": 105.506,
+      "end": 105.587,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9990525841712952,
+      "alignment_score": 0.73
+    },
+    {
+      "word": "andaba",
+      "start": 105.627,
+      "end": 105.951,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9890182018280029,
+      "alignment_score": 0.717
+    },
+    {
+      "word": "buscando",
+      "start": 106.032,
+      "end": 106.436,
+      "speaker": "SPEAKER_00",
+      "probability": 0.7620689868927002,
+      "alignment_score": 0.941
+    },
+    {
+      "word": "este",
+      "start": 106.497,
+      "end": 106.699,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9787737727165222,
+      "alignment_score": 0.862
+    },
+    {
+      "word": "puesto.",
+      "start": 106.719,
+      "end": 107.124,
+      "speaker": "SPEAKER_00",
+      "probability": 0.8135355710983276,
+      "alignment_score": 0.87
+    },
+    {
+      "word": "El",
+      "start": 107.164,
+      "end": 107.67,
+      "speaker": "SPEAKER_00",
+      "probability": 0.999243289232254,
+      "alignment_score": 0.846
+    },
+    {
+      "word": "destino",
+      "start": 107.73,
+      "end": 108.337,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9998996257781982,
+      "alignment_score": 0.954
+    },
+    {
+      "word": "me",
+      "start": 108.378,
+      "end": 108.458,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9794650673866272,
+      "alignment_score": 0.79
+    },
+    {
+      "word": "lo",
+      "start": 108.479,
+      "end": 108.519,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9998680353164673,
+      "alignment_score": 0.004
+    },
+    {
+      "word": "dio.",
+      "start": 108.539,
+      "end": 108.62,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9990922212600708,
+      "alignment_score": 0.25
+    },
+    {
+      "word": "Así",
+      "start": 109.2,
+      "end": 109.915,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9998621642589569,
+      "alignment_score": 0.361
+    },
+    {
+      "word": "que",
+      "start": 109.935,
+      "end": 110.037,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9998433589935303,
+      "alignment_score": 0.843
+    },
+    {
+      "word": "el",
+      "start": 110.078,
+      "end": 110.139,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9999656677246094,
+      "alignment_score": 0.936
+    },
+    {
+      "word": "pueblo",
+      "start": 110.221,
+      "end": 110.445,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9995390176773071,
+      "alignment_score": 0.606
+    },
+    {
+      "word": "se",
+      "start": 110.65,
+      "end": 110.711,
+      "speaker": "SPEAKER_00",
+      "probability": 0.998965859413147,
+      "alignment_score": 0.768
+    },
+    {
+      "word": "lo",
+      "start": 110.752,
+      "end": 110.813,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9996508359909058,
+      "alignment_score": 0.73
+    },
+    {
+      "word": "pide,",
+      "start": 110.976,
+      "end": 111.078,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9996911287307739,
+      "alignment_score": 0.001
+    },
+    {
+      "word": "¿ah?",
+      "start": 111.099,
+      "end": 111.18,
+      "speaker": "SPEAKER_00",
+      "probability": 0.999980092048645,
+      "alignment_score": 0.248
+    },
+    {
+      "word": "Por",
+      "start": 111.36,
+      "end": 112.118,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9777979850769043,
+      "alignment_score": 0.268
+    },
+    {
+      "word": "favor,",
+      "start": 112.139,
+      "end": 112.549,
+      "speaker": "SPEAKER_00",
+      "probability": 0.8837565183639526,
+      "alignment_score": 0.186
+    },
+    {
+      "word": "no",
+      "start": 112.569,
+      "end": 112.61,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9990435242652893,
+      "alignment_score": 0.277
+    },
+    {
+      "word": "nos",
+      "start": 112.733,
+      "end": 112.918,
+      "speaker": "SPEAKER_00",
+      "probability": 0.775795191526413,
+      "alignment_score": 0.237
+    },
+    {
+      "word": "deje.",
+      "start": 112.938,
+      "end": 113.04,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9989141225814819,
+      "alignment_score": 0.225
+    },
+    {
+      "word": "¿Cómo",
+      "start": 113.44,
+      "end": 114.007,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9999747276306152,
+      "alignment_score": 0.914
+    },
+    {
+      "word": "se",
+      "start": 114.068,
+      "end": 114.129,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9999672174453735,
+      "alignment_score": 0.524
+    },
+    {
+      "word": "nota",
+      "start": 114.149,
+      "end": 114.392,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9997841715812683,
+      "alignment_score": 0.453
+    },
+    {
+      "word": "que",
+      "start": 114.412,
+      "end": 114.493,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9989282190799713,
+      "alignment_score": 0.254
+    },
+    {
+      "word": "el",
+      "start": 114.514,
+      "end": 114.554,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9448199570178986,
+      "alignment_score": 0.72
+    },
+    {
+      "word": "tipo",
+      "start": 114.595,
+      "end": 114.757,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9998855590820312,
+      "alignment_score": 0.798
+    },
+    {
+      "word": "está",
+      "start": 114.797,
+      "end": 114.979,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9999229907989502,
+      "alignment_score": 0.73
+    },
+    {
+      "word": "cada",
+      "start": 115.04,
+      "end": 115.202,
+      "speaker": "SPEAKER_00",
+      "probability": 0.8906099796295166,
+      "alignment_score": 0.851
+    },
+    {
+      "word": "vez",
+      "start": 115.243,
+      "end": 115.344,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9999326467514038,
+      "alignment_score": 0.98
+    },
+    {
+      "word": "más",
+      "start": 115.445,
+      "end": 115.567,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9996446371078491,
+      "alignment_score": 0.791
+    },
+    {
+      "word": "al",
+      "start": 115.607,
+      "end": 115.648,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9998792409896851,
+      "alignment_score": 0.489
+    },
+    {
+      "word": "margen",
+      "start": 115.83,
+      "end": 116.215,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9999645948410034,
+      "alignment_score": 0.758
+    },
+    {
+      "word": "de",
+      "start": 116.235,
+      "end": 116.336,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9999861717224121,
+      "alignment_score": 0.816
+    },
+    {
+      "word": "la",
+      "start": 116.357,
+      "end": 116.438,
+      "speaker": "SPEAKER_00",
+      "probability": 0.999887228012085,
+      "alignment_score": 0.73
+    },
+    {
+      "word": "realidad?",
+      "start": 116.458,
+      "end": 116.64,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9990870952606201,
+      "alignment_score": 0.112
+    },
+    {
+      "word": "¿Qué",
+      "start": 117.08,
+      "end": 117.846,
+      "speaker": "SPEAKER_00",
+      "probability": 0.999718189239502,
+      "alignment_score": 0.711
+    },
+    {
+      "word": "es",
+      "start": 117.867,
+      "end": 117.909,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9998313188552856,
+      "alignment_score": 0.309
+    },
+    {
+      "word": "la",
+      "start": 117.971,
+      "end": 118.012,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9999406337738037,
+      "alignment_score": 0.003
+    },
+    {
+      "word": "democracia?",
+      "start": 118.033,
+      "end": 118.261,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9997944235801697,
+      "alignment_score": 0.1
+    },
+    {
+      "word": "Si",
+      "start": 118.62,
+      "end": 118.721,
+      "speaker": "SPEAKER_00",
+      "probability": 0.09858767734840512,
+      "alignment_score": 0.576
+    },
+    {
+      "word": "va",
+      "start": 119.525,
+      "end": 119.585,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9432721734046936,
+      "alignment_score": 0.956
+    },
+    {
+      "word": "a",
+      "start": 119.626,
+      "end": 119.646,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9975652694702148,
+      "alignment_score": 0.174
+    },
+    {
+      "word": "ir",
+      "start": 119.767,
+      "end": 119.827,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9950958788394928,
+      "alignment_score": 0.71
+    },
+    {
+      "word": "a",
+      "start": 119.867,
+      "end": 119.887,
+      "speaker": "SPEAKER_00",
+      "probability": 0.6788677126169205,
+      "alignment_score": 0.949
+    },
+    {
+      "word": "la",
+      "start": 119.968,
+      "end": 120.028,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9995110034942627,
+      "alignment_score": 0.947
+    },
+    {
+      "word": "reelección",
+      "start": 120.149,
+      "end": 120.752,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9998131394386292,
+      "alignment_score": 0.966
+    },
+    {
+      "word": "cuando",
+      "start": 120.792,
+      "end": 121.396,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9971930980682373,
+      "alignment_score": 0.429
+    },
+    {
+      "word": "termine",
+      "start": 121.476,
+      "end": 121.778,
+      "speaker": "SPEAKER_00",
+      "probability": 0.1074545755982399,
+      "alignment_score": 0.901
+    },
+    {
+      "word": "su",
+      "start": 121.879,
+      "end": 121.999,
+      "speaker": "SPEAKER_00",
+      "probability": 0.7856046557426453,
+      "alignment_score": 0.736
+    },
+    {
+      "word": "periodo",
+      "start": 122.019,
+      "end": 122.401,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9901198148727417,
+      "alignment_score": 0.768
+    },
+    {
+      "word": "en",
+      "start": 122.643,
+      "end": 122.723,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9943236112594604,
+      "alignment_score": 0.91
+    },
+    {
+      "word": "1989,",
+      "start": 122.764,
+      "end": 123.407,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9969437718391418,
+      "alignment_score": 0.863
+    },
+    {
+      "word": "Pinochet",
+      "start": 123.468,
+      "end": 123.83,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9950183629989624,
+      "alignment_score": 0.581
+    },
+    {
+      "word": "dice...",
+      "start": 123.85,
+      "end": 125.68,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9845536947250366,
+      "alignment_score": 0.71
+    },
+    {
+      "word": "¿Será",
+      "start": 126.3,
+      "end": 126.543,
+      "speaker": "SPEAKER_00",
+      "probability": 0.7379387617111206,
+      "alignment_score": 0.726
+    },
+    {
+      "word": "el",
+      "start": 126.625,
+      "end": 126.685,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9951416552066803,
+      "alignment_score": 0.984
+    },
+    {
+      "word": "pueblo",
+      "start": 126.787,
+      "end": 127.03,
+      "speaker": "SPEAKER_00",
+      "probability": 0.992201566696167,
+      "alignment_score": 0.892
+    },
+    {
+      "word": "soberano",
+      "start": 127.071,
+      "end": 127.679,
+      "speaker": "SPEAKER_00",
+      "probability": 0.7172860205173492,
+      "alignment_score": 0.889
+    },
+    {
+      "word": "de",
+      "start": 127.72,
+      "end": 127.801,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9278260469436646,
+      "alignment_score": 0.735
+    },
+    {
+      "word": "Chile",
+      "start": 127.983,
+      "end": 128.085,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9973847270011902,
+      "alignment_score": 0.161
+    },
+    {
+      "word": "el",
+      "start": 128.125,
+      "end": 128.186,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9909733931223551,
+      "alignment_score": 0.73
+    },
+    {
+      "word": "que",
+      "start": 128.247,
+      "end": 128.328,
+      "speaker": "SPEAKER_00",
+      "probability": 0.5119685474783182,
+      "alignment_score": 0.953
+    },
+    {
+      "word": "tendrá",
+      "start": 128.409,
+      "end": 128.653,
+      "speaker": "SPEAKER_00",
+      "probability": 0.7332845479249954,
+      "alignment_score": 0.836
+    },
+    {
+      "word": "que",
+      "start": 128.714,
+      "end": 128.815,
+      "speaker": "SPEAKER_00",
+      "probability": 0.999849796295166,
+      "alignment_score": 0.855
+    },
+    {
+      "word": "decidir?",
+      "start": 128.876,
+      "end": 129.2,
+      "speaker": "SPEAKER_00",
+      "probability": 0.999721348285675,
+      "alignment_score": 0.221
+    },
+    {
+      "word": "En",
+      "start": 129.3,
+      "end": 130.027,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9999154210090637,
+      "alignment_score": 0.596
+    },
+    {
+      "word": "este",
+      "start": 130.067,
+      "end": 130.228,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9816110134124756,
+      "alignment_score": 0.926
+    },
+    {
+      "word": "momento",
+      "start": 130.289,
+      "end": 130.572,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9952700734138489,
+      "alignment_score": 0.746
+    },
+    {
+      "word": "mi",
+      "start": 130.612,
+      "end": 130.652,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9995309114456177,
+      "alignment_score": 0.469
+    },
+    {
+      "word": "posición",
+      "start": 130.874,
+      "end": 131.238,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9999868869781494,
+      "alignment_score": 0.84
+    },
+    {
+      "word": "es",
+      "start": 131.258,
+      "end": 131.318,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9999538064002991,
+      "alignment_score": 0.531
+    },
+    {
+      "word": "fuerte.",
+      "start": 131.44,
+      "end": 131.863,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9999029636383057,
+      "alignment_score": 0.903
+    },
+    {
+      "word": "Tengo",
+      "start": 132.287,
+      "end": 132.489,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9994768798351288,
+      "alignment_score": 0.893
+    },
+    {
+      "word": "todo",
+      "start": 132.63,
+      "end": 132.812,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9979943037033081,
+      "alignment_score": 0.683
+    },
+    {
+      "word": "marchando",
+      "start": 132.873,
+      "end": 133.458,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9997758269309998,
+      "alignment_score": 0.664
+    },
+    {
+      "word": "a",
+      "start": 133.478,
+      "end": 133.498,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9999880790710449,
+      "alignment_score": 0.002
+    },
+    {
+      "word": "mi",
+      "start": 133.519,
+      "end": 133.559,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9970165491104126,
+      "alignment_score": 0.0
+    },
+    {
+      "word": "favor.",
+      "start": 133.579,
+      "end": 133.7,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9998550415039062,
+      "alignment_score": 0.164
+    },
+    {
+      "word": "Dentro",
+      "start": 134.36,
+      "end": 135.088,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9999724626541138,
+      "alignment_score": 0.442
+    },
+    {
+      "word": "de",
+      "start": 135.128,
+      "end": 135.209,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9998076558113098,
+      "alignment_score": 0.732
+    },
+    {
+      "word": "cinco",
+      "start": 135.229,
+      "end": 135.432,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9998463094234467,
+      "alignment_score": 0.775
+    },
+    {
+      "word": "años",
+      "start": 135.472,
+      "end": 135.614,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9997466206550598,
+      "alignment_score": 0.795
+    },
+    {
+      "word": "más",
+      "start": 135.695,
+      "end": 135.836,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9170835316181183,
+      "alignment_score": 0.652
+    },
+    {
+      "word": "por",
+      "start": 135.856,
+      "end": 135.957,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9998821020126343,
+      "alignment_score": 0.956
+    },
+    {
+      "word": "el",
+      "start": 135.998,
+      "end": 136.079,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9999170303344727,
+      "alignment_score": 0.793
+    },
+    {
+      "word": "camino,",
+      "start": 136.139,
+      "end": 136.443,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9999452829360962,
+      "alignment_score": 0.959
+    },
+    {
+      "word": "las",
+      "start": 136.483,
+      "end": 136.968,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9996854960918427,
+      "alignment_score": 0.848
+    },
+    {
+      "word": "cosas",
+      "start": 137.029,
+      "end": 137.292,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9999943971633911,
+      "alignment_score": 0.69
+    },
+    {
+      "word": "podrían",
+      "start": 137.332,
+      "end": 137.615,
+      "speaker": "SPEAKER_00",
+      "probability": 0.887933611869812,
+      "alignment_score": 0.856
+    },
+    {
+      "word": "ser",
+      "start": 137.737,
+      "end": 137.818,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9999864101409912,
+      "alignment_score": 0.614
+    },
+    {
+      "word": "diferentes.",
+      "start": 137.838,
+      "end": 138.06,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9999663829803467,
+      "alignment_score": 0.093
+    },
+    {
+      "word": "Así",
+      "start": 138.58,
+      "end": 139.39,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9999020099639893,
+      "alignment_score": 0.412
+    },
+    {
+      "word": "que",
+      "start": 139.41,
+      "end": 139.511,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9999643564224243,
+      "alignment_score": 0.593
+    },
+    {
+      "word": "es",
+      "start": 139.532,
+      "end": 139.572,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9998470544815063,
+      "alignment_score": 0.406
+    },
+    {
+      "word": "demasiado",
+      "start": 139.613,
+      "end": 140.017,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9997645020484924,
+      "alignment_score": 0.94
+    },
+    {
+      "word": "temprano",
+      "start": 140.098,
+      "end": 140.564,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9999879598617554,
+      "alignment_score": 0.831
+    },
+    {
+      "word": "para",
+      "start": 140.645,
+      "end": 140.726,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9998402297496796,
+      "alignment_score": 0.922
+    },
+    {
+      "word": "pensar",
+      "start": 140.827,
+      "end": 141.131,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9997276663780212,
+      "alignment_score": 0.81
+    },
+    {
+      "word": "en",
+      "start": 141.212,
+      "end": 141.273,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9997016787528992,
+      "alignment_score": 0.466
+    },
+    {
+      "word": "1989.",
+      "start": 141.293,
+      "end": 141.9,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9992006421089172,
+      "alignment_score": 0.781
+    },
+    {
+      "word": "La",
+      "start": 149.92,
+      "end": 150.448,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9999706745147705,
+      "alignment_score": 0.492
+    },
+    {
+      "word": "España",
+      "start": 150.468,
+      "end": 152.74,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9999254941940308,
+      "alignment_score": 0.632
+    },
+    {
+      "word": "La",
+      "start": 152.72,
+      "end": 153.168,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9999802112579346,
+      "alignment_score": 0.305
+    },
+    {
+      "word": "Política",
+      "start": 153.189,
+      "end": 153.381,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9999704360961914,
+      "alignment_score": 0.353
+    },
+    {
+      "word": "La",
+      "start": 153.36,
+      "end": 154.083,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9999455213546753,
+      "alignment_score": 0.643
+    },
+    {
+      "word": "Lausana",
+      "start": 154.125,
+      "end": 154.621,
+      "probability": 0.9998090863227844,
+      "alignment_score": 0.257
+    },
+    {
+      "word": "La",
+      "start": 154.6,
+      "end": 155.574,
+      "probability": 0.9996163845062256,
+      "alignment_score": 0.448
+    },
+    {
+      "word": "Política",
+      "start": 155.595,
+      "end": 155.761,
+      "probability": 0.9996825456619263,
+      "alignment_score": 0.125
+    },
+    {
+      "word": "La",
+      "start": 155.74,
+      "end": 156.007,
+      "probability": 0.00014985589950811118,
+      "alignment_score": 0.452
+    },
+    {
+      "word": "Máxima",
+      "start": 156.029,
+      "end": 156.162,
+      "probability": 5.647820216836408e-05,
+      "alignment_score": 0.166
+    }
+  ]
+}
