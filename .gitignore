@@ -80,3 +80,12 @@ certs/*.key
 .env.example
 # o, para todos:
 *.env.example
+# Entornos y artefactos locales
+multimodal_graph_env/
+.venv/
+**/__pycache__/
+*.pyc
+*.pyo
+*.log
+*.bak_*
+storage_keys.txt
