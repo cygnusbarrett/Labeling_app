@@ -5,6 +5,7 @@
 let adminService;
 let currentUser = null;
 let currentProject = null;
+let availablePendingSegments = [];
 
 async function initAdminDashboard() {
     try {
@@ -82,7 +83,7 @@ async function loadOverviewTab() {
             </div>
             <div class="stat-card">
                 <h3>Completados</h3>
-                <div class="value">${(stats.approved_segments || 0) + (stats.corrected_segments || 0)}</div>
+                <div class="value">${(stats.approved_segments || 0) + (stats.corrected_segments || 0) + (stats.discarded_segments || 0)}</div>
                 <div class="subtext">${stats.words_completed_percentage || 0}% del total</div>
             </div>
             <div class="stat-card">
@@ -118,7 +119,7 @@ async function loadUserStats() {
             if (user.role === 'admin') continue; // No mostrar admins
 
             const stats = await adminService.getUserStats(user.id);
-            const completed = (stats.approved_segments || 0) + (stats.corrected_segments || 0);
+            const completed = (stats.approved_segments || 0) + (stats.corrected_segments || 0) + (stats.discarded_segments || 0);
             const total = stats.total_segments || 0;
             const progress = total > 0 ? (completed / total) * 100 : 0;
 
@@ -219,28 +220,27 @@ async function loadAssignmentsTab() {
 async function loadSegments() {
     try {
         const projectId = document.getElementById('projectSelect').value;
+        const pendingInfo = document.getElementById('pendingSegmentsInfo');
+
         if (!projectId) {
-            showMessage('Selecciona un proyecto', 'info', 'assignments');
+            availablePendingSegments = [];
+            if (pendingInfo) {
+                pendingInfo.textContent = 'Selecciona un proyecto para calcular pendientes disponibles.';
+            }
+            const container = document.getElementById('assignedSegmentsContainer');
+            if (container) {
+                container.innerHTML = '<p style="color:#999;padding:10px;">Selecciona un proyecto para ver las asignaciones.</p>';
+            }
             return;
         }
 
         const segmentsData = await adminService.getSegments(projectId, 'pending');
         const segments = segmentsData.words || [];
+        availablePendingSegments = segments;
 
-        const segmentsSelect = document.getElementById('segmentsSelect');
-        segmentsSelect.innerHTML = '';
-
-        if (segments.length === 0) {
-            segmentsSelect.innerHTML = '<option>No hay segmentos sin asignar</option>';
-            return;
+        if (pendingInfo) {
+            pendingInfo.textContent = `Pendientes disponibles sin asignar: ${segments.length}`;
         }
-
-        segments.forEach(segment => {
-            const option = document.createElement('option');
-            option.value = segment.id;
-            option.text = `${segment.id} - ${segment.text.substring(0, 50)}...`;
-            segmentsSelect.appendChild(option);
-        });
 
         // También cargar segmentos asignados
         await loadAssignedSegments();
@@ -251,26 +251,142 @@ async function loadSegments() {
     }
 }
 
-async function assignSegments() {
+function shuffleArray(items = []) {
+    const shuffled = [...items];
+    for (let i = shuffled.length - 1; i > 0; i -= 1) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+    }
+    return shuffled;
+}
+
+function getSegmentMeta(segment) {
+    return {
+        audioFilename: typeof segment?.audio_filename === 'string' ? segment.audio_filename : '',
+        segmentIndex: Number.parseInt(segment?.segment_index, 10)
+    };
+}
+
+function addIndexToBlockMap(blockedByAudio, segment) {
+    const { audioFilename, segmentIndex } = getSegmentMeta(segment);
+    if (!audioFilename || !Number.isInteger(segmentIndex)) return;
+
+    if (!blockedByAudio.has(audioFilename)) {
+        blockedByAudio.set(audioFilename, new Set());
+    }
+    blockedByAudio.get(audioFilename).add(segmentIndex);
+}
+
+function hasAdjacentConflict(blockedByAudio, segment) {
+    const { audioFilename, segmentIndex } = getSegmentMeta(segment);
+    if (!audioFilename || !Number.isInteger(segmentIndex)) return false;
+
+    const blockedIndexes = blockedByAudio.get(audioFilename);
+    if (!blockedIndexes) return false;
+
+    return (
+        blockedIndexes.has(segmentIndex - 1) ||
+        blockedIndexes.has(segmentIndex) ||
+        blockedIndexes.has(segmentIndex + 1)
+    );
+}
+
+function pickRandomNonConsecutiveSegmentIds(pendingSegments, alreadyAssignedSegments, requestedCount) {
+    const blockedByAudio = new Map();
+    (alreadyAssignedSegments || []).forEach(segment => addIndexToBlockMap(blockedByAudio, segment));
+
+    const selectedIds = [];
+    const shuffledPending = shuffleArray(pendingSegments || []);
+
+    for (const segment of shuffledPending) {
+        if (selectedIds.length >= requestedCount) break;
+
+        const segmentId = Number.parseInt(segment?.id, 10);
+        if (!Number.isInteger(segmentId)) continue;
+        if (hasAdjacentConflict(blockedByAudio, segment)) continue;
+
+        selectedIds.push(segmentId);
+        addIndexToBlockMap(blockedByAudio, segment);
+    }
+
+    return {
+        segmentIds: selectedIds,
+        shortage: Math.max(0, requestedCount - selectedIds.length)
+    };
+}
+
+async function assignSegmentsByCount() {
     try {
         const projectId = document.getElementById('projectSelect').value;
         const annotatorId = document.getElementById('annotatorSelect').value;
-        const segmentsSelect = document.getElementById('segmentsSelect');
-        const segmentIds = Array.from(segmentsSelect.selectedOptions).map(o => parseInt(o.value));
+        const annotatorIdInt = Number.parseInt(annotatorId, 10);
+        const countInput = document.getElementById('assignCountInput');
+        const requestedCount = parseInt(countInput?.value, 10);
 
-        if (!projectId || !annotatorId || segmentIds.length === 0) {
-            showMessage('Selecciona proyecto, anotador y segmentos', 'info', 'assignments');
+        if (!projectId || !annotatorId) {
+            showMessage('Selecciona proyecto y anotador', 'info', 'assignments');
             return;
         }
 
-        await adminService.assignMultipleSegments(projectId, segmentIds, annotatorId);
-        
-        showMessage(`✅ ${segmentIds.length} segmento(s) asignado(s)`, 'success', 'assignments');
+        if (!Number.isInteger(requestedCount) || requestedCount <= 0) {
+            showMessage('Ingresa un número válido de segmentos', 'info', 'assignments');
+            return;
+        }
+
+        if (requestedCount > 500) {
+            showMessage('Máximo 500 segmentos por operación', 'info', 'assignments');
+            return;
+        }
+
+        // Refrescar pool y asignaciones actuales para evitar datos desactualizados.
+        const [latestSegmentsData, assignedData] = await Promise.all([
+            adminService.getSegments(projectId, 'pending'),
+            adminService.getAssignedSegments(projectId)
+        ]);
+        availablePendingSegments = latestSegmentsData.words || [];
+
+        if (availablePendingSegments.length === 0) {
+            showMessage('No hay segmentos pendientes para asignar', 'info', 'assignments');
+            return;
+        }
+
+        const assignedGroups = assignedData.assigned || [];
+        const annotatorGroup = assignedGroups.find(
+            group => Number.parseInt(group.user_id, 10) === annotatorIdInt
+        );
+        const alreadyAssignedSegments = annotatorGroup?.segments || [];
+
+        const { segmentIds, shortage } = pickRandomNonConsecutiveSegmentIds(
+            availablePendingSegments,
+            alreadyAssignedSegments,
+            requestedCount
+        );
+
+        if (segmentIds.length === 0) {
+            showMessage(
+                'No hay segmentos no correlativos disponibles para este anotador. Prueba con una cantidad menor.',
+                'info',
+                'assignments'
+            );
+            return;
+        }
+
+        await adminService.assignMultipleSegments(projectId, segmentIds, annotatorIdInt);
+
+        const avoidedMessage = shortage > 0 ? ' Se evitaron segmentos correlativos en esta asignación.' : '';
+
+        showMessage(
+            `✅ ${segmentIds.length} segmento(s) asignado(s) automáticamente` +
+            (segmentIds.length < requestedCount ? ` (solicitados: ${requestedCount})` : '') +
+            avoidedMessage,
+            'success',
+            'assignments'
+        );
+
         await loadSegments();
         await loadAssignedSegments();
-
     } catch (error) {
-        console.error('Error asignando segmentos:', error);
+        console.error('Error en asignación automática por cantidad:', error);
         showMessage(`Error: ${error.message}`, 'error', 'assignments');
     }
 }
@@ -506,7 +622,9 @@ function renderAnnotationsList() {
         <div class="annotation-item" data-segment-id="${ann.id}">
             <div class="annotation-item__header">
                 <input type="checkbox" class="annotation-check" value="${ann.id}" onchange="updateBulkUI()">
-                <span class="status-tag ${ann.review_status}">${ann.review_status === 'approved' ? '✓ Aprobada' : '✎ Corregida'}</span>
+                <span class="status-tag ${ann.review_status}">
+                    ${ann.review_status === 'approved' ? '✓ Aprobada' : (ann.review_status === 'discarded' ? '🗑️ Descartada' : '✎ Corregida')}
+                </span>
                 <span class="annotation-item__meta">Segmento #${ann.segment_index} · ${date}</span>
             </div>
             <div class="annotation-item__text">${escapeHtml(displayText)}</div>
@@ -535,7 +653,18 @@ async function downloadAnnotationsExcel() {
         const response = await fetch('/api/v1/admin/annotations/export', {
             headers: { 'Authorization': `Bearer ${token}` }
         });
-        if (!response.ok) throw new Error('Error al descargar');
+
+        if (!response.ok) {
+            let backendMessage = '';
+            try {
+                const errorData = await response.json();
+                backendMessage = errorData?.error || '';
+            } catch (_) {
+                // Response no JSON: mantener mensaje por estado HTTP
+            }
+            throw new Error(backendMessage || `Error al descargar (${response.status})`);
+        }
+
         const blob = await response.blob();
         const url = window.URL.createObjectURL(blob);
         const a = document.createElement('a');

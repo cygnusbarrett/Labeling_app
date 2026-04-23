@@ -276,7 +276,14 @@ def create_app():
     def logout():
         """Cierra sesión del usuario"""
         logger.info("User logged out")
-        return jsonify({'message': 'Logged out successfully'}), 200
+        response = jsonify({'message': 'Logged out successfully'})
+
+        # Limpiar cookies de autenticación usadas por navegación HTML
+        response.set_cookie('access_token', '', expires=0, path='/')
+        response.set_cookie('refresh_token', '', expires=0, path='/')
+        response.set_cookie('labeling_session', '', expires=0, path='/')
+
+        return response, 200
     
     @app.route('/me', methods=['GET'])
     def get_current_user():

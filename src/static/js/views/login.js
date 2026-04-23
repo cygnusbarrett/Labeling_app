@@ -6,6 +6,16 @@ function qs(sel) { return document.querySelector(sel); }
 
 function show(el) { el.style.display = 'block'; }
 function hide(el) { el.style.display = 'none'; }
+function hasAccessTokenCookie() {
+  try {
+    return document.cookie
+      .split(';')
+      .map((c) => c.trim())
+      .some((c) => c.startsWith('access_token='));
+  } catch {
+    return false;
+  }
+}
 
 function bindLoginForm() {
   const form = qs('#login-form');
@@ -43,6 +53,14 @@ function bindLoginForm() {
       const data = await authService.me();
       const role = data?.user?.role || JWT.getUser()?.role;
       if (role) {
+        // Evita loop / <-> /login cuando existe token en localStorage pero falta cookie
+        if (!hasAccessTokenCookie()) {
+          JWT.setTokens(JWT.getAccessToken(), JWT.getRefreshToken());
+        }
+        if (!hasAccessTokenCookie()) {
+          JWT.clear();
+          return;
+        }
         window.location.href = role === 'admin' ? ROUTES.admin : ROUTES.home;
         return;
       }

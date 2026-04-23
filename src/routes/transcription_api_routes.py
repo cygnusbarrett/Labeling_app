@@ -4,7 +4,7 @@ Rutas API para validación de transcripciones de audio
 from flask import Blueprint, request, jsonify, send_file, current_app
 from functools import wraps
 from datetime import datetime, timezone
-from models.database import TranscriptionProject, Word, Segment, User, DatabaseManager
+from models.database import TranscriptionProject, Word, Segment, User, DatabaseManager, SegmentDiscardReason
 from services.audio_service import AudioService
 from services.transcription_service import TranscriptionService
 from services.jwt_service import jwt_service
@@ -34,6 +34,46 @@ def get_audio_service():
         _audio_service = AudioService()
     return _audio_service
 
+
+def resolve_available_audio_filename(audio_service, project_id, stored_filename):
+    """
+    Resuelve el archivo de audio disponible en disco sin requerir conversión previa.
+    Intenta variantes comunes (.wav/.mp3 y sufijo _full).
+    """
+    candidates = []
+
+    def add_candidate(name):
+        if name and name not in candidates:
+            candidates.append(name)
+
+    add_candidate(stored_filename)
+
+    stem, ext = os.path.splitext(stored_filename)
+    ext = ext.lower()
+
+    # Alternar entre wav/mp3 manteniendo el mismo stem
+    if ext == '.wav':
+        add_candidate(f'{stem}.mp3')
+    elif ext == '.mp3':
+        add_candidate(f'{stem}.wav')
+
+    # Compatibilidad con naming *_full.{wav|json} y audio base .mp3
+    if stem.endswith('_full'):
+        base_stem = stem[:-5]
+        add_candidate(f'{base_stem}.mp3')
+        add_candidate(f'{base_stem}.wav')
+        add_candidate(f'{base_stem}_full.mp3')
+        add_candidate(f'{base_stem}_full.wav')
+    else:
+        add_candidate(f'{stem}_full.wav')
+        add_candidate(f'{stem}_full.mp3')
+
+    for candidate in candidates:
+        if audio_service.audio_exists(project_id, candidate):
+            return candidate
+
+    return None
+
 def get_transcription_service():
     global _transcription_service
     if _transcription_service is None:
@@ -53,7 +93,13 @@ def jwt_required(f):
         
         try:
             payload = jwt_service.verify_access_token(token)
-            request.user_id = payload.get('user_id')
+            user_id = payload.get('user_id', payload.get('id'))
+            if user_id is None:
+                return jsonify({'error': 'Token inválido: user_id faltante'}), 401
+            try:
+                request.user_id = int(user_id)
+            except (TypeError, ValueError):
+                return jsonify({'error': 'Token inválido: user_id inválido'}), 401
             request.username = payload.get('username')
             request.user_role = payload.get('role')
             return f(*args, **kwargs)
@@ -179,11 +225,24 @@ def list_words(project_id):
             # Filtrar por estado (review_status en segmentos)
             if status:
                 query = query.filter_by(review_status=status)
+                # La cola de revisión solo considera segmentos con palabras bajo el umbral
+                if status == 'pending':
+                    query = query.filter(Segment.low_prob_word_count > 0)
             
             # Filtrar por rol: anotadores ven solo sus segmentos asignados
             user = session.query(User).filter_by(id=request.user_id).first()
-            if user and user.role != 'admin':
+            if not user:
+                return jsonify({'error': 'Usuario no encontrado para el token'}), 401
+            if user.role != 'admin':
                 query = query.filter(Segment.annotator_id == request.user_id)
+
+            # Orden estable para evitar mezcla visual de segmentos
+            query = query.order_by(
+                Segment.audio_filename.asc(),
+                Segment.segment_index.asc(),
+                Segment.start_time.asc(),
+                Segment.id.asc()
+            )
             
             total = query.count()
             segments = query.offset(offset).limit(limit).all()
@@ -246,7 +305,10 @@ def get_word(project_id, word_id):
         
         # Verificar acceso
         user = session.query(User).filter_by(id=request.user_id).first()
-        if user and user.role != 'admin' and segment.annotator_id != request.user_id:
+        if not user:
+            session.close()
+            return jsonify({'error': 'Usuario no encontrado para el token'}), 401
+        if user.role != 'admin' and segment.annotator_id != request.user_id:
             # Allow if not assigned yet or if assigned to this user
             if segment.annotator_id is not None and segment.annotator_id != request.user_id:
                 session.close()
@@ -270,8 +332,6 @@ def get_word_audio(project_id, word_id):
     Extrae el audio entre start_time y end_time del segmento.
     """
     try:
-        import wave
-        
         db_manager = get_db_manager()
         session = db_manager.get_session()
         
@@ -287,22 +347,18 @@ def get_word_audio(project_id, word_id):
         
         # Verificar acceso
         user = session.query(User).filter_by(id=request.user_id).first()
-        if user and user.role != 'admin' and segment.annotator_id != request.user_id:
+        if not user:
+            session.close()
+            return jsonify({'error': 'Usuario no encontrado para el token'}), 401
+        if user.role != 'admin' and segment.annotator_id != request.user_id:
             if segment.annotator_id is not None:
                 session.close()
                 return jsonify({'error': 'Acceso denegado'}), 403
         
         session.close()
         
-        # Obtener ruta del audio
         audio_service = get_audio_service()
-        project_path = audio_service.get_project_path(project_id)
-        audio_path = os.path.join(project_path, segment.audio_filename)
-        
-        if not os.path.exists(audio_path):
-            current_app.logger.error(f'Archivo de audio no encontrado: {audio_path}')
-            return jsonify({'error': f'Archivo de audio no encontrado'}), 404
-        
+
         try:
             margin = float(request.args.get('margin', 0.2))
             
@@ -316,36 +372,33 @@ def get_word_audio(project_id, word_id):
             else:
                 audio_start = max(0, segment.start_time - margin)
                 audio_end = segment.end_time + margin
-            
-            # Leer archivo WAV y extraer segmento de audio
-            with wave.open(audio_path, 'rb') as wav_file:
-                # Obtener parámetros
-                n_channels = wav_file.getnchannels()
-                sample_width = wav_file.getsampwidth()
-                framerate = wav_file.getframerate()
-                n_frames = wav_file.getnframes()
-                
-                # Calcular índices de frames basados en segment times
-                start_frame = max(0, int(audio_start * framerate))
-                end_frame = min(n_frames, int(audio_end * framerate))
-                
-                # Leer datos
-                wav_file.setpos(start_frame)
-                frames = wav_file.readframes(end_frame - start_frame)
-            
-            # Crear nuevo archivo WAV en memoria
-            output_buffer = io.BytesIO()
-            with wave.open(output_buffer, 'wb') as output_wav:
-                output_wav.setnchannels(n_channels)
-                output_wav.setsampwidth(sample_width)
-                output_wav.setframerate(framerate)
-                output_wav.writeframes(frames)
-            
-            output_buffer.seek(0)
-            audio_bytes = output_buffer.getvalue()
+
+            # Resolver archivo existente en disco sin modificar formatos fuente
+            resolved_audio_filename = resolve_available_audio_filename(
+                audio_service,
+                project_id,
+                segment.audio_filename
+            )
+            if not resolved_audio_filename:
+                current_app.logger.error(
+                    f'Archivo de audio no encontrado para "{segment.audio_filename}" '
+                    f'en proyecto "{project_id}"'
+                )
+                return jsonify({'error': 'Archivo de audio no encontrado'}), 404
+
+            # Extraer segmento desde el formato fuente (wav/mp3) y retornarlo como WAV en memoria
+            audio_bytes = audio_service.get_audio_segment_as_wav(
+                project_id=project_id,
+                audio_filename=resolved_audio_filename,
+                start_time=audio_start,
+                end_time=audio_end,
+                margin_seconds=0.0,  # margin ya aplicado en audio_start/audio_end
+                sr=16000
+            )
             
             current_app.logger.info(
                 f'Audio segmento: "{segment.text[:50]}..." '
+                f'file={resolved_audio_filename} '
                 f'({segment.start_time:.2f}-{segment.end_time:.2f}s) '
                 f'con margen {margin}s = {len(audio_bytes)} bytes'
             )
@@ -448,10 +501,21 @@ def submit_correction(word_id):
         data = request.get_json()
         review_status = data.get('review_status', data.get('status'))  # Support both names
         text_revised = data.get('text_revised', data.get('corrected_text'))
+        discard_reason_type = (data.get('discard_reason_type') or '').strip()
+        discard_reason_note = (data.get('discard_reason_note') or '').strip()
         
-        if review_status not in ['approved', 'corrected', 'pending']:
+        if review_status not in ['approved', 'corrected', 'pending', 'discarded']:
             session.close()
-            return jsonify({'error': 'review_status debe ser "approved", "corrected", o "pending"'}), 400
+            return jsonify({'error': 'review_status debe ser "approved", "corrected", "discarded" o "pending"'}), 400
+
+        if review_status == 'discarded':
+            valid_discard_reasons = {'not_chilean_spanish', 'other'}
+            if discard_reason_type not in valid_discard_reasons:
+                session.close()
+                return jsonify({'error': 'discard_reason_type debe ser "not_chilean_spanish" o "other"'}), 400
+            if discard_reason_type == 'other' and not discard_reason_note:
+                session.close()
+                return jsonify({'error': 'discard_reason_note es requerido cuando discard_reason_type = "other"'}), 400
         
         # Buscar el segmento
         segment = session.query(Segment).filter_by(id=word_id).first()
@@ -462,7 +526,10 @@ def submit_correction(word_id):
         
         # Verificar permisos
         user = session.query(User).filter_by(id=request.user_id).first()
-        is_admin = user and user.role == 'admin'
+        if not user:
+            session.close()
+            return jsonify({'error': 'Usuario no encontrado para el token'}), 401
+        is_admin = user.role == 'admin'
         
         # Admin puede editar cualquier segmento
         # Anotadores pueden editar segmentos sin asignar o asignados a ellos
@@ -475,6 +542,29 @@ def submit_correction(word_id):
         segment.review_status = review_status
         if text_revised:
             segment.text_revised = text_revised
+        elif review_status == 'discarded':
+            # Mantener el texto original visible aunque se descarte.
+            segment.text_revised = segment.text
+
+        if review_status == 'discarded':
+            discard_reason = session.query(SegmentDiscardReason).filter_by(segment_id=segment.id).first()
+            if not discard_reason:
+                discard_reason = SegmentDiscardReason(
+                    segment_id=segment.id,
+                    project_id=segment.project_id,
+                    annotator_id=request.user_id,
+                    reason_type=discard_reason_type,
+                    reason_note=discard_reason_note or None
+                )
+                session.add(discard_reason)
+            else:
+                discard_reason.annotator_id = request.user_id
+                discard_reason.reason_type = discard_reason_type
+                discard_reason.reason_note = discard_reason_note or None
+                discard_reason.updated_at = datetime.now(timezone.utc)
+        elif segment.discard_reason:
+            # Si el segmento deja de estar descartado, limpiar motivo anterior.
+            session.delete(segment.discard_reason)
         
         # Si no estaba asignado, asignarlo ahora
         if not segment.annotator_id:
@@ -482,8 +572,10 @@ def submit_correction(word_id):
         
         # Timestamps
         segment.updated_at = datetime.now(timezone.utc)
-        if review_status in ['approved', 'corrected']:
+        if review_status in ['approved', 'corrected', 'discarded']:
             segment.completed_at = datetime.now(timezone.utc)
+        else:
+            segment.completed_at = None
         
         # Actualizar estadísticas del proyecto
         project = session.query(TranscriptionProject).filter_by(id=segment.project_id).first()
@@ -493,9 +585,13 @@ def submit_correction(word_id):
             
             completed = session.query(Segment).filter(
                 Segment.project_id == segment.project_id,
-                Segment.review_status.in_(['approved', 'corrected'])
+                Segment.low_prob_word_count > 0,
+                Segment.review_status.in_(['approved', 'corrected', 'discarded'])
             ).count()
-            total = session.query(Segment).filter_by(project_id=segment.project_id).count()
+            total = session.query(Segment).filter(
+                Segment.project_id == segment.project_id,
+                Segment.low_prob_word_count > 0
+            ).count()
             
             project.words_completed = completed
             project.words_to_review = total
@@ -512,7 +608,9 @@ def submit_correction(word_id):
         return jsonify({
             'message': 'Segmento actualizado',
             'segment_id': segment_id,
-            'review_status': final_review_status
+            'review_status': final_review_status,
+            'discard_reason_type': discard_reason_type if final_review_status == 'discarded' else None,
+            'discard_reason_note': discard_reason_note if final_review_status == 'discarded' else None
         }), 200
         
     except Exception as e:
@@ -542,21 +640,20 @@ def get_stats(project_id):
         
         # Obtener usuario
         user = session.query(User).filter_by(id=request.user_id).first()
+        if not user:
+            session.close()
+            return jsonify({'error': 'Usuario no encontrado para el token'}), 401
         
         # Estadísticas generales por estado de segmento
-        total_segments = session.query(Segment).filter_by(project_id=project_id).count()
-        pending_segments = session.query(Segment).filter_by(
-            project_id=project_id, 
-            review_status='pending'
-        ).count()
-        approved_segments = session.query(Segment).filter_by(
-            project_id=project_id,
-            review_status='approved'
-        ).count()
-        corrected_segments = session.query(Segment).filter_by(
-            project_id=project_id,
-            review_status='corrected'
-        ).count()
+        reviewable_base = session.query(Segment).filter(
+            Segment.project_id == project_id,
+            Segment.low_prob_word_count > 0
+        )
+        total_segments = reviewable_base.count()
+        pending_segments = reviewable_base.filter(Segment.review_status == 'pending').count()
+        approved_segments = reviewable_base.filter(Segment.review_status == 'approved').count()
+        corrected_segments = reviewable_base.filter(Segment.review_status == 'corrected').count()
+        discarded_segments = reviewable_base.filter(Segment.review_status == 'discarded').count()
         
         # Si es admin, mostrar stats por anotador
         if user and user.role == 'admin':
@@ -564,19 +661,28 @@ def get_stats(project_id):
             stats_by_annotator = {}
             
             for annotator in annotators:
-                annotator_total = session.query(Segment).filter_by(
-                    project_id=project_id,
-                    annotator_id=annotator.id
+                annotator_total = session.query(Segment).filter(
+                    Segment.project_id == project_id,
+                    Segment.annotator_id == annotator.id,
+                    Segment.low_prob_word_count > 0
                 ).count()
                 annotator_completed = session.query(Segment).filter(
                     Segment.project_id == project_id,
                     Segment.annotator_id == annotator.id,
-                    Segment.review_status.in_(['approved', 'corrected'])
+                    Segment.low_prob_word_count > 0,
+                    Segment.review_status.in_(['approved', 'corrected', 'discarded'])
+                ).count()
+                annotator_discarded = session.query(Segment).filter(
+                    Segment.project_id == project_id,
+                    Segment.annotator_id == annotator.id,
+                    Segment.low_prob_word_count > 0,
+                    Segment.review_status == 'discarded'
                 ).count()
                 
                 stats_by_annotator[annotator.username] = {
                     'total': annotator_total,
                     'completed': annotator_completed,
+                    'discarded': annotator_discarded,
                     'pending': annotator_total - annotator_completed,
                     'progress': round((annotator_completed / annotator_total * 100) if annotator_total > 0 else 0, 2)
                 }
@@ -590,19 +696,28 @@ def get_stats(project_id):
                 'pending_segments': pending_segments,
                 'approved_segments': approved_segments,
                 'corrected_segments': corrected_segments,
-                'overall_progress': round(((approved_segments + corrected_segments) / total_segments * 100) if total_segments > 0 else 0, 2),
+                'discarded_segments': discarded_segments,
+                'overall_progress': round(((approved_segments + corrected_segments + discarded_segments) / total_segments * 100) if total_segments > 0 else 0, 2),
                 'by_annotator': stats_by_annotator
             }), 200
         else:
             # Si es anotador, mostrar solo sus stats
-            user_total = session.query(Segment).filter_by(
-                project_id=project_id,
-                annotator_id=request.user_id
+            user_total = session.query(Segment).filter(
+                Segment.project_id == project_id,
+                Segment.annotator_id == request.user_id,
+                Segment.low_prob_word_count > 0
             ).count()
             user_completed = session.query(Segment).filter(
                 Segment.project_id == project_id,
                 Segment.annotator_id == request.user_id,
-                Segment.review_status.in_(['approved', 'corrected'])
+                Segment.low_prob_word_count > 0,
+                Segment.review_status.in_(['approved', 'corrected', 'discarded'])
+            ).count()
+            user_discarded = session.query(Segment).filter(
+                Segment.project_id == project_id,
+                Segment.annotator_id == request.user_id,
+                Segment.low_prob_word_count > 0,
+                Segment.review_status == 'discarded'
             ).count()
             
             session.close()
@@ -612,8 +727,10 @@ def get_stats(project_id):
                 'project_name': project.name,
                 'total_segments': total_segments,
                 'pending_segments': pending_segments,
+                'discarded_segments': discarded_segments,
                 'my_total': user_total,
                 'my_completed': user_completed,
+                'my_discarded': user_discarded,
                 'my_pending': user_total - user_completed,
                 'my_progress': round((user_completed / user_total * 100) if user_total > 0 else 0, 2)
             }), 200
@@ -741,7 +858,7 @@ def list_segments(project_id):
     """
     Lista segmentos de un proyecto
     Query params:
-    - status: 'pending', 'approved', 'corrected' (default: pending)
+    - status: 'pending', 'approved', 'corrected', 'discarded' (default: pending)
     - limit: Límite de resultados (default: 100)
     - offset: Offset para paginación (default: 0)
     """
@@ -762,6 +879,12 @@ def list_segments(project_id):
         
         # Listar segmentos
         query = session.query(Segment).filter_by(project_id=project_id, review_status=status)
+        query = query.order_by(
+            Segment.audio_filename.asc(),
+            Segment.segment_index.asc(),
+            Segment.start_time.asc(),
+            Segment.id.asc()
+        )
         total = query.count()
         segments = query.limit(limit).offset(offset).all()
         
@@ -884,11 +1007,22 @@ def submit_segment_correction(segment_id):
         data = request.get_json()
         text_revised = data.get('text_revised')
         review_status = data.get('review_status', 'corrected')
+        discard_reason_type = (data.get('discard_reason_type') or '').strip()
+        discard_reason_note = (data.get('discard_reason_note') or '').strip()
         
         # Validar entrada
-        if review_status not in ['approved', 'corrected']:
+        if review_status not in ['approved', 'corrected', 'discarded']:
             session.close()
-            return jsonify({'error': 'review_status debe ser "approved" o "corrected"'}), 400
+            return jsonify({'error': 'review_status debe ser "approved", "corrected" o "discarded"'}), 400
+
+        if review_status == 'discarded':
+            valid_discard_reasons = {'not_chilean_spanish', 'other'}
+            if discard_reason_type not in valid_discard_reasons:
+                session.close()
+                return jsonify({'error': 'discard_reason_type debe ser "not_chilean_spanish" o "other"'}), 400
+            if discard_reason_type == 'other' and not discard_reason_note:
+                session.close()
+                return jsonify({'error': 'discard_reason_note es requerido cuando discard_reason_type = "other"'}), 400
         
         # Obtener segmento
         segment = session.query(Segment).filter_by(id=segment_id).first()
@@ -902,15 +1036,40 @@ def submit_segment_correction(segment_id):
         segment.annotator_id = request.user_id
         segment.updated_at = datetime.now(timezone.utc)
         
-        if review_status in ['approved', 'corrected']:
+        if review_status == 'discarded':
+            if not segment.text_revised:
+                segment.text_revised = segment.text
+            discard_reason = session.query(SegmentDiscardReason).filter_by(segment_id=segment.id).first()
+            if not discard_reason:
+                discard_reason = SegmentDiscardReason(
+                    segment_id=segment.id,
+                    project_id=segment.project_id,
+                    annotator_id=request.user_id,
+                    reason_type=discard_reason_type,
+                    reason_note=discard_reason_note or None
+                )
+                session.add(discard_reason)
+            else:
+                discard_reason.annotator_id = request.user_id
+                discard_reason.reason_type = discard_reason_type
+                discard_reason.reason_note = discard_reason_note or None
+                discard_reason.updated_at = datetime.now(timezone.utc)
+        elif segment.discard_reason:
+            session.delete(segment.discard_reason)
+
+        if review_status in ['approved', 'corrected', 'discarded']:
             segment.completed_at = datetime.now(timezone.utc)
+        else:
+            segment.completed_at = None
+
+        segment_data = segment.to_dict()
         
         session.commit()
         session.close()
         
         return jsonify({
             'message': 'Segmento actualizado',
-            'segment': segment.to_dict()
+            'segment': segment_data
         }), 200
         
     except Exception as e:
@@ -932,10 +1091,15 @@ def get_segments_stats(project_id):
             session.close()
             return jsonify({'error': 'Proyecto no encontrado'}), 404
         
-        total = session.query(Segment).filter_by(project_id=project_id).count()
-        pending = session.query(Segment).filter_by(project_id=project_id, review_status='pending').count()
-        approved = session.query(Segment).filter_by(project_id=project_id, review_status='approved').count()
-        corrected = session.query(Segment).filter_by(project_id=project_id, review_status='corrected').count()
+        reviewable_base = session.query(Segment).filter(
+            Segment.project_id == project_id,
+            Segment.low_prob_word_count > 0
+        )
+        total = reviewable_base.count()
+        pending = reviewable_base.filter(Segment.review_status == 'pending').count()
+        approved = reviewable_base.filter(Segment.review_status == 'approved').count()
+        corrected = reviewable_base.filter(Segment.review_status == 'corrected').count()
+        discarded = reviewable_base.filter(Segment.review_status == 'discarded').count()
         
         session.close()
         
@@ -944,7 +1108,8 @@ def get_segments_stats(project_id):
             'pending': pending,
             'approved': approved,
             'corrected': corrected,
-            'progress': round((approved + corrected) / total * 100, 2) if total > 0 else 0
+            'discarded': discarded,
+            'progress': round((approved + corrected + discarded) / total * 100, 2) if total > 0 else 0
         }), 200
         
     except Exception as e:

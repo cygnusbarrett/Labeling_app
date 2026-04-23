@@ -15,6 +15,8 @@ let state = {
     fullEditTouched: false
 };
 
+const INITIAL_SEGMENT_LIMIT = 20;
+
 /**
  * Inicializa la aplicación
  */
@@ -119,13 +121,15 @@ async function selectProject(projectId) {
  */
 async function loadProjectWords() {
     try {
-        document.getElementById('loadingState').style.display = 'block';
+        const loadingEl = document.getElementById('loadingState');
+        loadingEl.textContent = 'Cargando segmentos...';
+        loadingEl.style.display = 'block';
         document.getElementById('wordCard').style.display = 'none';
         document.getElementById('statsPanel').style.display = 'none';
         const completionMsg = document.getElementById('completionMessage');
         if (completionMsg) completionMsg.style.display = 'none';
 
-        const wordsData = await transcriptionService.getWords(state.currentProject, 'pending', 100);
+        const wordsData = await transcriptionService.getWords(state.currentProject, 'pending', INITIAL_SEGMENT_LIMIT);
         state.allWords = wordsData.words || [];
 
         if (state.allWords.length === 0) {
@@ -236,6 +240,7 @@ async function displayWord(index) {
         document.title = `Segmento ${index + 1}/${state.allWords.length} - Validador`;
 
         document.getElementById('wordCard').style.display = 'block';
+        closeDiscardModal();
         document.getElementById('loadingState').style.display = 'none';
         document.getElementById('wordCard').scrollIntoView({ behavior: 'smooth', block: 'start' });
 
@@ -394,7 +399,18 @@ function revertInputToStatic(input) {
  */
 function reconstructText() {
     const container = document.getElementById('highlightedText');
+    if (!container) return (state.currentWord?.text || '').trim();
+
     const elements = container.querySelectorAll('.inline-word-input, .inline-word-static');
+
+    // Fallback: algunos segmentos no traen array de words en BD.
+    // En esos casos usamos el texto mostrado (o el original del segmento)
+    // para evitar enviar una corrección vacía.
+    if (elements.length === 0) {
+        const plainText = (container.textContent || '').trim();
+        return plainText || (state.currentWord?.text || '').trim();
+    }
+
     const words = [];
 
     elements.forEach(el => {
@@ -544,6 +560,18 @@ function toggleFullEdit() {
 }
 
 /**
+ * Avanza al siguiente segmento o finaliza la sesión de revisión actual.
+ */
+function goToNextSegmentOrFinish() {
+    if (state.currentWordIndex + 1 < state.allWords.length) {
+        displayWord(state.currentWordIndex + 1);
+    } else {
+        showMessage('¡Has completado todos los segmentos! 🎉', 'success');
+        document.getElementById('wordCard').style.display = 'none';
+    }
+}
+
+/**
  * Envía la validación de un segmento
  */
 async function submitWord(status) {
@@ -591,7 +619,9 @@ async function submitWord(status) {
         );
 
         // Mostrar mensaje de éxito
-        const statusText = review_status === 'approved' ? 'aprobada ✓' : 'corregida ✎';
+        const statusText = review_status === 'approved'
+            ? 'aprobada ✓'
+            : (review_status === 'discarded' ? 'descartada 🗑️' : 'corregida ✎');
         showMessage(`Segmento ${statusText}`, 'success');
 
         // Actualizar estadísticas
@@ -599,19 +629,96 @@ async function submitWord(status) {
 
         // Ir al siguiente segmento
         setTimeout(() => {
-            if (state.currentWordIndex + 1 < state.allWords.length) {
-                displayWord(state.currentWordIndex + 1);
-            } else {
-                showMessage('¡Has completado todos los segmentos! 🎉', 'success');
-                document.getElementById('wordCard').style.display = 'none';
-            }
-
+            goToNextSegmentOrFinish();
             buttons.forEach(btn => btn.disabled = false);
         }, 500);
 
     } catch (error) {
         showMessage(`Error enviando corrección: ${error.message}`, 'error');
         document.querySelectorAll('.form-actions button').forEach(btn => btn.disabled = false);
+    }
+}
+
+function openDiscardModal() {
+    if (!state.currentWord) {
+        showMessage('No hay segmento seleccionado para descartar', 'error');
+        return;
+    }
+    const modal = document.getElementById('discardModal');
+    const reasonSelect = document.getElementById('discardReasonType');
+    const reasonOther = document.getElementById('discardReasonOther');
+    if (reasonSelect) reasonSelect.value = 'not_chilean_spanish';
+    if (reasonOther) reasonOther.value = '';
+    toggleDiscardOtherReasonInput();
+    if (modal) modal.style.display = 'flex';
+}
+
+function closeDiscardModal() {
+    const modal = document.getElementById('discardModal');
+    if (modal) modal.style.display = 'none';
+}
+
+function toggleDiscardOtherReasonInput() {
+    const reasonSelect = document.getElementById('discardReasonType');
+    const otherWrap = document.getElementById('discardReasonOtherWrap');
+    if (!reasonSelect || !otherWrap) return;
+    otherWrap.style.display = reasonSelect.value === 'other' ? 'block' : 'none';
+}
+
+async function confirmDiscard() {
+    try {
+        if (!state.currentWord) {
+            showMessage('No hay segmento seleccionado para descartar', 'error');
+            return;
+        }
+
+        const reasonType = document.getElementById('discardReasonType')?.value;
+        const reasonOther = (document.getElementById('discardReasonOther')?.value || '').trim();
+
+        if (!reasonType) {
+            showMessage('Selecciona un motivo de descarte', 'info');
+            return;
+        }
+
+        if (reasonType === 'other' && !reasonOther) {
+            showMessage('Escribe el detalle para el motivo "Otro"', 'info');
+            return;
+        }
+
+        const formButtons = document.querySelectorAll('.form-actions button');
+        const cancelBtn = document.getElementById('discardCancelBtn');
+        const confirmBtn = document.getElementById('discardConfirmBtn');
+        formButtons.forEach(btn => btn.disabled = true);
+        if (cancelBtn) cancelBtn.disabled = true;
+        if (confirmBtn) confirmBtn.disabled = true;
+
+        await transcriptionService.submitWord(
+            state.currentWord.id,
+            'discarded',
+            reconstructText(),
+            {
+                discard_reason_type: reasonType,
+                discard_reason_note: reasonType === 'other' ? reasonOther : ''
+            }
+        );
+
+        closeDiscardModal();
+        showMessage('Segmento descartado correctamente', 'success');
+        await updateStats();
+
+        setTimeout(() => {
+            goToNextSegmentOrFinish();
+            formButtons.forEach(btn => btn.disabled = false);
+            if (cancelBtn) cancelBtn.disabled = false;
+            if (confirmBtn) confirmBtn.disabled = false;
+        }, 400);
+    } catch (error) {
+        showMessage(`Error descartando segmento: ${error.message}`, 'error');
+        document.querySelectorAll('.form-actions button').forEach(btn => btn.disabled = false);
+        const cancelBtn = document.getElementById('discardCancelBtn');
+        const confirmBtn = document.getElementById('discardConfirmBtn');
+        if (cancelBtn) cancelBtn.disabled = false;
+        if (confirmBtn) confirmBtn.disabled = false;
     }
 }
 
@@ -626,7 +733,7 @@ async function updateStats() {
             // Vista admin: mostrar totales del PROYECTO (en SEGMENTOS)
             const stats = statsData;
             const total = stats.total_segments || stats.total_words || 0;
-            const completed = (stats.approved_segments || 0) + (stats.corrected_segments || 0) || stats.words_completed || 0;
+            const completed = (stats.approved_segments || 0) + (stats.corrected_segments || 0) + (stats.discarded_segments || 0) || stats.words_completed || 0;
             const progress = total > 0 ? (completed / total * 100) : 0;
 
             document.getElementById('totalWords').textContent = total;
@@ -655,6 +762,7 @@ async function updateStats() {
 
     } catch (error) {
         console.error('Error actualizando estadísticas:', error);
+        showMessage(`No se pudieron cargar estadísticas: ${error.message}`, 'error');
     }
 }
 
@@ -723,20 +831,12 @@ function replayAudio() {
 /**
  * Logout
  */
-function logout() {
-    transcriptionService.logout();
-    state = {
-        user: null,
-        currentProject: null,
-        currentWord: null,
-        currentWordIndex: 0,
-        allWords: [],
-        stats: null,
-        userRole: 'annotator',
-        fullEditMode: false,
-        fullEditTouched: false
-    };
-    document.getElementById('messageArea').innerHTML = '';
-    showLoginSection();
-    document.getElementById('loginForm').reset();
+async function logout() {
+    try {
+        await transcriptionService.logout();
+    } catch (error) {
+        console.error('Error al cerrar sesión:', error);
+    } finally {
+        window.location.href = '/login?logged_out=1';
+    }
 }

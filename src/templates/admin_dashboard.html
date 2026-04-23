@@ -509,6 +509,10 @@
             background: #fefcbf;
             color: #744210;
         }
+        .status-tag.discarded {
+            background: #fed7d7;
+            color: #822727;
+        }
     </style>
 </head>
 <body>
@@ -611,17 +615,25 @@
                         </select>
                     </div>
 
-                    <div class="form-group">
-                        <label>Palabras Sin Asignar</label>
-                        <select id="segmentsSelect" multiple style="height: 200px;">
-                            <option value="">Cargando segmentos...</option>
-                        </select>
-                        <small style="color: #999;">Mantén Ctrl/Cmd presionado para seleccionar múltiples</small>
+                    <div class="form-group" style="margin-bottom: 18px; padding: 14px; background: #eef2ff; border: 1px solid #dbe4ff; border-radius: 8px;">
+                        <label style="margin-bottom: 10px;">Asignación por Cantidad</label>
+                        <div style="display: grid; grid-template-columns: 1fr auto; gap: 10px; align-items: end;">
+                            <div>
+                                <label for="assignCountInput" style="font-size: 12px; color: #666; margin-bottom: 4px;">Número de segmentos pendientes</label>
+                                <input id="assignCountInput" type="number" min="1" max="500" value="10" />
+                            </div>
+                            <button class="btn btn-success" onclick="assignSegmentsByCount()" style="height: 40px;">
+                                🚀 Asignar Automáticamente
+                            </button>
+                        </div>
+                        <small id="pendingSegmentsInfo" style="display:block; color:#666; margin-top: 8px;">
+                            Selecciona un proyecto para calcular pendientes disponibles.
+                        </small>
                     </div>
 
-                    <button class="btn btn-primary" onclick="assignSegments()" style="width: 100%;">
-                        📤 Asignar Seleccionados
-                    </button>
+                    <div class="form-group" style="margin-bottom:0;">
+                        <small style="color: #666;">La asignación manual fue deshabilitada. Usa la asignación por cantidad.</small>
+                    </div>
                 </div>
 
                 <div style="margin-top: 30px;">

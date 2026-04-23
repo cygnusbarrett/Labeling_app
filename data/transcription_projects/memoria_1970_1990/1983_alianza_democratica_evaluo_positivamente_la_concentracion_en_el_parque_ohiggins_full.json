@@ -1,0 +1,526 @@
+{
+  "segments": [
+    {
+      "start": 0.0,
+      "end": 5.82,
+      "text": " La concentración del pacto FIBI, recibida por un dienso en que se expresaba",
+      "words": [
+        {
+          "word": "La",
+          "start": 0.0,
+          "end": 0.685,
+          "speaker": "SPEAKER_02",
+          "probability": 0.9920549392700195,
+          "alignment_score": 0.934
+        },
+        {
+          "word": "concentración",
+          "start": 0.765,
+          "end": 1.47,
+          "speaker": "SPEAKER_02",
+          "probability": 0.9906023442745209,
+          "alignment_score": 0.866
+        },
+        {
+          "word": "del",
+          "start": 1.51,
+          "end": 1.672,
+          "speaker": "SPEAKER_02",
+          "probability": 0.9981768131256104,
+          "alignment_score": 0.395
+        },
+        {
+          "word": "pacto",
+          "start": 1.792,
+          "end": 2.054,
+          "speaker": "SPEAKER_02",
+          "probability": 0.9461853504180908,
+          "alignment_score": 0.878
+        },
+        {
+          "word": "FIBI,",
+          "start": 2.235,
+          "end": 2.517,
+          "speaker": "SPEAKER_02",
+          "probability": 0.4731252392133077,
+          "alignment_score": 0.688
+        },
+        {
+          "word": "recibida",
+          "start": 3.706,
+          "end": 4.149,
+          "speaker": "SPEAKER_02",
+          "probability": 0.8337928354740143,
+          "alignment_score": 0.801
+        },
+        {
+          "word": "por",
+          "start": 4.189,
+          "end": 4.41,
+          "speaker": "SPEAKER_02",
+          "probability": 0.9999454021453857,
+          "alignment_score": 0.308
+        },
+        {
+          "word": "un",
+          "start": 4.431,
+          "end": 4.551,
+          "speaker": "SPEAKER_02",
+          "probability": 0.9987974166870117,
+          "alignment_score": 0.298
+        },
+        {
+          "word": "dienso",
+          "start": 4.572,
+          "end": 4.793,
+          "speaker": "SPEAKER_02",
+          "probability": 0.6106589138507843,
+          "alignment_score": 0.525
+        },
+        {
+          "word": "en",
+          "start": 4.934,
+          "end": 5.055,
+          "speaker": "SPEAKER_02",
+          "probability": 0.8501162528991699,
+          "alignment_score": 0.688
+        },
+        {
+          "word": "que",
+          "start": 5.075,
+          "end": 5.256,
+          "speaker": "SPEAKER_02",
+          "probability": 0.9671815037727356,
+          "alignment_score": 0.608
+        },
+        {
+          "word": "se",
+          "start": 5.276,
+          "end": 5.397,
+          "speaker": "SPEAKER_02",
+          "probability": 0.9957283139228821,
+          "alignment_score": 0.715
+        },
+        {
+          "word": "expresaba",
+          "start": 5.417,
+          "end": 5.82,
+          "speaker": "SPEAKER_02",
+          "probability": 0.9836052358150482,
+          "alignment_score": 0.385
+        }
+      ],
+      "speaker": "SPEAKER_02"
+    },
+    {
+      "start": 5.8,
+      "end": 11.28,
+      "text": " FIBI por la libertad y la justicia, por la democracia y la paz,",
+      "words": [
+        {
+          "word": "FIBI",
+          "start": 5.8,
+          "end": 7.15,
+          "speaker": "SPEAKER_02",
+          "probability": 0.8170624772707621,
+          "alignment_score": 0.628
+        },
+        {
+          "word": "por",
+          "start": 7.452,
+          "end": 7.593,
+          "speaker": "SPEAKER_02",
+          "probability": 0.925110936164856,
+          "alignment_score": 0.991
+        },
+        {
+          "word": "la",
+          "start": 7.674,
+          "end": 7.734,
+          "speaker": "SPEAKER_02",
+          "probability": 0.9999904632568359,
+          "alignment_score": 0.806
+        },
+        {
+          "word": "libertad",
+          "start": 7.835,
+          "end": 8.318,
+          "speaker": "SPEAKER_02",
+          "probability": 0.9995666146278381,
+          "alignment_score": 0.853
+        },
+        {
+          "word": "y",
+          "start": 8.339,
+          "end": 8.359,
+          "speaker": "SPEAKER_02",
+          "probability": 0.9995006322860718,
+          "alignment_score": 0.999
+        },
+        {
+          "word": "la",
+          "start": 8.661,
+          "end": 8.721,
+          "speaker": "SPEAKER_02",
+          "probability": 0.9999780654907227,
+          "alignment_score": 0.98
+        },
+        {
+          "word": "justicia,",
+          "start": 8.822,
+          "end": 9.427,
+          "speaker": "SPEAKER_02",
+          "probability": 0.9999821782112122,
+          "alignment_score": 0.857
+        },
+        {
+          "word": "por",
+          "start": 9.971,
+          "end": 10.132,
+          "speaker": "SPEAKER_01",
+          "probability": 0.9999480247497559,
+          "alignment_score": 0.568
+        },
+        {
+          "word": "la",
+          "start": 10.192,
+          "end": 10.253,
+          "speaker": "SPEAKER_02",
+          "probability": 0.9999982118606567,
+          "alignment_score": 0.921
+        },
+        {
+          "word": "democracia",
+          "start": 10.313,
+          "end": 10.917,
+          "speaker": "SPEAKER_02",
+          "probability": 0.9999557733535767,
+          "alignment_score": 0.863
+        },
+        {
+          "word": "y",
+          "start": 10.938,
+          "end": 10.958,
+          "speaker": "SPEAKER_02",
+          "probability": 0.9999890327453613,
+          "alignment_score": 0.881
+        },
+        {
+          "word": "la",
+          "start": 11.038,
+          "end": 11.079,
+          "speaker": "SPEAKER_02",
+          "probability": 0.9999792575836182,
+          "alignment_score": 0.001
+        },
+        {
+          "word": "paz,",
+          "start": 11.099,
+          "end": 11.28,
+          "speaker": "SPEAKER_02",
+          "probability": 0.9998286962509155,
+          "alignment_score": 0.636
+        }
+      ],
+      "speaker": "SPEAKER_02"
+    },
+    {
+      "start": 12.34,
+      "end": 15.16,
+      "text": " constituyó una gran jornada unitaria.",
+      "words": [
+        {
+          "word": "constituyó",
+          "start": 12.34,
+          "end": 13.03,
+          "speaker": "SPEAKER_02",
+          "probability": 0.9981727004051208,
+          "alignment_score": 0.398
+        },
+        {
+          "word": "una",
+          "start": 13.05,
+          "end": 13.781,
+          "speaker": "SPEAKER_02",
+          "probability": 0.9999691247940063,
+          "alignment_score": 0.957
+        },
+        {
+          "word": "gran",
+          "start": 13.862,
+          "end": 14.065,
+          "speaker": "SPEAKER_02",
+          "probability": 0.9995391368865967,
+          "alignment_score": 0.893
+        },
+        {
+          "word": "jornada",
+          "start": 14.186,
+          "end": 14.612,
+          "speaker": "SPEAKER_02",
+          "probability": 0.9994865357875824,
+          "alignment_score": 0.957
+        },
+        {
+          "word": "unitaria.",
+          "start": 14.714,
+          "end": 15.16,
+          "speaker": "SPEAKER_02",
+          "probability": 0.9924328525861105,
+          "alignment_score": 0.537
+        }
+      ],
+      "speaker": "SPEAKER_02"
+    }
+  ],
+  "word_segments": [
+    {
+      "word": "La",
+      "start": 0.0,
+      "end": 0.685,
+      "speaker": "SPEAKER_02",
+      "probability": 0.9920549392700195,
+      "alignment_score": 0.934
+    },
+    {
+      "word": "concentración",
+      "start": 0.765,
+      "end": 1.47,
+      "speaker": "SPEAKER_02",
+      "probability": 0.9906023442745209,
+      "alignment_score": 0.866
+    },
+    {
+      "word": "del",
+      "start": 1.51,
+      "end": 1.672,
+      "speaker": "SPEAKER_02",
+      "probability": 0.9981768131256104,
+      "alignment_score": 0.395
+    },
+    {
+      "word": "pacto",
+      "start": 1.792,
+      "end": 2.054,
+      "speaker": "SPEAKER_02",
+      "probability": 0.9461853504180908,
+      "alignment_score": 0.878
+    },
+    {
+      "word": "FIBI,",
+      "start": 2.235,
+      "end": 2.517,
+      "speaker": "SPEAKER_02",
+      "probability": 0.4731252392133077,
+      "alignment_score": 0.688
+    },
+    {
+      "word": "recibida",
+      "start": 3.706,
+      "end": 4.149,
+      "speaker": "SPEAKER_02",
+      "probability": 0.8337928354740143,
+      "alignment_score": 0.801
+    },
+    {
+      "word": "por",
+      "start": 4.189,
+      "end": 4.41,
+      "speaker": "SPEAKER_02",
+      "probability": 0.9999454021453857,
+      "alignment_score": 0.308
+    },
+    {
+      "word": "un",
+      "start": 4.431,
+      "end": 4.551,
+      "speaker": "SPEAKER_02",
+      "probability": 0.9987974166870117,
+      "alignment_score": 0.298
+    },
+    {
+      "word": "dienso",
+      "start": 4.572,
+      "end": 4.793,
+      "speaker": "SPEAKER_02",
+      "probability": 0.6106589138507843,
+      "alignment_score": 0.525
+    },
+    {
+      "word": "en",
+      "start": 4.934,
+      "end": 5.055,
+      "speaker": "SPEAKER_02",
+      "probability": 0.8501162528991699,
+      "alignment_score": 0.688
+    },
+    {
+      "word": "que",
+      "start": 5.075,
+      "end": 5.256,
+      "speaker": "SPEAKER_02",
+      "probability": 0.9671815037727356,
+      "alignment_score": 0.608
+    },
+    {
+      "word": "se",
+      "start": 5.276,
+      "end": 5.397,
+      "speaker": "SPEAKER_02",
+      "probability": 0.9957283139228821,
+      "alignment_score": 0.715
+    },
+    {
+      "word": "expresaba",
+      "start": 5.417,
+      "end": 5.82,
+      "speaker": "SPEAKER_02",
+      "probability": 0.9836052358150482,
+      "alignment_score": 0.385
+    },
+    {
+      "word": "FIBI",
+      "start": 5.8,
+      "end": 7.15,
+      "speaker": "SPEAKER_02",
+      "probability": 0.8170624772707621,
+      "alignment_score": 0.628
+    },
+    {
+      "word": "por",
+      "start": 7.452,
+      "end": 7.593,
+      "speaker": "SPEAKER_02",
+      "probability": 0.925110936164856,
+      "alignment_score": 0.991
+    },
+    {
+      "word": "la",
+      "start": 7.674,
+      "end": 7.734,
+      "speaker": "SPEAKER_02",
+      "probability": 0.9999904632568359,
+      "alignment_score": 0.806
+    },
+    {
+      "word": "libertad",
+      "start": 7.835,
+      "end": 8.318,
+      "speaker": "SPEAKER_02",
+      "probability": 0.9995666146278381,
+      "alignment_score": 0.853
+    },
+    {
+      "word": "y",
+      "start": 8.339,
+      "end": 8.359,
+      "speaker": "SPEAKER_02",
+      "probability": 0.9995006322860718,
+      "alignment_score": 0.999
+    },
+    {
+      "word": "la",
+      "start": 8.661,
+      "end": 8.721,
+      "speaker": "SPEAKER_02",
+      "probability": 0.9999780654907227,
+      "alignment_score": 0.98
+    },
+    {
+      "word": "justicia,",
+      "start": 8.822,
+      "end": 9.427,
+      "speaker": "SPEAKER_02",
+      "probability": 0.9999821782112122,
+      "alignment_score": 0.857
+    },
+    {
+      "word": "por",
+      "start": 9.971,
+      "end": 10.132,
+      "speaker": "SPEAKER_01",
+      "probability": 0.9999480247497559,
+      "alignment_score": 0.568
+    },
+    {
+      "word": "la",
+      "start": 10.192,
+      "end": 10.253,
+      "speaker": "SPEAKER_02",
+      "probability": 0.9999982118606567,
+      "alignment_score": 0.921
+    },
+    {
+      "word": "democracia",
+      "start": 10.313,
+      "end": 10.917,
+      "speaker": "SPEAKER_02",
+      "probability": 0.9999557733535767,
+      "alignment_score": 0.863
+    },
+    {
+      "word": "y",
+      "start": 10.938,
+      "end": 10.958,
+      "speaker": "SPEAKER_02",
+      "probability": 0.9999890327453613,
+      "alignment_score": 0.881
+    },
+    {
+      "word": "la",
+      "start": 11.038,
+      "end": 11.079,
+      "speaker": "SPEAKER_02",
+      "probability": 0.9999792575836182,
+      "alignment_score": 0.001
+    },
+    {
+      "word": "paz,",
+      "start": 11.099,
+      "end": 11.28,
+      "speaker": "SPEAKER_02",
+      "probability": 0.9998286962509155,
+      "alignment_score": 0.636
+    },
+    {
+      "word": "constituyó",
+      "start": 12.34,
+      "end": 13.03,
+      "speaker": "SPEAKER_02",
+      "probability": 0.9981727004051208,
+      "alignment_score": 0.398
+    },
+    {
+      "word": "una",
+      "start": 13.05,
+      "end": 13.781,
+      "speaker": "SPEAKER_02",
+      "probability": 0.9999691247940063,
+      "alignment_score": 0.957
+    },
+    {
+      "word": "gran",
+      "start": 13.862,
+      "end": 14.065,
+      "speaker": "SPEAKER_02",
+      "probability": 0.9995391368865967,
+      "alignment_score": 0.893
+    },
+    {
+      "word": "jornada",
+      "start": 14.186,
+      "end": 14.612,
+      "speaker": "SPEAKER_02",
+      "probability": 0.9994865357875824,
+      "alignment_score": 0.957
+    },
+    {
+      "word": "unitaria.",
+      "start": 14.714,
+      "end": 15.16,
+      "speaker": "SPEAKER_02",
+      "probability": 0.9924328525861105,
+      "alignment_score": 0.537
+    }
+  ]
+}

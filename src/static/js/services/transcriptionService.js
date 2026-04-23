@@ -29,6 +29,21 @@ class TranscriptionService {
     }
 
     /**
+     * Limpia estado de autenticación del navegador (storage + cookies)
+     */
+    clearBrowserAuthState() {
+        this.token = null;
+        localStorage.removeItem('access_token');
+        localStorage.removeItem('refresh_token');
+        localStorage.removeItem('current_user');
+
+        // Limpiar cookies usadas por rutas HTML protegidas
+        document.cookie = 'access_token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT';
+        document.cookie = 'refresh_token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT';
+        document.cookie = 'labeling_session=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT';
+    }
+
+    /**
      * Realiza una llamada a la API
      */
     async apiCall(method, endpoint, data = null) {
@@ -47,8 +62,7 @@ class TranscriptionService {
             
             if (!response.ok) {
                 if (response.status === 401) {
-                    this.token = null;
-                    localStorage.removeItem('token');
+                    this.clearBrowserAuthState();
                     throw new Error('Token expirado. Por favor, inicia sesión nuevamente.');
                 }
                 throw new Error(`Error ${response.status}: ${response.statusText}`);
@@ -146,12 +160,13 @@ class TranscriptionService {
     /**
      * Envía una corrección de segmento (antes "palabra")
      */
-    async submitWord(wordId, status, correctedText = null) {
+    async submitWord(wordId, status, correctedText = null, extraPayload = {}) {
         const data = {
             review_status: status,  // Usar review_status para segmentos
-            status: status  // Para backward compatibility
+            status: status,  // Para backward compatibility
+            ...extraPayload
         };
-        if (correctedText) {
+        if (correctedText !== null && correctedText !== undefined) {
             data.text_revised = correctedText;  // Usar text_revised para segmentos
             data.corrected_text = correctedText;  // Para backward compatibility
         }
@@ -175,12 +190,18 @@ class TranscriptionService {
     /**
      * Limpia la sesión
      */
-    logout() {
-        this.token = null;
-        // Limpiar con la clave correcta
-        localStorage.removeItem('access_token');
-        localStorage.removeItem('refresh_token');
-        localStorage.removeItem('current_user');
+    async logout() {
+        try {
+            // Avisar al backend para limpieza de cookies del lado servidor
+            await fetch('/logout', {
+                method: 'POST',
+                headers: this.token ? this.getAuthHeader() : { 'Content-Type': 'application/json' }
+            });
+        } catch (error) {
+            console.warn('Logout backend falló, se limpiará sesión local igual:', error);
+        } finally {
+            this.clearBrowserAuthState();
+        }
     }
 }
 

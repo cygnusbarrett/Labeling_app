@@ -1,0 +1,1488 @@
+{
+  "segments": [
+    {
+      "start": 0.0,
+      "end": 4.44,
+      "text": " El acuerdo de la Cámara resultó un paso clave en la escalada de los golpistas,",
+      "words": [
+        {
+          "word": "El",
+          "start": 0.0,
+          "end": 0.283,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9883534908294678,
+          "alignment_score": 0.942
+        },
+        {
+          "word": "acuerdo",
+          "start": 0.323,
+          "end": 0.686,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9810676574707031,
+          "alignment_score": 0.865
+        },
+        {
+          "word": "de",
+          "start": 0.767,
+          "end": 0.827,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9995989203453064,
+          "alignment_score": 0.689
+        },
+        {
+          "word": "la",
+          "start": 0.868,
+          "end": 0.928,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9996401071548462,
+          "alignment_score": 0.946
+        },
+        {
+          "word": "Cámara",
+          "start": 0.989,
+          "end": 1.272,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9812251726786295,
+          "alignment_score": 0.953
+        },
+        {
+          "word": "resultó",
+          "start": 1.857,
+          "end": 2.22,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9979737401008606,
+          "alignment_score": 0.974
+        },
+        {
+          "word": "un",
+          "start": 2.26,
+          "end": 2.301,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9992103576660156,
+          "alignment_score": 0.5
+        },
+        {
+          "word": "paso",
+          "start": 2.523,
+          "end": 2.725,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9997730851173401,
+          "alignment_score": 0.972
+        },
+        {
+          "word": "clave",
+          "start": 2.826,
+          "end": 3.108,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9999333620071411,
+          "alignment_score": 0.853
+        },
+        {
+          "word": "en",
+          "start": 3.128,
+          "end": 3.169,
+          "speaker": "SPEAKER_00",
+          "probability": 0.999272882938385,
+          "alignment_score": 0.479
+        },
+        {
+          "word": "la",
+          "start": 3.33,
+          "end": 3.371,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9998825788497925,
+          "alignment_score": 0.992
+        },
+        {
+          "word": "escalada",
+          "start": 3.411,
+          "end": 3.835,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9995533227920532,
+          "alignment_score": 0.922
+        },
+        {
+          "word": "de",
+          "start": 3.895,
+          "end": 3.956,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9998816251754761,
+          "alignment_score": 0.962
+        },
+        {
+          "word": "los",
+          "start": 3.996,
+          "end": 4.077,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9996916055679321,
+          "alignment_score": 0.835
+        },
+        {
+          "word": "golpistas,",
+          "start": 4.117,
+          "end": 4.44,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9997128446896871,
+          "alignment_score": 0.432
+        }
+      ],
+      "speaker": "SPEAKER_00"
+    },
+    {
+      "start": 4.68,
+      "end": 8.92,
+      "text": " los mismos que organizaron la manifestación de un grupo de señoras",
+      "words": [
+        {
+          "word": "los",
+          "start": 4.68,
+          "end": 5.387,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9987340569496155,
+          "alignment_score": 0.718
+        },
+        {
+          "word": "mismos",
+          "start": 5.467,
+          "end": 5.73,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9996178150177002,
+          "alignment_score": 0.985
+        },
+        {
+          "word": "que",
+          "start": 5.77,
+          "end": 6.275,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9991217255592346,
+          "alignment_score": 0.794
+        },
+        {
+          "word": "organizaron",
+          "start": 6.356,
+          "end": 6.921,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9998657405376434,
+          "alignment_score": 0.968
+        },
+        {
+          "word": "la",
+          "start": 7.002,
+          "end": 7.042,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9998295307159424,
+          "alignment_score": 0.996
+        },
+        {
+          "word": "manifestación",
+          "start": 7.103,
+          "end": 7.749,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9999098777770996,
+          "alignment_score": 0.97
+        },
+        {
+          "word": "de",
+          "start": 7.85,
+          "end": 7.911,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9997789263725281,
+          "alignment_score": 0.987
+        },
+        {
+          "word": "un",
+          "start": 7.971,
+          "end": 8.052,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9997519850730896,
+          "alignment_score": 0.983
+        },
+        {
+          "word": "grupo",
+          "start": 8.113,
+          "end": 8.314,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9998706579208374,
+          "alignment_score": 0.798
+        },
+        {
+          "word": "de",
+          "start": 8.395,
+          "end": 8.476,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9999326467514038,
+          "alignment_score": 0.894
+        },
+        {
+          "word": "señoras",
+          "start": 8.577,
+          "end": 8.92,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9994139671325684,
+          "alignment_score": 0.758
+        }
+      ],
+      "speaker": "SPEAKER_00"
+    },
+    {
+      "start": 8.9,
+      "end": 11.06,
+      "text": " frente a la casa del general Prats.",
+      "words": [
+        {
+          "word": "frente",
+          "start": 8.9,
+          "end": 9.776,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9681300520896912,
+          "alignment_score": 0.895
+        },
+        {
+          "word": "a",
+          "start": 9.797,
+          "end": 9.838,
+          "speaker": "SPEAKER_00",
+          "probability": 0.99969482421875,
+          "alignment_score": 0.499
+        },
+        {
+          "word": "la",
+          "start": 9.878,
+          "end": 9.919,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9998155236244202,
+          "alignment_score": 0.807
+        },
+        {
+          "word": "casa",
+          "start": 10.001,
+          "end": 10.225,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9962151646614075,
+          "alignment_score": 0.941
+        },
+        {
+          "word": "del",
+          "start": 10.286,
+          "end": 10.408,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9993506073951721,
+          "alignment_score": 0.812
+        },
+        {
+          "word": "general",
+          "start": 10.49,
+          "end": 10.918,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9445288181304932,
+          "alignment_score": 0.958
+        },
+        {
+          "word": "Prats.",
+          "start": 10.938,
+          "end": 11.06,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9818379878997803,
+          "alignment_score": 0.163
+        }
+      ],
+      "speaker": "SPEAKER_00"
+    },
+    {
+      "start": 46.78,
+      "end": 52.52,
+      "text": " En otro lugar de Santiago,",
+      "words": [
+        {
+          "word": "En",
+          "start": 46.78,
+          "end": 47.767,
+          "speaker": "SPEAKER_02",
+          "probability": 0.3137788474559784,
+          "alignment_score": 0.714
+        },
+        {
+          "word": "otro",
+          "start": 48.009,
+          "end": 49.862,
+          "speaker": "SPEAKER_02",
+          "probability": 0.9854228496551514,
+          "alignment_score": 0.572
+        },
+        {
+          "word": "lugar",
+          "start": 50.003,
+          "end": 51.07,
+          "speaker": "SPEAKER_02",
+          "probability": 0.9992990493774414,
+          "alignment_score": 0.501
+        },
+        {
+          "word": "de",
+          "start": 51.09,
+          "end": 51.292,
+          "speaker": "SPEAKER_02",
+          "probability": 0.9962552785873413,
+          "alignment_score": 0.582
+        },
+        {
+          "word": "Santiago,",
+          "start": 51.533,
+          "end": 52.52,
+          "speaker": "SPEAKER_00",
+          "probability": 0.9967735409736633,
+          "alignment_score": 0.444
+        }
+      ],
+      "speaker": "SPEAKER_02"
+    },
+    {
+      "start": 60.72,
+      "end": 90.0,
+      "text": " el gobierno de la Cámara resultó un paso clave en la escalada de los golpistas,",
+      "words": [
+        {
+          "word": "el",
+          "start": 60.72,
+          "end": 64.605,
+          "probability": 0.007573947310447693,
+          "alignment_score": 0.373
+        },
+        {
+          "word": "gobierno",
+          "start": 64.625,
+          "end": 71.875,
+          "speaker": "SPEAKER_03",
+          "probability": 0.38722822070121765,
+          "alignment_score": 0.479
+        },
+        {
+          "word": "de",
+          "start": 71.895,
+          "end": 71.935,
+          "speaker": "SPEAKER_03",
+          "probability": 0.1818598359823227,
+          "alignment_score": 0.01
+        },
+        {
+          "word": "la",
+          "start": 71.955,
+          "end": 73.417,
+          "speaker": "SPEAKER_03",
+          "probability": 0.19099992513656616,
+          "alignment_score": 0.514
+        },
+        {
+          "word": "Cámara",
+          "start": 73.437,
+          "end": 75.48,
+          "speaker": "SPEAKER_03",
+          "probability": 0.45145452208817005,
+          "alignment_score": 0.322
+        },
+        {
+          "word": "resultó",
+          "start": 75.5,
+          "end": 75.741,
+          "speaker": "SPEAKER_03",
+          "probability": 0.14235456017195247,
+          "alignment_score": 0.118
+        },
+        {
+          "word": "un",
+          "start": 75.761,
+          "end": 75.801,
+          "speaker": "SPEAKER_03",
+          "probability": 0.023720137774944305,
+          "alignment_score": 0.005
+        },
+        {
+          "word": "paso",
+          "start": 75.821,
+          "end": 77.683,
+          "speaker": "SPEAKER_03",
+          "probability": 0.00035015252069570124,
+          "alignment_score": 0.473
+        },
+        {
+          "word": "clave",
+          "start": 77.703,
+          "end": 78.084,
+          "speaker": "SPEAKER_03",
+          "probability": 0.4656856686633546,
+          "alignment_score": 0.238
+        },
+        {
+          "word": "en",
+          "start": 78.104,
+          "end": 78.144,
+          "speaker": "SPEAKER_03",
+          "probability": 0.20753322541713715,
+          "alignment_score": 0.002
+        },
+        {
+          "word": "la",
+          "start": 78.164,
+          "end": 79.125,
+          "speaker": "SPEAKER_03",
+          "probability": 0.6439184546470642,
+          "alignment_score": 0.497
+        },
+        {
+          "word": "escalada",
+          "start": 79.145,
+          "end": 85.614,
+          "speaker": "SPEAKER_03",
+          "probability": 0.15600494517093466,
+          "alignment_score": 0.461
+        },
+        {
+          "word": "de",
+          "start": 85.634,
+          "end": 85.995,
+          "probability": 0.3347552716732025,
+          "alignment_score": 0.521
+        },
+        {
+          "word": "los",
+          "start": 86.015,
+          "end": 86.315,
+          "probability": 0.06170911341905594,
+          "alignment_score": 0.287
+        },
+        {
+          "word": "golpistas,",
+          "start": 86.335,
+          "end": 90.0,
+          "speaker": "SPEAKER_00",
+          "probability": 0.17245358742851144,
+          "alignment_score": 0.316
+        }
+      ],
+      "speaker": "SPEAKER_03"
+    },
+    {
+      "start": 89.98,
+      "end": 119.98,
+      "text": " el gobierno de la Cámara resultó un paso clave en la escalada de los golpistas,",
+      "words": [
+        {
+          "word": "el",
+          "start": 89.98,
+          "end": 90.02,
+          "speaker": "SPEAKER_00",
+          "probability": 0.013595806434750557,
+          "alignment_score": 0.103
+        },
+        {
+          "word": "gobierno",
+          "start": 91.101,
+          "end": 93.705,
+          "speaker": "SPEAKER_00",
+          "probability": 0.038956958800554276,
+          "alignment_score": 0.605
+        },
+        {
+          "word": "de",
+          "start": 93.725,
+          "end": 93.805,
+          "speaker": "SPEAKER_00",
+          "probability": 0.3548192083835602,
+          "alignment_score": 0.46
+        },
+        {
+          "word": "la",
+          "start": 93.865,
+          "end": 93.905,
+          "speaker": "SPEAKER_00",
+          "probability": 0.17245391011238098,
+          "alignment_score": 0.996
+        },
+        {
+          "word": "Cámara",
+          "start": 93.965,
+          "end": 94.466,
+          "speaker": "SPEAKER_00",
+          "probability": 0.4499412377675374,
+          "alignment_score": 0.68
+        },
+        {
+          "word": "resultó",
+          "start": 94.506,
+          "end": 95.608,
+          "speaker": "SPEAKER_00",
+          "probability": 0.2149567494780058,
+          "alignment_score": 0.439
+        },
+        {
+          "word": "un",
+          "start": 95.628,
+          "end": 95.668,
+          "speaker": "SPEAKER_00",
+          "probability": 0.013090039603412151,
+          "alignment_score": 0.498
+        },
+        {
+          "word": "paso",
+          "start": 96.609,
+          "end": 96.909,
+          "speaker": "SPEAKER_00",
+          "probability": 0.00038783682975918055,
+          "alignment_score": 0.343
+        },
+        {
+          "word": "clave",
+          "start": 97.59,
+          "end": 99.373,
+          "speaker": "SPEAKER_00",
+          "probability": 0.30825454017031007,
+          "alignment_score": 0.784
+        },
+        {
+          "word": "en",
+          "start": 99.393,
+          "end": 99.433,
+          "speaker": "SPEAKER_00",
+          "probability": 0.1813691109418869,
+          "alignment_score": 0.5
+        },
+        {
+          "word": "la",
+          "start": 99.453,
+          "end": 99.513,
+          "speaker": "SPEAKER_00",
+          "probability": 0.5401339530944824,
+          "alignment_score": 0.407
+        },
+        {
+          "word": "escalada",
+          "start": 99.593,
+          "end": 100.394,
+          "speaker": "SPEAKER_00",
+          "probability": 0.13678221229929477,
+          "alignment_score": 0.406
+        },
+        {
+          "word": "de",
+          "start": 101.716,
+          "end": 101.916,
+          "speaker": "SPEAKER_00",
+          "probability": 0.3717843294143677,
+          "alignment_score": 0.647
+        },
+        {
+          "word": "los",
+          "start": 102.116,
+          "end": 102.617,
+          "speaker": "SPEAKER_00",
+          "probability": 0.06705755740404129,
+          "alignment_score": 0.634
+        },
+        {
+          "word": "golpistas,",
+          "start": 102.637,
+          "end": 119.98,
+          "speaker": "SPEAKER_01",
+          "probability": 0.09057909662563664,
+          "alignment_score": 0.358
+        }
+      ],
+      "speaker": "SPEAKER_00"
+    },
+    {
+      "start": 119.98,
+      "end": 149.08,
+      "text": " el gobierno de la Cámara resultó un paso clave en la escalada de los golpistas,",
+      "words": [
+        {
+          "word": "el",
+          "start": 119.98,
+          "end": 122.023,
+          "speaker": "SPEAKER_01",
+          "probability": 0.09860794991254807,
+          "alignment_score": 0.712
+        },
+        {
+          "word": "gobierno",
+          "start": 122.063,
+          "end": 123.965,
+          "speaker": "SPEAKER_01",
+          "probability": 0.323393851518631,
+          "alignment_score": 0.577
+        },
+        {
+          "word": "de",
+          "start": 123.986,
+          "end": 124.026,
+          "speaker": "SPEAKER_01",
+          "probability": 0.012085193768143654,
+          "alignment_score": 0.494
+        },
+        {
+          "word": "la",
+          "start": 124.386,
+          "end": 124.887,
+          "speaker": "SPEAKER_01",
+          "probability": 0.1561649590730667,
+          "alignment_score": 0.38
+        },
+        {
+          "word": "Cámara",
+          "start": 128.932,
+          "end": 133.258,
+          "speaker": "SPEAKER_01",
+          "probability": 0.43715618426601094,
+          "alignment_score": 0.708
+        },
+        {
+          "word": "resultó",
+          "start": 133.459,
+          "end": 136.623,
+          "speaker": "SPEAKER_01",
+          "probability": 0.038668032006171416,
+          "alignment_score": 0.602
+        },
+        {
+          "word": "un",
+          "start": 136.863,
+          "end": 138.325,
+          "speaker": "SPEAKER_01",
+          "probability": 0.0252771507948637,
+          "alignment_score": 0.812
+        },
+        {
+          "word": "paso",
+          "start": 138.345,
+          "end": 138.786,
+          "speaker": "SPEAKER_01",
+          "probability": 0.00041748894727788866,
+          "alignment_score": 0.49
+        },
+        {
+          "word": "clave",
+          "start": 138.926,
+          "end": 139.527,
+          "speaker": "SPEAKER_01",
+          "probability": 0.45539956871652976,
+          "alignment_score": 0.756
+        },
+        {
+          "word": "en",
+          "start": 140.668,
+          "end": 141.029,
+          "speaker": "SPEAKER_01",
+          "probability": 0.13053591549396515,
+          "alignment_score": 0.694
+        },
+        {
+          "word": "la",
+          "start": 141.349,
+          "end": 141.43,
+          "speaker": "SPEAKER_01",
+          "probability": 0.47644180059432983,
+          "alignment_score": 0.937
+        },
+        {
+          "word": "escalada",
+          "start": 141.57,
+          "end": 142.211,
+          "speaker": "SPEAKER_01",
+          "probability": 0.17576587773510255,
+          "alignment_score": 0.365
+        },
+        {
+          "word": "de",
+          "start": 142.451,
+          "end": 142.992,
+          "speaker": "SPEAKER_01",
+          "probability": 0.3731039762496948,
+          "alignment_score": 0.6
+        },
+        {
+          "word": "los",
+          "start": 145.375,
+          "end": 145.936,
+          "speaker": "SPEAKER_01",
+          "probability": 0.08625403791666031,
+          "alignment_score": 0.532
+        },
+        {
+          "word": "golpistas,",
+          "start": 145.956,
+          "end": 149.08,
+          "speaker": "SPEAKER_01",
+          "probability": 0.3111275431753408,
+          "alignment_score": 0.447
+        }
+      ],
+      "speaker": "SPEAKER_01"
+    },
+    {
+      "start": 149.98,
+      "end": 152.3,
+      "text": " y ellos se esconden, como siempre.",
+      "words": [
+        {
+          "word": "y",
+          "start": 149.98,
+          "end": 150.061,
+          "speaker": "SPEAKER_01",
+          "probability": 0.11026416718959808,
+          "alignment_score": 0.206
+        },
+        {
+          "word": "ellos",
+          "start": 150.122,
+          "end": 150.224,
+          "speaker": "SPEAKER_01",
+          "probability": 0.6243484616279602,
+          "alignment_score": 0.195
+        },
+        {
+          "word": "se",
+          "start": 150.245,
+          "end": 150.285,
+          "speaker": "SPEAKER_01",
+          "probability": 0.846754252910614,
+          "alignment_score": 0.3
+        },
+        {
+          "word": "esconden,",
+          "start": 150.306,
+          "end": 150.713,
+          "speaker": "SPEAKER_01",
+          "probability": 0.9894192814826965,
+          "alignment_score": 0.387
+        },
+        {
+          "word": "como",
+          "start": 152.036,
+          "end": 152.117,
+          "speaker": "SPEAKER_01",
+          "probability": 0.8741558790206909,
+          "alignment_score": 0.208
+        },
+        {
+          "word": "siempre.",
+          "start": 152.138,
+          "end": 152.3,
+          "speaker": "SPEAKER_01",
+          "probability": 0.09079398959875107,
+          "alignment_score": 0.125
+        }
+      ],
+      "speaker": "SPEAKER_01"
+    }
+  ],
+  "word_segments": [
+    {
+      "word": "El",
+      "start": 0.0,
+      "end": 0.283,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9883534908294678,
+      "alignment_score": 0.942
+    },
+    {
+      "word": "acuerdo",
+      "start": 0.323,
+      "end": 0.686,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9810676574707031,
+      "alignment_score": 0.865
+    },
+    {
+      "word": "de",
+      "start": 0.767,
+      "end": 0.827,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9995989203453064,
+      "alignment_score": 0.689
+    },
+    {
+      "word": "la",
+      "start": 0.868,
+      "end": 0.928,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9996401071548462,
+      "alignment_score": 0.946
+    },
+    {
+      "word": "Cámara",
+      "start": 0.989,
+      "end": 1.272,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9812251726786295,
+      "alignment_score": 0.953
+    },
+    {
+      "word": "resultó",
+      "start": 1.857,
+      "end": 2.22,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9979737401008606,
+      "alignment_score": 0.974
+    },
+    {
+      "word": "un",
+      "start": 2.26,
+      "end": 2.301,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9992103576660156,
+      "alignment_score": 0.5
+    },
+    {
+      "word": "paso",
+      "start": 2.523,
+      "end": 2.725,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9997730851173401,
+      "alignment_score": 0.972
+    },
+    {
+      "word": "clave",
+      "start": 2.826,
+      "end": 3.108,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9999333620071411,
+      "alignment_score": 0.853
+    },
+    {
+      "word": "en",
+      "start": 3.128,
+      "end": 3.169,
+      "speaker": "SPEAKER_00",
+      "probability": 0.999272882938385,
+      "alignment_score": 0.479
+    },
+    {
+      "word": "la",
+      "start": 3.33,
+      "end": 3.371,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9998825788497925,
+      "alignment_score": 0.992
+    },
+    {
+      "word": "escalada",
+      "start": 3.411,
+      "end": 3.835,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9995533227920532,
+      "alignment_score": 0.922
+    },
+    {
+      "word": "de",
+      "start": 3.895,
+      "end": 3.956,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9998816251754761,
+      "alignment_score": 0.962
+    },
+    {
+      "word": "los",
+      "start": 3.996,
+      "end": 4.077,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9996916055679321,
+      "alignment_score": 0.835
+    },
+    {
+      "word": "golpistas,",
+      "start": 4.117,
+      "end": 4.44,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9997128446896871,
+      "alignment_score": 0.432
+    },
+    {
+      "word": "los",
+      "start": 4.68,
+      "end": 5.387,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9987340569496155,
+      "alignment_score": 0.718
+    },
+    {
+      "word": "mismos",
+      "start": 5.467,
+      "end": 5.73,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9996178150177002,
+      "alignment_score": 0.985
+    },
+    {
+      "word": "que",
+      "start": 5.77,
+      "end": 6.275,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9991217255592346,
+      "alignment_score": 0.794
+    },
+    {
+      "word": "organizaron",
+      "start": 6.356,
+      "end": 6.921,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9998657405376434,
+      "alignment_score": 0.968
+    },
+    {
+      "word": "la",
+      "start": 7.002,
+      "end": 7.042,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9998295307159424,
+      "alignment_score": 0.996
+    },
+    {
+      "word": "manifestación",
+      "start": 7.103,
+      "end": 7.749,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9999098777770996,
+      "alignment_score": 0.97
+    },
+    {
+      "word": "de",
+      "start": 7.85,
+      "end": 7.911,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9997789263725281,
+      "alignment_score": 0.987
+    },
+    {
+      "word": "un",
+      "start": 7.971,
+      "end": 8.052,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9997519850730896,
+      "alignment_score": 0.983
+    },
+    {
+      "word": "grupo",
+      "start": 8.113,
+      "end": 8.314,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9998706579208374,
+      "alignment_score": 0.798
+    },
+    {
+      "word": "de",
+      "start": 8.395,
+      "end": 8.476,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9999326467514038,
+      "alignment_score": 0.894
+    },
+    {
+      "word": "señoras",
+      "start": 8.577,
+      "end": 8.92,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9994139671325684,
+      "alignment_score": 0.758
+    },
+    {
+      "word": "frente",
+      "start": 8.9,
+      "end": 9.776,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9681300520896912,
+      "alignment_score": 0.895
+    },
+    {
+      "word": "a",
+      "start": 9.797,
+      "end": 9.838,
+      "speaker": "SPEAKER_00",
+      "probability": 0.99969482421875,
+      "alignment_score": 0.499
+    },
+    {
+      "word": "la",
+      "start": 9.878,
+      "end": 9.919,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9998155236244202,
+      "alignment_score": 0.807
+    },
+    {
+      "word": "casa",
+      "start": 10.001,
+      "end": 10.225,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9962151646614075,
+      "alignment_score": 0.941
+    },
+    {
+      "word": "del",
+      "start": 10.286,
+      "end": 10.408,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9993506073951721,
+      "alignment_score": 0.812
+    },
+    {
+      "word": "general",
+      "start": 10.49,
+      "end": 10.918,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9445288181304932,
+      "alignment_score": 0.958
+    },
+    {
+      "word": "Prats.",
+      "start": 10.938,
+      "end": 11.06,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9818379878997803,
+      "alignment_score": 0.163
+    },
+    {
+      "word": "En",
+      "start": 46.78,
+      "end": 47.767,
+      "speaker": "SPEAKER_02",
+      "probability": 0.3137788474559784,
+      "alignment_score": 0.714
+    },
+    {
+      "word": "otro",
+      "start": 48.009,
+      "end": 49.862,
+      "speaker": "SPEAKER_02",
+      "probability": 0.9854228496551514,
+      "alignment_score": 0.572
+    },
+    {
+      "word": "lugar",
+      "start": 50.003,
+      "end": 51.07,
+      "speaker": "SPEAKER_02",
+      "probability": 0.9992990493774414,
+      "alignment_score": 0.501
+    },
+    {
+      "word": "de",
+      "start": 51.09,
+      "end": 51.292,
+      "speaker": "SPEAKER_02",
+      "probability": 0.9962552785873413,
+      "alignment_score": 0.582
+    },
+    {
+      "word": "Santiago,",
+      "start": 51.533,
+      "end": 52.52,
+      "speaker": "SPEAKER_00",
+      "probability": 0.9967735409736633,
+      "alignment_score": 0.444
+    },
+    {
+      "word": "el",
+      "start": 60.72,
+      "end": 64.605,
+      "probability": 0.007573947310447693,
+      "alignment_score": 0.373
+    },
+    {
+      "word": "gobierno",
+      "start": 64.625,
+      "end": 71.875,
+      "speaker": "SPEAKER_03",
+      "probability": 0.38722822070121765,
+      "alignment_score": 0.479
+    },
+    {
+      "word": "de",
+      "start": 71.895,
+      "end": 71.935,
+      "speaker": "SPEAKER_03",
+      "probability": 0.1818598359823227,
+      "alignment_score": 0.01
+    },
+    {
+      "word": "la",
+      "start": 71.955,
+      "end": 73.417,
+      "speaker": "SPEAKER_03",
+      "probability": 0.19099992513656616,
+      "alignment_score": 0.514
+    },
+    {
+      "word": "Cámara",
+      "start": 73.437,
+      "end": 75.48,
+      "speaker": "SPEAKER_03",
+      "probability": 0.45145452208817005,
+      "alignment_score": 0.322
+    },
+    {
+      "word": "resultó",
+      "start": 75.5,
+      "end": 75.741,
+      "speaker": "SPEAKER_03",
+      "probability": 0.14235456017195247,
+      "alignment_score": 0.118
+    },
+    {
+      "word": "un",
+      "start": 75.761,
+      "end": 75.801,
+      "speaker": "SPEAKER_03",
+      "probability": 0.023720137774944305,
+      "alignment_score": 0.005
+    },
+    {
+      "word": "paso",
+      "start": 75.821,
+      "end": 77.683,
+      "speaker": "SPEAKER_03",
+      "probability": 0.00035015252069570124,
+      "alignment_score": 0.473
+    },
+    {
+      "word": "clave",
+      "start": 77.703,
+      "end": 78.084,
+      "speaker": "SPEAKER_03",
+      "probability": 0.4656856686633546,
+      "alignment_score": 0.238
+    },
+    {
+      "word": "en",
+      "start": 78.104,
+      "end": 78.144,
+      "speaker": "SPEAKER_03",
+      "probability": 0.20753322541713715,
+      "alignment_score": 0.002
+    },
+    {
+      "word": "la",
+      "start": 78.164,
+      "end": 79.125,
+      "speaker": "SPEAKER_03",
+      "probability": 0.6439184546470642,
+      "alignment_score": 0.497
+    },
+    {
+      "word": "escalada",
+      "start": 79.145,
+      "end": 85.614,
+      "speaker": "SPEAKER_03",
+      "probability": 0.15600494517093466,
+      "alignment_score": 0.461
+    },
+    {
+      "word": "de",
+      "start": 85.634,
+      "end": 85.995,
+      "probability": 0.3347552716732025,
+      "alignment_score": 0.521
+    },
+    {
+      "word": "los",
+      "start": 86.015,
+      "end": 86.315,
+      "probability": 0.06170911341905594,
+      "alignment_score": 0.287
+    },
+    {
+      "word": "golpistas,",
+      "start": 86.335,
+      "end": 90.0,
+      "speaker": "SPEAKER_00",
+      "probability": 0.17245358742851144,
+      "alignment_score": 0.316
+    },
+    {
+      "word": "el",
+      "start": 89.98,
+      "end": 90.02,
+      "speaker": "SPEAKER_00",
+      "probability": 0.013595806434750557,
+      "alignment_score": 0.103
+    },
+    {
+      "word": "gobierno",
+      "start": 91.101,
+      "end": 93.705,
+      "speaker": "SPEAKER_00",
+      "probability": 0.038956958800554276,
+      "alignment_score": 0.605
+    },
+    {
+      "word": "de",
+      "start": 93.725,
+      "end": 93.805,
+      "speaker": "SPEAKER_00",
+      "probability": 0.3548192083835602,
+      "alignment_score": 0.46
+    },
+    {
+      "word": "la",
+      "start": 93.865,
+      "end": 93.905,
+      "speaker": "SPEAKER_00",
+      "probability": 0.17245391011238098,
+      "alignment_score": 0.996
+    },
+    {
+      "word": "Cámara",
+      "start": 93.965,
+      "end": 94.466,
+      "speaker": "SPEAKER_00",
+      "probability": 0.4499412377675374,
+      "alignment_score": 0.68
+    },
+    {
+      "word": "resultó",
+      "start": 94.506,
+      "end": 95.608,
+      "speaker": "SPEAKER_00",
+      "probability": 0.2149567494780058,
+      "alignment_score": 0.439
+    },
+    {
+      "word": "un",
+      "start": 95.628,
+      "end": 95.668,
+      "speaker": "SPEAKER_00",
+      "probability": 0.013090039603412151,
+      "alignment_score": 0.498
+    },
+    {
+      "word": "paso",
+      "start": 96.609,
+      "end": 96.909,
+      "speaker": "SPEAKER_00",
+      "probability": 0.00038783682975918055,
+      "alignment_score": 0.343
+    },
+    {
+      "word": "clave",
+      "start": 97.59,
+      "end": 99.373,
+      "speaker": "SPEAKER_00",
+      "probability": 0.30825454017031007,
+      "alignment_score": 0.784
+    },
+    {
+      "word": "en",
+      "start": 99.393,
+      "end": 99.433,
+      "speaker": "SPEAKER_00",
+      "probability": 0.1813691109418869,
+      "alignment_score": 0.5
+    },
+    {
+      "word": "la",
+      "start": 99.453,
+      "end": 99.513,
+      "speaker": "SPEAKER_00",
+      "probability": 0.5401339530944824,
+      "alignment_score": 0.407
+    },
+    {
+      "word": "escalada",
+      "start": 99.593,
+      "end": 100.394,
+      "speaker": "SPEAKER_00",
+      "probability": 0.13678221229929477,
+      "alignment_score": 0.406
+    },
+    {
+      "word": "de",
+      "start": 101.716,
+      "end": 101.916,
+      "speaker": "SPEAKER_00",
+      "probability": 0.3717843294143677,
+      "alignment_score": 0.647
+    },
+    {
+      "word": "los",
+      "start": 102.116,
+      "end": 102.617,
+      "speaker": "SPEAKER_00",
+      "probability": 0.06705755740404129,
+      "alignment_score": 0.634
+    },
+    {
+      "word": "golpistas,",
+      "start": 102.637,
+      "end": 119.98,
+      "speaker": "SPEAKER_01",
+      "probability": 0.09057909662563664,
+      "alignment_score": 0.358
+    },
+    {
+      "word": "el",
+      "start": 119.98,
+      "end": 122.023,
+      "speaker": "SPEAKER_01",
+      "probability": 0.09860794991254807,
+      "alignment_score": 0.712
+    },
+    {
+      "word": "gobierno",
+      "start": 122.063,
+      "end": 123.965,
+      "speaker": "SPEAKER_01",
+      "probability": 0.323393851518631,
+      "alignment_score": 0.577
+    },
+    {
+      "word": "de",
+      "start": 123.986,
+      "end": 124.026,
+      "speaker": "SPEAKER_01",
+      "probability": 0.012085193768143654,
+      "alignment_score": 0.494
+    },
+    {
+      "word": "la",
+      "start": 124.386,
+      "end": 124.887,
+      "speaker": "SPEAKER_01",
+      "probability": 0.1561649590730667,
+      "alignment_score": 0.38
+    },
+    {
+      "word": "Cámara",
+      "start": 128.932,
+      "end": 133.258,
+      "speaker": "SPEAKER_01",
+      "probability": 0.43715618426601094,
+      "alignment_score": 0.708
+    },
+    {
+      "word": "resultó",
+      "start": 133.459,
+      "end": 136.623,
+      "speaker": "SPEAKER_01",
+      "probability": 0.038668032006171416,
+      "alignment_score": 0.602
+    },
+    {
+      "word": "un",
+      "start": 136.863,
+      "end": 138.325,
+      "speaker": "SPEAKER_01",
+      "probability": 0.0252771507948637,
+      "alignment_score": 0.812
+    },
+    {
+      "word": "paso",
+      "start": 138.345,
+      "end": 138.786,
+      "speaker": "SPEAKER_01",
+      "probability": 0.00041748894727788866,
+      "alignment_score": 0.49
+    },
+    {
+      "word": "clave",
+      "start": 138.926,
+      "end": 139.527,
+      "speaker": "SPEAKER_01",
+      "probability": 0.45539956871652976,
+      "alignment_score": 0.756
+    },
+    {
+      "word": "en",
+      "start": 140.668,
+      "end": 141.029,
+      "speaker": "SPEAKER_01",
+      "probability": 0.13053591549396515,
+      "alignment_score": 0.694
+    },
+    {
+      "word": "la",
+      "start": 141.349,
+      "end": 141.43,
+      "speaker": "SPEAKER_01",
+      "probability": 0.47644180059432983,
+      "alignment_score": 0.937
+    },
+    {
+      "word": "escalada",
+      "start": 141.57,
+      "end": 142.211,
+      "speaker": "SPEAKER_01",
+      "probability": 0.17576587773510255,
+      "alignment_score": 0.365
+    },
+    {
+      "word": "de",
+      "start": 142.451,
+      "end": 142.992,
+      "speaker": "SPEAKER_01",
+      "probability": 0.3731039762496948,
+      "alignment_score": 0.6
+    },
+    {
+      "word": "los",
+      "start": 145.375,
+      "end": 145.936,
+      "speaker": "SPEAKER_01",
+      "probability": 0.08625403791666031,
+      "alignment_score": 0.532
+    },
+    {
+      "word": "golpistas,",
+      "start": 145.956,
+      "end": 149.08,
+      "speaker": "SPEAKER_01",
+      "probability": 0.3111275431753408,
+      "alignment_score": 0.447
+    },
+    {
+      "word": "y",
+      "start": 149.98,
+      "end": 150.061,
+      "speaker": "SPEAKER_01",
+      "probability": 0.11026416718959808,
+      "alignment_score": 0.206
+    },
+    {
+      "word": "ellos",
+      "start": 150.122,
+      "end": 150.224,
+      "speaker": "SPEAKER_01",
+      "probability": 0.6243484616279602,
+      "alignment_score": 0.195
+    },
+    {
+      "word": "se",
+      "start": 150.245,
+      "end": 150.285,
+      "speaker": "SPEAKER_01",
+      "probability": 0.846754252910614,
+      "alignment_score": 0.3
+    },
+    {
+      "word": "esconden,",
+      "start": 150.306,
+      "end": 150.713,
+      "speaker": "SPEAKER_01",
+      "probability": 0.9894192814826965,
+      "alignment_score": 0.387
+    },
+    {
+      "word": "como",
+      "start": 152.036,
+      "end": 152.117,
+      "speaker": "SPEAKER_01",
+      "probability": 0.8741558790206909,
+      "alignment_score": 0.208
+    },
+    {
+      "word": "siempre.",
+      "start": 152.138,
+      "end": 152.3,
+      "speaker": "SPEAKER_01",
+      "probability": 0.09079398959875107,
+      "alignment_score": 0.125
+    }
+  ]
+}

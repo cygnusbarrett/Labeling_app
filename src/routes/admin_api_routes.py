@@ -4,7 +4,7 @@ Rutas API para administración - Panel administrativo Phase 2
 from flask import Blueprint, request, jsonify, current_app, send_file
 from functools import wraps
 from datetime import datetime, timezone
-from models.database import User, TranscriptionProject, Segment, DatabaseManager
+from models.database import User, TranscriptionProject, Segment, SegmentDiscardReason, DatabaseManager
 from services.jwt_service import jwt_service
 from config import Config
 import logging
@@ -41,7 +41,15 @@ def admin_required(f):
             payload = jwt_service.verify_access_token(token)
             if payload.get('role') != 'admin':
                 return jsonify({'error': 'User is not admin'}), 403
+
+            # Compatibilidad de claims: algunos tokens usan `user_id`, otros `id`.
+            current_user_id = payload.get('user_id', payload.get('id'))
+            if current_user_id is None:
+                logger.error(f"Admin token missing user id claim: {payload}")
+                return jsonify({'error': 'Invalid token payload'}), 401
+
             request.current_user = payload
+            request.current_user_id = current_user_id
             return f(*args, **kwargs)
         except Exception as e:
             logger.error(f"Admin token error: {e}")
@@ -126,9 +134,19 @@ def create_user():
 @admin_bp.route('/users/<int:user_id>', methods=['DELETE'])
 @admin_required
 def delete_user(user_id):
-    """Elimina un usuario"""
+    """Elimina un usuario y revierte sus anotaciones para mantener consistencia"""
+    session = None
     try:
-        if user_id == request.current_user['id']:
+        current_admin_id = getattr(request, 'current_user_id', None)
+        if current_admin_id is None:
+            current_admin_id = request.current_user.get('user_id', request.current_user.get('id'))
+
+        try:
+            current_admin_id = int(current_admin_id)
+        except (TypeError, ValueError):
+            return jsonify({'error': 'Invalid current user id in token'}), 401
+
+        if user_id == current_admin_id:
             return jsonify({'error': 'Cannot delete yourself'}), 403
         
         db_manager = get_db_manager()
@@ -140,13 +158,83 @@ def delete_user(user_id):
             return jsonify({'error': 'User not found'}), 404
         
         username = user.username
+        now_utc = datetime.now(timezone.utc)
+
+        # 1) Identificar proyectos impactados para recalcular métricas al final.
+        affected_project_ids = [
+            pid for (pid,) in session.query(Segment.project_id).filter(
+                Segment.annotator_id == user_id
+            ).distinct().all()
+        ]
+
+        # 2) Obtener IDs de segmentos tocados por el usuario.
+        affected_segment_ids = [
+            sid for (sid,) in session.query(Segment.id).filter(
+                Segment.annotator_id == user_id
+            ).all()
+        ]
+
+        # 3) Revertir TODO el trabajo del usuario: deja segmentos como al inicio.
+        reverted_segments = session.query(Segment).filter(
+            Segment.annotator_id == user_id
+        ).update(
+            {
+                Segment.annotator_id: None,
+                Segment.review_status: 'pending',
+                Segment.text_revised: None,
+                Segment.completed_at: None,
+                Segment.updated_at: now_utc
+            },
+            synchronize_session=False
+        )
+
+        # 4) Borrar motivos de descarte ligados a segmentos trabajados por el usuario.
+        deleted_discard_reasons_by_segment = 0
+        if affected_segment_ids:
+            deleted_discard_reasons_by_segment = session.query(SegmentDiscardReason).filter(
+                SegmentDiscardReason.segment_id.in_(affected_segment_ids)
+            ).delete(synchronize_session=False)
+
+        # 5) Limpieza defensiva de filas que sigan apuntando al usuario.
+        deleted_discard_reasons_by_user = session.query(SegmentDiscardReason).filter(
+                SegmentDiscardReason.annotator_id == user_id
+        ).delete(synchronize_session=False)
+
+        # 6) Recalcular words_completed para cada proyecto afectado.
+        completed_statuses = ['approved', 'corrected', 'discarded']
+        for project_id in affected_project_ids:
+            completed_count = session.query(Segment).filter(
+                Segment.project_id == project_id,
+                Segment.review_status.in_(completed_statuses)
+            ).count()
+            session.query(TranscriptionProject).filter_by(id=project_id).update(
+                {
+                    TranscriptionProject.words_completed: completed_count,
+                    TranscriptionProject.updated_at: now_utc
+                },
+                synchronize_session=False
+            )
+
         session.delete(user)
         session.commit()
         session.close()
         
-        return jsonify({'message': f'User {username} deleted'}), 200
+        return jsonify({
+            'message': f'User {username} deleted',
+            'reverted_segments': int(reverted_segments or 0),
+            'deleted_discard_reasons': int((deleted_discard_reasons_by_segment or 0) + (deleted_discard_reasons_by_user or 0)),
+            # Compatibilidad con payload anterior
+            'unassigned_segments': int(reverted_segments or 0),
+            'updated_discard_reasons': 0
+        }), 200
         
     except Exception as e:
+        if session:
+            try:
+                session.rollback()
+                session.close()
+            except Exception:
+                pass
         logger.error(f"Error deleting user: {e}")
         return jsonify({'error': str(e)}), 500
 
@@ -163,11 +251,18 @@ def get_user_stats(user_id):
             session.close()
             return jsonify({'error': 'User not found'}), 404
         
-        # Contar segmentos asignados y completados
-        total_assigned = session.query(Segment).filter_by(annotator_id=user_id).count()
-        completed = session.query(Segment).filter_by(
-            annotator_id=user_id
-        ).filter(Segment.review_status.in_(['approved', 'corrected'])).count()
+        # Contar segmentos asignados y completados (solo revisables: low_prob_word_count > 0)
+        user_base = session.query(Segment).filter(
+            Segment.annotator_id == user_id,
+            Segment.low_prob_word_count > 0
+        )
+        total_assigned = user_base.count()
+        approved = user_base.filter(Segment.review_status == 'approved').count()
+        corrected = user_base.filter(Segment.review_status == 'corrected').count()
+        discarded = user_base.filter(Segment.review_status == 'discarded').count()
+        completed = user_base.filter(
+            Segment.review_status.in_(['approved', 'corrected', 'discarded'])
+        ).count()
         
         session.close()
         
@@ -175,8 +270,9 @@ def get_user_stats(user_id):
             'user_id': user_id,
             'username': user.username,
             'total_segments': total_assigned,
-            'approved_segments': completed,
-            'corrected_segments': completed,
+            'approved_segments': approved,
+            'corrected_segments': corrected,
+            'discarded_segments': discarded,
             'pending_segments': total_assigned - completed,
             'words_completed_percentage': round((completed / total_assigned * 100), 2) if total_assigned > 0 else 0
         }), 200
@@ -226,10 +322,15 @@ def get_project_stats(project_id):
             session.close()
             return jsonify({'error': 'Project not found'}), 404
         
-        total_segments = session.query(Segment).filter_by(project_id=project_id).count()
-        pending = session.query(Segment).filter_by(project_id=project_id, review_status='pending').count()
-        approved = session.query(Segment).filter_by(project_id=project_id, review_status='approved').count()
-        corrected = session.query(Segment).filter_by(project_id=project_id, review_status='corrected').count()
+        reviewable_base = session.query(Segment).filter(
+            Segment.project_id == project_id,
+            Segment.low_prob_word_count > 0
+        )
+        total_segments = reviewable_base.count()
+        pending = reviewable_base.filter(Segment.review_status == 'pending').count()
+        approved = reviewable_base.filter(Segment.review_status == 'approved').count()
+        corrected = reviewable_base.filter(Segment.review_status == 'corrected').count()
+        discarded = reviewable_base.filter(Segment.review_status == 'discarded').count()
         
         # Contar anotadores
         from sqlalchemy import func, distinct
@@ -243,7 +344,8 @@ def get_project_stats(project_id):
             'pending_segments': pending,
             'approved_segments': approved,
             'corrected_segments': corrected,
-            'words_completed_percentage': round(((approved + corrected) / total_segments * 100), 2) if total_segments > 0 else 0,
+            'discarded_segments': discarded,
+            'words_completed_percentage': round(((approved + corrected + discarded) / total_segments * 100), 2) if total_segments > 0 else 0,
             'total_annotators': total_annotators
         }), 200
         
@@ -267,10 +369,20 @@ def list_segments(project_id):
         
         if status != 'all':
             if status == 'pending':
-                query = query.filter_by(review_status='pending').filter(Segment.annotator_id.is_(None))
+                query = query.filter_by(review_status='pending').filter(
+                    Segment.annotator_id.is_(None),
+                    Segment.low_prob_word_count > 0
+                )
             elif status == 'completed':
-                query = query.filter(Segment.review_status.in_(['approved', 'corrected']))
-        
+                query = query.filter(Segment.review_status.in_(['approved', 'corrected', 'discarded']))
+
+        query = query.order_by(
+            Segment.audio_filename.asc(),
+            Segment.segment_index.asc(),
+            Segment.start_time.asc(),
+            Segment.id.asc()
+        )
+
         segments = query.all()
         session.close()
         
@@ -278,6 +390,10 @@ def list_segments(project_id):
             'words': [  # Mantener nombre 'words' por compatibility
                 {
                     'id': s.id,
+                    'audio_filename': s.audio_filename,
+                    'segment_index': s.segment_index,
+                    'start_time': s.start_time,
+                    'end_time': s.end_time,
                     'text': s.text,
                     'status': s.review_status,
                     'assigned_to': s.annotator_id,
@@ -301,25 +417,63 @@ def assign_segment(project_id, segment_id):
         
         if not annotator_id:
             return jsonify({'error': 'annotator_id required'}), 400
+
+        try:
+            annotator_id = int(annotator_id)
+        except (TypeError, ValueError):
+            return jsonify({'error': 'annotator_id must be an integer'}), 400
         
         db_manager = get_db_manager()
         session = db_manager.get_session()
+
+        annotator = session.query(User).filter_by(id=annotator_id).first()
+        if not annotator:
+            session.close()
+            return jsonify({'error': 'Annotator not found'}), 404
         
+        # Asignación atómica: solo asigna si sigue libre (annotator_id IS NULL).
+        # Esto evita que un segundo request sobreescriba la asignación por carrera.
+        updated_rows = session.query(Segment).filter(
+            Segment.id == segment_id,
+            Segment.project_id == project_id,
+            Segment.annotator_id.is_(None)
+        ).update(
+            {
+                Segment.annotator_id: annotator_id,
+                Segment.updated_at: datetime.now(timezone.utc)
+            },
+            synchronize_session=False
+        )
+
+        if updated_rows == 1:
+            session.commit()
+            session.close()
+            return jsonify({'message': 'Segment assigned', 'segment_id': segment_id}), 200
+
+        session.rollback()
         segment = session.query(Segment).filter_by(
-            id=segment_id, 
+            id=segment_id,
             project_id=project_id
         ).first()
-        
+
         if not segment:
             session.close()
             return jsonify({'error': 'Segment not found'}), 404
-        
-        segment.annotator_id = annotator_id
-        segment.updated_at = datetime.now(timezone.utc)
-        session.commit()
+
+        if segment.annotator_id is not None and int(segment.annotator_id) == annotator_id:
+            session.close()
+            return jsonify({
+                'message': 'Segment already assigned to this annotator',
+                'segment_id': segment_id,
+                'annotator_id': annotator_id
+            }), 200
+
         session.close()
-        
-        return jsonify({'message': 'Segment assigned', 'segment_id': segment_id}), 200
+        return jsonify({
+            'error': 'Segment already assigned to another annotator',
+            'segment_id': segment_id,
+            'assigned_to': segment.annotator_id
+        }), 409
         
     except Exception as e:
         logger.error(f"Error assigning segment: {e}")
@@ -368,6 +522,12 @@ def list_assigned_segments(project_id):
         segments = session.query(Segment).filter(
             Segment.project_id == project_id,
             Segment.annotator_id.isnot(None)
+        ).order_by(
+            Segment.annotator_id.asc(),
+            Segment.audio_filename.asc(),
+            Segment.segment_index.asc(),
+            Segment.start_time.asc(),
+            Segment.id.asc()
         ).all()
         
         # Agrupar por usuario
@@ -383,6 +543,10 @@ def list_assigned_segments(project_id):
                 }
             by_user[uid]['segments'].append({
                 'id': s.id,
+                'audio_filename': s.audio_filename,
+                'segment_index': s.segment_index,
+                'start_time': s.start_time,
+                'end_time': s.end_time,
                 'text': s.text,
                 'status': s.review_status,
                 'completed_at': s.completed_at.isoformat() if s.completed_at else None
@@ -413,7 +577,7 @@ def get_user_annotations(user_id):
 
         segments = session.query(Segment).filter(
             Segment.annotator_id == user_id,
-            Segment.review_status.in_(['approved', 'corrected'])
+            Segment.review_status.in_(['approved', 'corrected', 'discarded'])
         ).order_by(Segment.completed_at.desc()).all()
 
         result = []
@@ -447,7 +611,7 @@ def get_user_annotations(user_id):
 @admin_bp.route('/annotations/export', methods=['GET'])
 @admin_required
 def export_all_annotations():
-    """Exporta todas las anotaciones completadas de todos los usuarios a Excel"""
+    """Exporta anotaciones (incluye descartes y su motivo) de todos los usuarios a Excel"""
     try:
         from openpyxl import Workbook
         from openpyxl.styles import Font, PatternFill, Alignment, Border, Side
@@ -456,7 +620,7 @@ def export_all_annotations():
         session = db_manager.get_session()
 
         segments = session.query(Segment).filter(
-            Segment.review_status.in_(['approved', 'corrected'])
+            Segment.review_status.in_(['approved', 'corrected', 'discarded'])
         ).order_by(Segment.completed_at.desc()).all()
 
         # Pre-load annotator usernames
@@ -465,6 +629,15 @@ def export_all_annotations():
         if annotator_ids:
             users = session.query(User).filter(User.id.in_(annotator_ids)).all()
             users_map = {u.id: u.username for u in users}
+
+        # Pre-load motivos de descarte por segmento
+        discarded_segment_ids = [s.id for s in segments if s.review_status == 'discarded']
+        discard_reasons_map = {}
+        if discarded_segment_ids:
+            discard_reasons = session.query(SegmentDiscardReason).filter(
+                SegmentDiscardReason.segment_id.in_(discarded_segment_ids)
+            ).all()
+            discard_reasons_map = {r.segment_id: r for r in discard_reasons}
 
         data_dir = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'data', 'transcription_projects')
 
@@ -485,8 +658,10 @@ def export_all_annotations():
         headers = [
             'Ruta del Audio',
             'Timestamp (inicio - fin)',
+            'Estado',
             'Segmento Original',
             'Segmento Modificado',
+            'Motivo Descarte',
             'Anotador',
             'Fecha de Anotación'
         ]
@@ -503,17 +678,48 @@ def export_all_annotations():
             h, m = divmod(int(m), 60)
             return f'{h:02d}:{int(m):02d}:{sec:05.2f}'
 
+        status_labels = {
+            'approved': 'Aprobada',
+            'corrected': 'Corregida',
+            'discarded': 'Descartada'
+        }
+        reason_labels = {
+            'not_chilean_spanish': 'No es español chileno',
+            'other': 'Otro'
+        }
+
         for row_idx, s in enumerate(segments, 2):
             audio_path = os.path.join(data_dir, s.project_id, s.audio_filename)
             timestamp = f'{fmt_time(s.start_time)} - {fmt_time(s.end_time)}'
             completed = s.completed_at.strftime('%Y-%m-%d %H:%M') if s.completed_at else '\u2014'
             username = users_map.get(s.annotator_id, '\u2014')
+            status_label = status_labels.get(s.review_status, s.review_status or '\u2014')
+
+            discard_reason = discard_reasons_map.get(s.id)
+            discard_reason_text = '\u2014'
+            if s.review_status == 'discarded':
+                if discard_reason:
+                    if discard_reason.reason_type == 'other':
+                        discard_reason_text = discard_reason.reason_note or 'Otro'
+                    else:
+                        discard_reason_text = reason_labels.get(
+                            discard_reason.reason_type,
+                            discard_reason.reason_type or '\u2014'
+                        )
+                else:
+                    discard_reason_text = 'Sin motivo registrado'
+            elif s.review_status == 'approved':
+                discard_reason_text = 'Aprobada'
+            elif s.review_status == 'corrected':
+                discard_reason_text = 'Corregida'
 
             row_data = [
                 audio_path,
                 timestamp,
+                status_label,
                 s.text,
                 s.text_revised or s.text,
+                discard_reason_text,
                 username,
                 completed
             ]
@@ -525,10 +731,12 @@ def export_all_annotations():
 
         ws.column_dimensions['A'].width = 50
         ws.column_dimensions['B'].width = 25
-        ws.column_dimensions['C'].width = 45
+        ws.column_dimensions['C'].width = 14
         ws.column_dimensions['D'].width = 45
-        ws.column_dimensions['E'].width = 15
-        ws.column_dimensions['F'].width = 20
+        ws.column_dimensions['E'].width = 45
+        ws.column_dimensions['F'].width = 36
+        ws.column_dimensions['G'].width = 15
+        ws.column_dimensions['H'].width = 20
 
         session.close()
 

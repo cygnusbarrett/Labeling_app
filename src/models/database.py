@@ -164,6 +164,7 @@ class Segment(Base):
     
     # Relaciones
     words = relationship('Word', back_populates='segment', cascade='all, delete-orphan')
+    discard_reason = relationship('SegmentDiscardReason', back_populates='segment', uselist=False, cascade='all, delete-orphan')
     project = relationship('TranscriptionProject', back_populates='segments')
     annotator = relationship('User', back_populates='segments')
     
@@ -176,7 +177,7 @@ class Segment(Base):
         Index('idx_segment_file', 'audio_filename'),
     )
     
-    def to_dict(self, include_words=True):
+    def to_dict(self, include_words=True, include_discard_reason=False):
         """Convierte el segmento a diccionario"""
         result = {
             'id': self.id,
@@ -199,11 +200,59 @@ class Segment(Base):
         
         if include_words:
             result['words'] = [w.to_dict(include_segment=False) for w in self.words]
+
+        if include_discard_reason and self.discard_reason:
+            result['discard_reason'] = self.discard_reason.to_dict(include_segment=False)
         
         return result
     
     def __repr__(self):
         return f'<Segment {self.project_id}:{self.segment_index} status={self.review_status}>'
+
+
+class SegmentDiscardReason(Base):
+    """Motivo de descarte de un segmento"""
+    __tablename__ = 'segment_discard_reasons'
+
+    id = Column(Integer, primary_key=True)
+    segment_id = Column(Integer, ForeignKey('segments.id'), nullable=False, unique=True)
+    project_id = Column(String(100), ForeignKey('transcription_projects.id'), nullable=False)
+    annotator_id = Column(Integer, ForeignKey('users.id'), nullable=False)
+    reason_type = Column(String(40), nullable=False)  # 'not_chilean_spanish' | 'other'
+    reason_note = Column(Text, nullable=True)  # Texto libre cuando reason_type == 'other'
+    created_at = Column(DateTime(timezone=True), nullable=False, default=datetime.now(timezone.utc))
+    updated_at = Column(DateTime(timezone=True), nullable=False, default=datetime.now(timezone.utc))
+
+    segment = relationship('Segment', back_populates='discard_reason')
+    project = relationship('TranscriptionProject')
+    annotator = relationship('User')
+
+    __table_args__ = (
+        Index('idx_discard_reason_project', 'project_id'),
+        Index('idx_discard_reason_annotator', 'annotator_id'),
+        Index('idx_discard_reason_type', 'reason_type'),
+    )
+
+    def to_dict(self, include_segment=True):
+        data = {
+            'id': self.id,
+            'segment_id': self.segment_id,
+            'project_id': self.project_id,
+            'annotator_id': self.annotator_id,
+            'reason_type': self.reason_type,
+            'reason_note': self.reason_note,
+            'created_at': self.created_at.isoformat() if self.created_at else None,
+            'updated_at': self.updated_at.isoformat() if self.updated_at else None,
+        }
+        if include_segment:
+            data['segment'] = {
+                'id': self.segment.id,
+                'segment_index': self.segment.segment_index
+            } if self.segment else None
+        return data
+
+    def __repr__(self):
+        return f'<SegmentDiscardReason segment_id={self.segment_id} reason={self.reason_type}>'
 
 class Word(Base):
     """Modelo de palabra para detectar qué requiere revisión

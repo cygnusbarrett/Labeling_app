@@ -30,10 +30,10 @@ COPY src /app/src
 
 WORKDIR /app/src
 
-EXPOSE 3000
+EXPOSE 18090
 
 HEALTHCHECK --interval=30s --timeout=10s --start-period=40s --retries=3 \
-    CMD curl -f http://localhost:3000/login || exit 1
+    CMD curl -f http://localhost:18090/login || exit 1
 
 # Usa la app WSGI (wsgi.py) con configuración de Gunicorn versionada en src/
 CMD ["gunicorn", "--config", "/app/src/gunicorn.conf.py", "wsgi:app"]

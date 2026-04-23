@@ -25,15 +25,15 @@ class CorrectionSchema(Schema):
     """Esquema para validación de correcciones de segmentos"""
     review_status = fields.Str(
         required=True,
-        validate=validate.OneOf(['approved', 'corrected', 'pending']),
+        validate=validate.OneOf(['approved', 'corrected', 'discarded', 'pending']),
         error_messages={
             'required': 'review_status es requerido',
-            'validator_failed': 'review_status debe ser "approved", "corrected" o "pending"'
+            'validator_failed': 'review_status debe ser "approved", "corrected", "discarded" o "pending"'
         }
     )
     status = fields.Str(
         required=False,
-        validate=validate.OneOf(['approved', 'corrected', 'pending']),
+        validate=validate.OneOf(['approved', 'corrected', 'discarded', 'pending']),
         error_messages={'validator_failed': 'status inválido (backward compat)'}
     )
     text_revised = fields.Str(
@@ -47,6 +47,18 @@ class CorrectionSchema(Schema):
         validate=validate.Length(min=1, max=5000),
         allow_none=True,
         error_messages={'validator_failed': 'corrected_text debe tener entre 1 y 5000 caracteres'}
+    )
+    discard_reason_type = fields.Str(
+        required=False,
+        validate=validate.OneOf(['not_chilean_spanish', 'other']),
+        allow_none=True,
+        error_messages={'validator_failed': 'discard_reason_type inválido'}
+    )
+    discard_reason_note = fields.Str(
+        required=False,
+        validate=validate.Length(min=1, max=1000),
+        allow_none=True,
+        error_messages={'validator_failed': 'discard_reason_note debe tener entre 1 y 1000 caracteres'}
     )
     
     @validates('text_revised')
