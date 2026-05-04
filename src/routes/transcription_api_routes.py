@@ -7,6 +7,7 @@ from datetime import datetime, timezone
 from models.database import TranscriptionProject, Word, Segment, User, DatabaseManager, SegmentDiscardReason
 from services.audio_service import AudioService
 from services.transcription_service import TranscriptionService
+from services.transcript_export_service import export_project_transcript
 from services.jwt_service import jwt_service
 from services.rate_limiter import rate_limit_service
 from config import Config
@@ -503,10 +504,28 @@ def submit_correction(word_id):
         text_revised = data.get('text_revised', data.get('corrected_text'))
         discard_reason_type = (data.get('discard_reason_type') or '').strip()
         discard_reason_note = (data.get('discard_reason_note') or '').strip()
+        decision_type = (data.get('decision_type') or '').strip()
         
         if review_status not in ['approved', 'corrected', 'pending', 'discarded']:
             session.close()
             return jsonify({'error': 'review_status debe ser "approved", "corrected", "discarded" o "pending"'}), 400
+
+        if not decision_type:
+            if review_status == 'discarded':
+                decision_type = 'discarded'
+            elif review_status in ['approved', 'corrected']:
+                decision_type = 'approved'
+
+        valid_decision_types = {'approved', 'approved_with_doubt', 'discarded'}
+        if review_status in ['approved', 'corrected'] and decision_type not in {'approved', 'approved_with_doubt'}:
+            session.close()
+            return jsonify({'error': 'decision_type debe ser "approved" o "approved_with_doubt"'}), 400
+        if review_status == 'discarded' and decision_type != 'discarded':
+            session.close()
+            return jsonify({'error': 'decision_type debe ser "discarded" cuando review_status = "discarded"'}), 400
+        if decision_type and decision_type not in valid_decision_types:
+            session.close()
+            return jsonify({'error': 'decision_type inválido'}), 400
 
         if review_status == 'discarded':
             valid_discard_reasons = {'not_chilean_spanish', 'other'}
@@ -540,6 +559,7 @@ def submit_correction(word_id):
         
         # Actualizar segmento
         segment.review_status = review_status
+        segment.decision_type = decision_type or None
         if text_revised:
             segment.text_revised = text_revised
         elif review_status == 'discarded':
@@ -598,9 +618,12 @@ def submit_correction(word_id):
             
             current_app.logger.info(f'Segmento {word_id} actualizado: status={review_status}, proyecto stats: {completed}/{total}')
         
+        export_paths = export_project_transcript(session, segment.project_id)
+
         # Capture values before closing session
         segment_id = segment.id
         final_review_status = segment.review_status
+        final_decision_type = segment.decision_type
         
         session.commit()
         session.close()
@@ -609,8 +632,10 @@ def submit_correction(word_id):
             'message': 'Segmento actualizado',
             'segment_id': segment_id,
             'review_status': final_review_status,
+            'decision_type': final_decision_type,
             'discard_reason_type': discard_reason_type if final_review_status == 'discarded' else None,
-            'discard_reason_note': discard_reason_note if final_review_status == 'discarded' else None
+            'discard_reason_note': discard_reason_note if final_review_status == 'discarded' else None,
+            'export_paths': export_paths
         }), 200
         
     except Exception as e:
@@ -1009,11 +1034,22 @@ def submit_segment_correction(segment_id):
         review_status = data.get('review_status', 'corrected')
         discard_reason_type = (data.get('discard_reason_type') or '').strip()
         discard_reason_note = (data.get('discard_reason_note') or '').strip()
+        decision_type = (data.get('decision_type') or '').strip()
         
         # Validar entrada
         if review_status not in ['approved', 'corrected', 'discarded']:
             session.close()
             return jsonify({'error': 'review_status debe ser "approved", "corrected" o "discarded"'}), 400
+
+        if not decision_type:
+            decision_type = 'discarded' if review_status == 'discarded' else 'approved'
+
+        if review_status in ['approved', 'corrected'] and decision_type not in {'approved', 'approved_with_doubt'}:
+            session.close()
+            return jsonify({'error': 'decision_type debe ser "approved" o "approved_with_doubt"'}), 400
+        if review_status == 'discarded' and decision_type != 'discarded':
+            session.close()
+            return jsonify({'error': 'decision_type debe ser "discarded" cuando review_status = "discarded"'}), 400
 
         if review_status == 'discarded':
             valid_discard_reasons = {'not_chilean_spanish', 'other'}
@@ -1033,6 +1069,7 @@ def submit_segment_correction(segment_id):
         # Actualizar segmento
         segment.text_revised = text_revised
         segment.review_status = review_status
+        segment.decision_type = decision_type
         segment.annotator_id = request.user_id
         segment.updated_at = datetime.now(timezone.utc)
         
@@ -1062,6 +1099,7 @@ def submit_segment_correction(segment_id):
         else:
             segment.completed_at = None
 
+        export_paths = export_project_transcript(session, segment.project_id)
         segment_data = segment.to_dict()
         
         session.commit()
@@ -1069,7 +1107,8 @@ def submit_segment_correction(segment_id):
         
         return jsonify({
             'message': 'Segmento actualizado',
-            'segment': segment_data
+            'segment': segment_data,
+            'export_paths': export_paths
         }), 200
         
     except Exception as e:

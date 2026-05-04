@@ -2,7 +2,7 @@
 Modelos de base de datos SQLite para la aplicación de anotación colaborativa
 """
 from datetime import datetime, timezone
-from sqlalchemy import create_engine, Column, Integer, String, Text, DateTime, ForeignKey, Index, Float, Boolean
+from sqlalchemy import create_engine, Column, Integer, String, Text, DateTime, ForeignKey, Index, Float, Boolean, inspect, text as sa_text
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker, relationship
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -63,8 +63,28 @@ class DatabaseManager:
         self.SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=self.engine)
         
     def create_tables(self):
-        """Crea todas las tablas"""
+        """Crea todas las tablas y aplica columnas runtime faltantes."""
         Base.metadata.create_all(bind=self.engine)
+        self.ensure_runtime_columns()
+
+    def ensure_runtime_columns(self):
+        """Agrega columnas nuevas en despliegues existentes sin requerir migracion manual."""
+        inspector = inspect(self.engine)
+        if 'segments' not in inspector.get_table_names():
+            return
+
+        existing_columns = {column['name'] for column in inspector.get_columns('segments')}
+        statements = []
+        if 'decision_type' not in existing_columns:
+            column_type = 'VARCHAR(32)' if self.engine.dialect.name in ('postgresql', 'mysql') else 'TEXT'
+            statements.append(f'ALTER TABLE segments ADD COLUMN decision_type {column_type}')
+
+        if not statements:
+            return
+
+        with self.engine.begin() as connection:
+            for statement in statements:
+                connection.execute(sa_text(statement))
         
     def get_session(self):
         """Obtiene una sesión de base de datos"""
@@ -152,6 +172,7 @@ class Segment(Base):
     # Corrección a nivel de segmento
     text_revised = Column(Text, nullable=True)  # Transcripción corregida por anotador
     review_status = Column(String(20), nullable=False, default='pending')  # 'pending', 'approved', 'corrected'
+    decision_type = Column(String(32), nullable=True)  # 'approved', 'approved_with_doubt', 'discarded'
     
     # Auditoría y asignación
     annotator_id = Column(Integer, ForeignKey('users.id'), nullable=True)
@@ -191,6 +212,7 @@ class Segment(Base):
             'text_revised': self.text_revised,
             'speaker': self.speaker,
             'review_status': self.review_status,
+            'decision_type': self.decision_type,
             'low_prob_word_count': self.low_prob_word_count,
             'annotator_id': self.annotator_id,
             'created_at': self.created_at.isoformat() if self.created_at else None,

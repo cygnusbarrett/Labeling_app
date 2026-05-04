@@ -12,7 +12,9 @@ let state = {
     stats: null,
     userRole: 'annotator',
     fullEditMode: false,
-    fullEditTouched: false
+    fullEditTouched: false,
+    audioRequestToken: 0,
+    currentAudioUrl: null
 };
 
 const INITIAL_SEGMENT_LIMIT = 20;
@@ -133,9 +135,9 @@ async function loadProjectWords() {
         state.allWords = wordsData.words || [];
 
         if (state.allWords.length === 0) {
+            clearAudioPlayer();
             document.getElementById('loadingState').style.display = 'none';
             
-            // Mostrar mensaje de felicitaciones con opción de solicitar más
             const msgContainer = document.getElementById('completionMessage');
             if (msgContainer) {
                 msgContainer.style.display = 'block';
@@ -156,8 +158,6 @@ async function loadProjectWords() {
         }
 
         state.currentWordIndex = 0;
-        document.getElementById('loadingState').style.display = 'none';
-
         await displayWord(0);
         await updateStats();
 
@@ -167,21 +167,83 @@ async function loadProjectWords() {
     }
 }
 
+function revokeAudioUrl(url) {
+    if (url && url.startsWith('blob:')) {
+        URL.revokeObjectURL(url);
+    }
+}
+
+function clearAudioPlayer() {
+    const audioPlayer = document.getElementById('audioPlayer');
+    if (!audioPlayer) return;
+
+    audioPlayer.pause();
+    audioPlayer.removeAttribute('src');
+    audioPlayer.load();
+
+    revokeAudioUrl(state.currentAudioUrl);
+    state.currentAudioUrl = null;
+}
+
+async function loadCurrentSegmentAudio(segment) {
+    const requestToken = ++state.audioRequestToken;
+    clearAudioPlayer();
+
+    const audioUrl = await transcriptionService.getWordAudio(state.currentProject, segment.id, 0.2);
+    if (requestToken != state.audioRequestToken) {
+        revokeAudioUrl(audioUrl);
+        return false;
+    }
+
+    state.currentAudioUrl = audioUrl;
+
+    const audioPlayer = document.getElementById('audioPlayer');
+    await new Promise((resolve, reject) => {
+        const cleanup = () => {
+            audioPlayer.removeEventListener('loadeddata', onLoaded);
+            audioPlayer.removeEventListener('error', onError);
+        };
+        const onLoaded = () => {
+            cleanup();
+            resolve();
+        };
+        const onError = () => {
+            cleanup();
+            reject(new Error('El navegador no pudo cargar el audio del segmento'));
+        };
+
+        audioPlayer.addEventListener('loadeddata', onLoaded, { once: true });
+        audioPlayer.addEventListener('error', onError, { once: true });
+        audioPlayer.src = audioUrl;
+        audioPlayer.load();
+    });
+
+    if (requestToken != state.audioRequestToken) {
+        return false;
+    }
+
+    return true;
+}
+
 /**
  * Muestra una palabra específica
  */
 async function displayWord(index) {
+    const loadingEl = document.getElementById('loadingState');
     try {
         if (index < 0 || index >= state.allWords.length) {
             showMessage('No hay más segmentos', 'info');
             return;
         }
 
+        loadingEl.textContent = 'Cargando segmento y audio...';
+        loadingEl.style.display = 'block';
+        document.getElementById('wordCard').style.display = 'none';
+
         state.currentWordIndex = index;
         const segment = state.allWords[index];
         state.currentWord = segment;
 
-        // Reset full-edit mode for each new segment
         state.fullEditMode = false;
         state.fullEditTouched = false;
         const fullEditSection = document.getElementById('fullEditSection');
@@ -189,27 +251,21 @@ async function displayWord(index) {
         const toggleLink = document.querySelector('.full-edit-toggle');
         if (toggleLink) toggleLink.style.display = '';
 
-        // Reset context section
         const contextSection = document.getElementById('contextSection');
         if (contextSection) contextSection.style.display = 'none';
         const contextBtn = document.getElementById('contextBtn');
-        if (contextBtn) contextBtn.textContent = '📖 Más contexto';
+        if (contextBtn) {
+            contextBtn.textContent = '📖 Más contexto';
+            contextBtn.disabled = false;
+        }
 
-        // Actualizar interfaz con los datos del SEGMENTO
-        // Speaker hidden by design
         document.getElementById('originalText').textContent = segment.text;
-
-        // Renderizar texto con edición inline de palabras inciertas
         displayHighlightedText(segment);
-
-        // Pre-llenar textarea oculto (para modo edición completa)
         document.getElementById('correctedText').value = segment.text;
 
-        // Duración
         const duration = (segment.end_time - segment.start_time).toFixed(2);
         document.getElementById('wordDuration').textContent = `${duration}s`;
         
-        // Info de palabras con baja probabilidad
         const lowProbText = document.getElementById('lowProbText');
         if (segment.low_prob_word_count > 0) {
             lowProbText.textContent = `⚠️ ${segment.low_prob_word_count} palabra(s) con baja confianza`;
@@ -219,32 +275,29 @@ async function displayWord(index) {
             lowProbText.style.color = '#22863a';
         }
 
-        // Badge (oculto)
         document.getElementById('probabilityBadge').innerHTML = '';
-
-        // Indicador de cambios
         updateChangeIndicator();
 
-        // Cargar audio del SEGMENTO
         try {
-            const audioUrl = await transcriptionService.getWordAudio(state.currentProject, segment.id, 0.2);
-            const audioPlayer = document.getElementById('audioPlayer');
-            audioPlayer.src = audioUrl;
-            audioPlayer.load();
+            const loaded = await loadCurrentSegmentAudio(segment);
+            if (!loaded) {
+                return;
+            }
         } catch (audioError) {
             console.error('Error al cargar audio:', audioError);
+            clearAudioPlayer();
             showMessage(`Advertencia: No se pudo cargar el audio - ${audioError.message}`, 'error');
         }
 
-        // Actualizar título
         document.title = `Segmento ${index + 1}/${state.allWords.length} - Validador`;
 
         document.getElementById('wordCard').style.display = 'block';
         closeDiscardModal();
-        document.getElementById('loadingState').style.display = 'none';
+        loadingEl.style.display = 'none';
         document.getElementById('wordCard').scrollIntoView({ behavior: 'smooth', block: 'start' });
 
     } catch (error) {
+        loadingEl.style.display = 'none';
         showMessage(`Error mostrando segmento: ${error.message}`, 'error');
     }
 }
@@ -562,74 +615,71 @@ function toggleFullEdit() {
 /**
  * Avanza al siguiente segmento o finaliza la sesión de revisión actual.
  */
-function goToNextSegmentOrFinish() {
-    if (state.currentWordIndex + 1 < state.allWords.length) {
-        displayWord(state.currentWordIndex + 1);
-    } else {
-        showMessage('¡Has completado todos los segmentos! 🎉', 'success');
-        document.getElementById('wordCard').style.display = 'none';
-    }
+async function goToNextSegmentOrFinish() {
+    await loadProjectWords();
 }
 
 /**
  * Envía la validación de un segmento
  */
-async function submitWord(status) {
+async function submitWord(status, options = {}) {
     try {
         if (!state.currentWord) {
             showMessage('Error: No hay segmento seleccionado', 'error');
             return;
         }
 
-        // Determinar texto y estado
         let textRevised;
-        let review_status;
+        let reviewStatus;
+        const decisionType = options.decisionType || (status === 'approved_with_doubt' ? 'approved_with_doubt' : 'approved');
 
-        if (state.fullEditMode && state.fullEditTouched) {
-            // Textarea fue editado manualmente: tiene prioridad sobre inline
-            textRevised = document.getElementById('correctedText').value.trim();
-            review_status = (textRevised !== state.currentWord.text.trim()) ? 'corrected' : 'approved';
-        } else {
-            // Modo inline (o fullEdit abierto pero no tocado): reconstruir desde inputs
+        if (status === 'discarded') {
+            reviewStatus = 'discarded';
             textRevised = reconstructText();
-            review_status = hasInlineChanges() ? 'corrected' : 'approved';
+        } else if (state.fullEditMode && state.fullEditTouched) {
+            textRevised = document.getElementById('correctedText').value.trim();
+            reviewStatus = (textRevised !== state.currentWord.text.trim()) ? 'corrected' : 'approved';
+        } else {
+            textRevised = reconstructText();
+            reviewStatus = hasInlineChanges() ? 'corrected' : 'approved';
         }
 
-        // Validar que hay texto
         if (!textRevised) {
             showMessage('Error: no se pudo reconstruir el texto', 'error');
             return;
         }
 
-        // Deshabilitar botones mientras se procesa
         const buttons = document.querySelectorAll('.form-actions button');
         buttons.forEach(btn => btn.disabled = true);
 
         console.log('📤 Enviando segmento:', {
             segment_id: state.currentWord.id,
-            review_status: review_status,
+            review_status: reviewStatus,
+            decision_type: decisionType,
             text_revised: textRevised
         });
 
-        // Enviar corrección
         await transcriptionService.submitWord(
             state.currentWord.id,
-            review_status,
-            textRevised
+            reviewStatus,
+            textRevised,
+            { decision_type: decisionType }
         );
 
-        // Mostrar mensaje de éxito
-        const statusText = review_status === 'approved'
-            ? 'aprobada ✓'
-            : (review_status === 'discarded' ? 'descartada 🗑️' : 'corregida ✎');
+        let statusText = 'corregida ✎';
+        if (decisionType === 'approved_with_doubt') {
+            statusText = 'confirmada con duda';
+        } else if (reviewStatus === 'approved') {
+            statusText = 'aprobada ✓';
+        } else if (reviewStatus === 'discarded') {
+            statusText = 'descartada 🗑️';
+        }
         showMessage(`Segmento ${statusText}`, 'success');
 
-        // Actualizar estadísticas
         await updateStats();
 
-        // Ir al siguiente segmento
-        setTimeout(() => {
-            goToNextSegmentOrFinish();
+        setTimeout(async () => {
+            await goToNextSegmentOrFinish();
             buttons.forEach(btn => btn.disabled = false);
         }, 500);
 
@@ -697,6 +747,7 @@ async function confirmDiscard() {
             'discarded',
             reconstructText(),
             {
+                decision_type: 'discarded',
                 discard_reason_type: reasonType,
                 discard_reason_note: reasonType === 'other' ? reasonOther : ''
             }
@@ -706,8 +757,8 @@ async function confirmDiscard() {
         showMessage('Segmento descartado correctamente', 'success');
         await updateStats();
 
-        setTimeout(() => {
-            goToNextSegmentOrFinish();
+        setTimeout(async () => {
+            await goToNextSegmentOrFinish();
             formButtons.forEach(btn => btn.disabled = false);
             if (cancelBtn) cancelBtn.disabled = false;
             if (confirmBtn) confirmBtn.disabled = false;
@@ -815,17 +866,6 @@ function pauseAudio() {
     const audio = document.getElementById('audioPlayer');
     console.log('⏸️  Presionado: Pausar');
     audio.pause();
-}
-
-function replayAudio() {
-    const audio = document.getElementById('audioPlayer');
-    console.log('🔄 Presionado: Repetir');
-    audio.currentTime = 0;
-    audio.play().then(() => {
-        console.log('✅ Audio reiciado');
-    }).catch(error => {
-        console.error('❌ Error al reiciar:', error);
-    });
 }
 
 /**

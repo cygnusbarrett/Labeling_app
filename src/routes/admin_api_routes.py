@@ -6,6 +6,7 @@ from functools import wraps
 from datetime import datetime, timezone
 from models.database import User, TranscriptionProject, Segment, SegmentDiscardReason, DatabaseManager
 from services.jwt_service import jwt_service
+from services.transcript_export_service import export_project_transcript
 from config import Config
 import logging
 import io
@@ -659,6 +660,7 @@ def export_all_annotations():
             'Ruta del Audio',
             'Timestamp (inicio - fin)',
             'Estado',
+            'Decision del anotador',
             'Segmento Original',
             'Segmento Modificado',
             'Motivo Descarte',
@@ -683,6 +685,11 @@ def export_all_annotations():
             'corrected': 'Corregida',
             'discarded': 'Descartada'
         }
+        decision_labels = {
+            'approved': 'Confirmar',
+            'approved_with_doubt': 'Confirmar con duda',
+            'discarded': 'Descartar'
+        }
         reason_labels = {
             'not_chilean_spanish': 'No es español chileno',
             'other': 'Otro'
@@ -694,6 +701,7 @@ def export_all_annotations():
             completed = s.completed_at.strftime('%Y-%m-%d %H:%M') if s.completed_at else '\u2014'
             username = users_map.get(s.annotator_id, '\u2014')
             status_label = status_labels.get(s.review_status, s.review_status or '\u2014')
+            decision_label = decision_labels.get(s.decision_type, s.decision_type or '\u2014')
 
             discard_reason = discard_reasons_map.get(s.id)
             discard_reason_text = '\u2014'
@@ -717,6 +725,7 @@ def export_all_annotations():
                 audio_path,
                 timestamp,
                 status_label,
+                decision_label,
                 s.text,
                 s.text_revised or s.text,
                 discard_reason_text,
@@ -732,11 +741,12 @@ def export_all_annotations():
         ws.column_dimensions['A'].width = 50
         ws.column_dimensions['B'].width = 25
         ws.column_dimensions['C'].width = 14
-        ws.column_dimensions['D'].width = 45
+        ws.column_dimensions['D'].width = 24
         ws.column_dimensions['E'].width = 45
-        ws.column_dimensions['F'].width = 36
-        ws.column_dimensions['G'].width = 15
-        ws.column_dimensions['H'].width = 20
+        ws.column_dimensions['F'].width = 45
+        ws.column_dimensions['G'].width = 36
+        ws.column_dimensions['H'].width = 15
+        ws.column_dimensions['I'].width = 20
 
         session.close()
 
@@ -781,11 +791,13 @@ def edit_annotation(segment_id):
         segment.text_revised = text_revised
         if review_status in ('approved', 'corrected'):
             segment.review_status = review_status
+        segment.decision_type = 'approved' if segment.review_status in ('approved', 'corrected') else None
         segment.updated_at = datetime.now(timezone.utc)
+        export_paths = export_project_transcript(session, segment.project_id)
         session.commit()
         session.close()
 
-        return jsonify({'message': 'Annotation updated', 'segment_id': segment_id}), 200
+        return jsonify({'message': 'Annotation updated', 'segment_id': segment_id, 'export_paths': export_paths}), 200
 
     except Exception as e:
         logger.error(f"Error editing annotation: {e}")
@@ -807,13 +819,17 @@ def revert_annotation(segment_id):
 
         segment.annotator_id = None
         segment.review_status = 'pending'
+        segment.decision_type = None
         segment.text_revised = None
         segment.completed_at = None
         segment.updated_at = datetime.now(timezone.utc)
+        if segment.discard_reason:
+            session.delete(segment.discard_reason)
+        export_paths = export_project_transcript(session, segment.project_id)
         session.commit()
         session.close()
 
-        return jsonify({'message': 'Annotation reverted', 'segment_id': segment_id}), 200
+        return jsonify({'message': 'Annotation reverted', 'segment_id': segment_id, 'export_paths': export_paths}), 200
 
     except Exception as e:
         logger.error(f"Error reverting annotation: {e}")
@@ -835,20 +851,30 @@ def bulk_revert_annotations():
         session = db_manager.get_session()
 
         reverted = 0
+        affected_projects = set()
         for sid in segment_ids:
             segment = session.query(Segment).filter_by(id=sid).first()
             if segment:
+                affected_projects.add(segment.project_id)
                 segment.annotator_id = None
                 segment.review_status = 'pending'
+                segment.decision_type = None
                 segment.text_revised = None
                 segment.completed_at = None
                 segment.updated_at = datetime.now(timezone.utc)
+                if segment.discard_reason:
+                    session.delete(segment.discard_reason)
                 reverted += 1
+
+        export_paths = {
+            project_id: export_project_transcript(session, project_id)
+            for project_id in sorted(affected_projects)
+        }
 
         session.commit()
         session.close()
 
-        return jsonify({'message': f'{reverted} annotations reverted', 'reverted': reverted}), 200
+        return jsonify({'message': f'{reverted} annotations reverted', 'reverted': reverted, 'export_paths': export_paths}), 200
 
     except Exception as e:
         logger.error(f"Error bulk reverting annotations: {e}")
