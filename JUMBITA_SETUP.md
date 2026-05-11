@@ -1,6 +1,6 @@
-# Jumbita Production Setup
+# Jumbita Setup
 
-Esta guia resume lo necesario para desplegar este proyecto de forma correcta en jumbita o en un host equivalente, usando la version Docker del repositorio.
+Esta guia resume lo necesario para desplegar este proyecto de forma correcta en jumbita usando Docker, primero en puertos internos del host y despues detras del reverse proxy que configurara el admin.
 
 ## 1. Que si puedo y que no puedo habilitar hoy en `cdgutierrez2`
 
@@ -75,15 +75,15 @@ Motivo principal:
 2. `postgresql-client` sirve para validacion y debugging del servicio PostgreSQL.
 3. `tini` mejora apagados limpios y manejo de procesos en contenedores.
 
-## 4. Servicios minimos para soportar multiples consultas en produccion
+## 4. Servicios minimos para soportar multiples consultas en jumbita
 
 El stack minimo recomendado para este proyecto es:
 
-1. Nginx para TLS y reverse proxy.
-2. Gunicorn con multiples workers.
-3. PostgreSQL para concurrencia real y persistencia robusta.
-4. Redis para sesiones distribuidas entre workers.
-5. Volumenes persistentes para BD, Redis, logs y datos de proyecto.
+1. Gunicorn con multiples workers.
+2. PostgreSQL para concurrencia real y persistencia robusta.
+3. Redis para sesiones distribuidas entre workers.
+4. Volumenes persistentes para BD, Redis, logs y datos de proyecto.
+5. Reverse proxy externo del admin apuntando al puerto interno de la app cuando la validacion local este lista.
 
 ## 5. Ajustes concretos recomendados en este repositorio
 
@@ -93,37 +93,62 @@ Estos son los cambios mas importantes ya preparados en el repo:
 2. Gunicorn toma `bind`, `workers`, `worker_class` y `timeout` desde `src/gunicorn_config.py` y variables de entorno, sin banderas contradictorias en el `Dockerfile`.
 3. El healthcheck ahora usa `/health` en vez de `/login`.
 4. PostgreSQL y Redis ya no quedan publicados a toda la red, solo a `127.0.0.1` del host.
-5. PgAdmin queda detras de un profile opcional.
-6. Se agregan dependencias de audio y runtime utiles para produccion.
+5. Nginx del repositorio queda detras de un profile opcional `edge`, porque en jumbita el reverse proxy final lo manejara el admin.
+6. PgAdmin queda detras de un profile opcional.
+7. Se agregan dependencias de audio y runtime utiles para produccion.
 
-## 6. Pedido exacto al admin
+## 6. Rutas persistentes del usuario en jumbita
+
+Usaremos estas rutas del usuario `cdgutierrez2`:
+
+```text
+/home/cdgutierrez2/docker_projects
+/home/cdgutierrez2/docker_data
+/home/cdgutierrez2/backups
+```
+
+Estructura recomendada:
+
+```text
+/home/cdgutierrez2/docker_projects/Labeling_app
+/home/cdgutierrez2/docker_data/postgres
+/home/cdgutierrez2/docker_data/redis
+/home/cdgutierrez2/docker_data/transcription_projects
+/home/cdgutierrez2/docker_data/logs/web_app
+/home/cdgutierrez2/docker_data/logs/nginx
+/home/cdgutierrez2/docker_data/pgadmin
+/home/cdgutierrez2/backups/labeling_app
+```
+
+Creacion inicial:
+
+```bash
+mkdir -p /home/cdgutierrez2/docker_projects
+mkdir -p /home/cdgutierrez2/docker_data/postgres
+mkdir -p /home/cdgutierrez2/docker_data/redis
+mkdir -p /home/cdgutierrez2/docker_data/transcription_projects
+mkdir -p /home/cdgutierrez2/docker_data/logs/web_app
+mkdir -p /home/cdgutierrez2/docker_data/logs/nginx
+mkdir -p /home/cdgutierrez2/docker_data/pgadmin
+mkdir -p /home/cdgutierrez2/backups/labeling_app
+```
+
+## 7. Pedido exacto al admin
 
 Puedes enviar este texto casi literal:
 
 ```text
-Necesito habilitar un entorno de produccion/pruebas real para Labeling_app en jumbita.
+Necesito habilitar un entorno Docker de desarrollo validado para Labeling_app en jumbita.
 
-La app ya corre con SQLAlchemy, Gunicorn, Redis y Docker Compose, pero para dejarla correctamente en PostgreSQL necesito una de estas alternativas:
-
-Opcion A:
-- agregar mi usuario cdgutierrez2 al grupo docker para poder ejecutar docker compose;
-- confirmar que Docker Engine y Docker Compose Plugin estan instalados y funcionando.
-
-Opcion B:
-- instalar PostgreSQL server en el host;
-- dejar disponibles los binarios postgres, initdb, pg_ctl y psql para mi usuario o para una cuenta de servicio;
-- crear una base labeling_db y un usuario labeling_user con permisos completos sobre esa base.
-
-Opcion C:
-- entregar una instancia PostgreSQL ya existente accesible desde jumbita, con host, puerto, nombre de base, usuario y credenciales.
+La app levantara PostgreSQL y Redis dentro de Docker, expuestos solo en puertos internos del host. Una vez validada localmente en el usuario cdgutierrez2, el reverse proxy quedara de su lado apuntando al puerto interno definido en Docker Compose.
 
 Ademas necesito confirmar:
-- si el puerto 443 quedara expuesto via Nginx;
-- donde se almacenaran los certificados TLS;
-- si el directorio de datos persistentes puede vivir bajo /home/cdgutierrez2/Repos/Labeling_app o si existe una ruta institucional preferida.
+- que mi usuario cdgutierrez2 puede usar Docker Compose;
+- que el reverse proxy apuntara despues a 127.0.0.1:3000 u otro puerto interno que dejemos definido;
+- que la persistencia se hara bajo /home/cdgutierrez2/docker_projects, /home/cdgutierrez2/docker_data y /home/cdgutierrez2/backups.
 ```
 
-## 7. Variables de entorno minimas para produccion
+## 8. Variables de entorno minimas para jumbita
 
 Primero crea el archivo real de entorno:
 
@@ -135,7 +160,7 @@ chmod 600 envs/production.env
 Antes de levantar `docker compose`, define al menos estas variables:
 
 ```env
-FLASK_ENV=production
+FLASK_ENV=development
 DEBUG=False
 DB_USER=labeling_user
 DB_PASSWORD=colocar_password_fuerte
@@ -145,23 +170,39 @@ REDIS_PASSWORD=colocar_password_fuerte
 REDIS_URL=redis://:colocar_password_fuerte@redis:6379
 JWT_SECRET_KEY=colocar_64_hex_fuertes
 SECRET_KEY=colocar_64_hex_fuertes
+HOST_DOCKER_PROJECTS=/home/cdgutierrez2/docker_projects
+HOST_DOCKER_DATA=/home/cdgutierrez2/docker_data
+HOST_BACKUPS=/home/cdgutierrez2/backups
+PORT=3000
 WORKERS=4
 WORKER_CLASS=gthread
 WORKER_TIMEOUT=120
 ```
 
-## 8. Comandos de verificacion despues del despliegue
+## 9. Comandos de verificacion despues del despliegue
 
 ```bash
+mkdir -p /home/cdgutierrez2/docker_projects
+cd /home/cdgutierrez2/docker_projects
+git clone <tu-repo> Labeling_app
+cd Labeling_app
+cp envs/production.env.example envs/production.env
+chmod 600 envs/production.env
+
 docker compose -f docker-compose.prod.yml up -d --build
 docker compose -f docker-compose.prod.yml ps
 docker compose -f docker-compose.prod.yml logs -f web_app
 curl -f http://127.0.0.1:3000/health
-curl -k https://localhost/health
 ```
 
 Si quieres exponer PgAdmin localmente para debugging puntual:
 
 ```bash
 docker compose -f docker-compose.prod.yml --profile admin up -d pgadmin
+```
+
+Si mas adelante quieres levantar tambien el Nginx del repositorio para pruebas locales, hazlo explicitamente:
+
+```bash
+docker compose -f docker-compose.prod.yml --profile edge up -d nginx
 ```

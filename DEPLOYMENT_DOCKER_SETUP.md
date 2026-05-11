@@ -293,7 +293,7 @@ docker compose -f docker-compose.prod.yml config
 
 La guia exacta de dependencias del host y el texto para pedir permisos al admin quedó en:
 
-`JUMBITA_PRODUCTION_SETUP.md`
+`JUMBITA_SETUP.md`
 
 Esa guia cubre:
 
