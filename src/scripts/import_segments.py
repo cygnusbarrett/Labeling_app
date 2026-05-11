@@ -21,6 +21,23 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
 from models.database import DatabaseManager, TranscriptionProject, Segment, Word
 from config import Config
 
+SUPPORTED_AUDIO_EXTENSIONS = ('.wav', '.mp3', '.flac', '.m4a')
+
+
+def resolve_audio_filename(project_dir: Path, json_file: Path) -> str:
+    """Return the actual audio filename that belongs to a transcript JSON."""
+    base_name = json_file.stem
+
+    for extension in SUPPORTED_AUDIO_EXTENSIONS:
+        candidate = project_dir / f'{base_name}{extension}'
+        if candidate.exists():
+            return candidate.name
+
+    raise FileNotFoundError(
+        f'No se encontró audio para {json_file.name}. '
+        f'Se esperaba uno de: {", ".join(base_name + ext for ext in SUPPORTED_AUDIO_EXTENSIONS)}'
+    )
+
 def import_project_segments(db_manager, project_id, project_dir):
     """
     Importa todos los segmentos de un proyecto desde JSONs
@@ -67,9 +84,9 @@ def import_project_segments(db_manager, project_id, project_dir):
         
         for json_file in json_files:
             print(f"\n📖 Procesando: {json_file.name}...")
-            
-            # Convertir el nombre del JSON al nombre del archivo de audio WAV
-            audio_filename = json_file.name.replace('.json', '.wav')
+
+            audio_filename = resolve_audio_filename(Path(project_dir), json_file)
+            print(f"   └─ Audio asociado: {audio_filename}")
             
             with open(json_file) as f:
                 data = json.load(f)
@@ -101,7 +118,7 @@ def import_project_segments(db_manager, project_id, project_dir):
                     word = Word(
                         segment_id=segment.id,
                         project_id=project_id,
-                        audio_filename=json_file.name,
+                        audio_filename=audio_filename,
                         word_index=word_idx,
                         word=word_data['word'],
                         speaker=word_data.get('speaker', 'UNKNOWN'),
