@@ -49,6 +49,14 @@ envs/*.env
 # Data files (opcional - puedes comentar si quieres incluir los datos)
 *.pkl
 
+# Local project data and generated outputs
+/data/
+/logs/
+/src/logs/
+/src/data/backups/
+/src/data/transcription_projects/
+/src/db_backups/
+
 # Logs
 *.log
 nohup.out
@@ -66,6 +74,7 @@ certs/*.key
 
 # Database files
 *.db
+*.sqlite
 *.sqlite3
 
 # Virtual environments
@@ -75,4 +84,5 @@ certs/*.key
 *.wav
 *.mp3
 *.flac
+*.m4a
 *.ogg
