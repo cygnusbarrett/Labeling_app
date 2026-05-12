@@ -16,7 +16,7 @@ Este sistema envía notificaciones automáticas al administrador cuando los usua
 
 1. Habla con [@BotFather](https://t.me/BotFather) en Telegram
 2. Envía `/newbot` y sigue las instrucciones
-3. Guarda el **token** que te proporciona (formato: `123456789:ABCdefGhIjKlMnOpQrStUvWxYz`)
+3. Guarda el **token** que te proporciona (formato: `REPLACE_WITH_BOTFATHER_TOKEN`)
 
 ### 2. Obtener tu Chat ID
 
@@ -31,7 +31,7 @@ Crea un archivo `.env` en el directorio raíz del proyecto:
 
 ```bash
 # Token del bot de Telegram
-TELEGRAM_BOT_TOKEN=123456789:ABCdefGhIjKlMnOpQrStUvWxYz
+TELEGRAM_BOT_TOKEN=REPLACE_WITH_BOTFATHER_TOKEN
 
 # ID del chat del admin
 TELEGRAM_ADMIN_CHAT_ID=123456789

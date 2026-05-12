@@ -5,11 +5,11 @@ PROJECT_DIR="/Users/camilogutierrez/STEM/nuestra-memoria/Repos/Untitled/Labeling
 cd "$PROJECT_DIR"
 
 # Export common environment variables
-export DATABASE_URL="postgresql://labeling_user:phase2_password@localhost:5432/labeling_db"
+export DATABASE_URL="${DATABASE_URL:-postgresql://labeling_user:CHANGE_ME_IN_ENV@localhost:5432/labeling_db}"
 export REDIS_URL="redis://127.0.0.1:6379/0"
 export FLASK_ENV="development"
-export JWT_SECRET_KEY="dev-jwt-secret-key-phase2"
-export SECRET_KEY="dev-secret-key-phase2"
+export JWT_SECRET_KEY="${JWT_SECRET_KEY:-CHANGE_ME_IN_ENV}"
+export SECRET_KEY="${SECRET_KEY:-CHANGE_ME_IN_ENV}"
 
 # Activate virtual environment
 . venv/bin/activate

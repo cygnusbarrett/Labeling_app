@@ -19,10 +19,10 @@
 - [ ] Docker Compose v2+ instalado
 - [ ] Directorios necesarios existen:
   - [ ] `certs/`
-  - [ ] `logs/`
-  - [ ] `src/logs/`
-  - [ ] `data/backups/`
-  - [ ] `data/transcription_projects/`
+   - [ ] `/home/cdgutierrez2/docker_data/logs/web_app`
+   - [ ] `/home/cdgutierrez2/docker_data/logs/nginx`
+   - [ ] `/home/cdgutierrez2/backups/labeling_app`
+   - [ ] `/home/cdgutierrez2/docker_data/transcription_projects`
 - [ ] Dockerfile actualizado (con Gunicorn, puerto 3000, healthchecks)
 - [ ] docker-compose.prod.yml valida sintaxis
 

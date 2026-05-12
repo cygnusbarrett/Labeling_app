@@ -75,6 +75,8 @@ services:
       DEBUG: "False"
       LOG_LEVEL: INFO
       SESSION_TYPE: redis
+      BACKUP_DIR: /app/data/backups
+      TRANSCRIPTION_PROJECTS_PATH: /app/data/transcription_projects
       HOST: 0.0.0.0
       PORT: 3000
       WORKERS: ${WORKERS:-4}

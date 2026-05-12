@@ -17,6 +17,9 @@ NC='\033[0m' # No Color
 PROJECT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 ENV_FILE="$PROJECT_DIR/.env"
 DOCKER_COMPOSE="docker-compose -f $PROJECT_DIR/docker-compose.prod.yml"
+HOST_DOCKER_PROJECTS="${HOST_DOCKER_PROJECTS:-/home/cdgutierrez2/docker_projects}"
+HOST_DOCKER_DATA="${HOST_DOCKER_DATA:-/home/cdgutierrez2/docker_data}"
+HOST_BACKUPS="${HOST_BACKUPS:-/home/cdgutierrez2/backups}"
 
 # Funciones
 print_header() {
@@ -61,9 +64,14 @@ print_header "Step 2: Verificar directorios"
 
 # Crear directorios necesarios
 mkdir -p "$PROJECT_DIR/certs"
-mkdir -p "$PROJECT_DIR/logs"
-mkdir -p "$PROJECT_DIR/src/logs"
-mkdir -p "$PROJECT_DIR/data/backups"
+mkdir -p "$HOST_DOCKER_PROJECTS"
+mkdir -p "$HOST_DOCKER_DATA/postgres"
+mkdir -p "$HOST_DOCKER_DATA/redis"
+mkdir -p "$HOST_DOCKER_DATA/transcription_projects"
+mkdir -p "$HOST_DOCKER_DATA/logs/web_app"
+mkdir -p "$HOST_DOCKER_DATA/logs/nginx"
+mkdir -p "$HOST_DOCKER_DATA/pgadmin"
+mkdir -p "$HOST_BACKUPS/labeling_app"
 print_success "Directorios verificados/creados"
 
 # Paso 3: Verificar .env

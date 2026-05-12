@@ -259,10 +259,11 @@ docker-compose -f docker-compose.prod.yml logs -f
 # Se ejecuta diariamente a las 2 AM
 
 # Backups manuales
-docker compose -f docker-compose.prod.yml exec postgres pg_dump -U "$DB_USER" "$DB_NAME" > backup-$(date +%Y%m%d).sql
+mkdir -p /home/cdgutierrez2/backups/labeling_app
+docker compose -f docker-compose.prod.yml exec postgres pg_dump -U "$DB_USER" "$DB_NAME" > /home/cdgutierrez2/backups/labeling_app/backup-$(date +%Y%m%d).sql
 
 # Restaurar
-docker compose -f docker-compose.prod.yml exec -T postgres psql -U "$DB_USER" "$DB_NAME" < backup-20260413.sql
+docker compose -f docker-compose.prod.yml exec -T postgres psql -U "$DB_USER" "$DB_NAME" < /home/cdgutierrez2/backups/labeling_app/backup-20260413.sql
 ```
 
 ---

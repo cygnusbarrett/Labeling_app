@@ -168,14 +168,13 @@ def import_project_segments(db_manager, project_id, project_dir):
 
 def main():
     """Función principal"""
-    import os
     from pathlib import Path
     
     # Cargar configuración
     config = Config.from_env()
     
     # Ruta a proyectos
-    base_data_dir = Path(__file__).parent.parent / 'data' / 'transcription_projects'
+    base_data_dir = Path(config.get_transcription_projects_path())
     
     # Determinar qué proyecto(s) importar
     if len(sys.argv) > 1:

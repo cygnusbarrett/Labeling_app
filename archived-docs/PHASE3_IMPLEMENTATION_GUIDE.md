@@ -164,7 +164,7 @@ curl http://localhost:3000/
 
 # 5. All services have correct configuration
 grep DATABASE_URL src/config.py
-# Expected: postgresql://labeling_user:phase2_password@localhost:5432/labeling_db
+# Expected: postgresql://labeling_user:CHANGE_ME_PASSWORD@localhost:5432/labeling_db
 ```
 
 **If all pass ✅**: Ready for Phase 3
@@ -339,7 +339,7 @@ host    replication     labeling_user   127.0.0.1/32            md5
 psql -U postgres
 
 # 2. Create replication user
-CREATE USER labeling_replica WITH REPLICATION PASSWORD 'replica_password_123';
+CREATE USER labeling_replica WITH REPLICATION PASSWORD 'CHANGE_ME_REPLICA_PASSWORD';
 
 # 3. Take base backup
 cd ~/postgresql_replicas
@@ -348,7 +348,7 @@ pg_basebackup -h localhost -D ./replica1 -U labeling_replica -v -P
 # 4. Create recovery.conf for replica
 cat > ~/postgresql_replicas/replica1/recovery.conf << EOF
 standby_mode = 'on'
-primary_conninfo = 'host=127.0.0.1 port=5432 user=labeling_replica password=replica_password_123'
+primary_conninfo = 'host=127.0.0.1 port=5432 user=labeling_replica password=CHANGE_ME_REPLICA_PASSWORD'
 trigger_file = '/tmp/promote_replica1'
 EOF
 
@@ -410,7 +410,7 @@ services:
     container_name: labeling-postgres-primary
     environment:
       POSTGRES_USER: labeling_user
-      POSTGRES_PASSWORD: phase2_password
+      POSTGRES_PASSWORD: CHANGE_ME_PASSWORD
       POSTGRES_DB: labeling_db
     volumes:
       - postgres_primary_data:/var/lib/postgresql/data
@@ -436,7 +436,7 @@ services:
     container_name: labeling-postgres-replica1
     environment:
       PGUSER: labeling_replica
-      PGPASSWORD: replica_password_123
+      PGPASSWORD: CHANGE_ME_REPLICA_PASSWORD
     volumes:
       - postgres_replica1_data:/var/lib/postgresql/data
     ports:
@@ -482,7 +482,7 @@ services:
     container_name: labeling-app-1
     environment:
       FLASK_ENV: production
-      DATABASE_URL: postgresql://labeling_user:phase2_password@postgres-primary:5432/labeling_db
+      DATABASE_URL: postgresql://labeling_user:CHANGE_ME_PASSWORD@postgres-primary:5432/labeling_db
       REDIS_URL: redis://redis:6379/0
       JWT_SECRET_KEY: ${JWT_SECRET_KEY}
       SECRET_KEY: ${SECRET_KEY}
@@ -511,7 +511,7 @@ services:
     container_name: labeling-app-2
     environment:
       FLASK_ENV: production
-      DATABASE_URL: postgresql://labeling_user:phase2_password@postgres-primary:5432/labeling_db
+      DATABASE_URL: postgresql://labeling_user:CHANGE_ME_PASSWORD@postgres-primary:5432/labeling_db
       REDIS_URL: redis://redis:6379/0
       JWT_SECRET_KEY: ${JWT_SECRET_KEY}
       SECRET_KEY: ${SECRET_KEY}
@@ -540,7 +540,7 @@ services:
     container_name: labeling-app-3
     environment:
       FLASK_ENV: production
-      DATABASE_URL: postgresql://labeling_user:phase2_password@postgres-primary:5432/labeling_db
+      DATABASE_URL: postgresql://labeling_user:CHANGE_ME_PASSWORD@postgres-primary:5432/labeling_db
       REDIS_URL: redis://redis:6379/0
       JWT_SECRET_KEY: ${JWT_SECRET_KEY}
       SECRET_KEY: ${SECRET_KEY}

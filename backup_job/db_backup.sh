@@ -8,7 +8,8 @@ set -euo pipefail
 ###############################
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PROJECT_DIR="$SCRIPT_DIR"  # Ajustar si se mueve el script
-BACKUP_DIR="$SCRIPT_DIR/backups"
+CONTAINER_NAME="${POSTGRES_CONTAINER_NAME:-nuestra-memoria-postgres}"
+BACKUP_DIR="${HOST_BACKUPS:-/home/cdgutierrez2/backups}/labeling_app"
 LOG_FILE="$SCRIPT_DIR/backup.log"
 
 TIMESTAMP=$(date +%Y-%m-%d_%H-%M-%S)
@@ -30,13 +31,13 @@ mkdir -p "$BACKUP_DIR"
 	# Backup de Postgres
 	###############################
 	echo "Creando dump dentro del contenedor..."
-	docker exec -t db pg_dump -U labeling_user -d labeling_db -F c -f /tmp/backup.dump
+	docker exec -t "$CONTAINER_NAME" pg_dump -U "${DB_USER:-labeling_app}" -d "${DB_NAME:-labeling_app}" -F c -f /tmp/backup.dump
 
 	echo "Copiando dump al host: $DEST_FILE"
-	docker cp db:/tmp/backup.dump "$DEST_FILE"
+	docker cp "$CONTAINER_NAME:/tmp/backup.dump" "$DEST_FILE"
 
 	echo "Eliminando dump temporal del contenedor"
-	docker exec db rm /tmp/backup.dump || echo "Advertencia: No se pudo eliminar /tmp/backup.dump"
+	docker exec "$CONTAINER_NAME" rm /tmp/backup.dump || echo "Advertencia: No se pudo eliminar /tmp/backup.dump"
 
 	echo "✅ Backup guardado en: $DEST_FILE"
 

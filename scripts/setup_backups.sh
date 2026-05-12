@@ -6,7 +6,8 @@ set -e
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PROJECT_DIR="$(dirname "$SCRIPT_DIR")"
-BACKUP_DIR="$PROJECT_DIR/data/backups"
+HOST_BACKUPS="${HOST_BACKUPS:-/home/cdgutierrez2/backups}"
+BACKUP_DIR="$HOST_BACKUPS/labeling_app"
 
 echo "🔧 Configurando backups automáticos"
 echo "   Script: $SCRIPT_DIR/backup_service.py"
@@ -22,7 +23,7 @@ touch "$CRON_LOG"
 chmod 666 "$CRON_LOG"
 
 # Generar cron job
-CRON_JOB="0 * * * * cd $PROJECT_DIR && . venv/bin/activate && python src/services/backup_service.py >> $CRON_LOG 2>&1"
+CRON_JOB="0 * * * * cd $PROJECT_DIR && BACKUP_DIR=$BACKUP_DIR . venv/bin/activate && python src/services/backup_service.py >> $CRON_LOG 2>&1"
 
 echo ""
 echo "📋 Cron job a instalar:"

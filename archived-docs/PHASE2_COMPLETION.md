@@ -72,7 +72,7 @@ server 127.0.0.1:5002  (ready for scaling)
 **Configuration**: PostgreSQL + Redis  
 **Environment Variables**:
 ```
-DATABASE_URL=postgresql://labeling_user:phase2_password@localhost:5432/labeling_db
+DATABASE_URL=postgresql://labeling_user:CHANGE_ME_PASSWORD@localhost:5432/labeling_db
 REDIS_URL=redis://127.0.0.1:6379/0
 SESSION_TYPE=redis
 FLASK_ENV=development
@@ -188,7 +188,7 @@ Submit attempts: ✅ 60/min limit enforced
 1. **Start new instance on port 5001**:
 ```bash
 export FLASK_PORT=5001
-export DATABASE_URL="postgresql://labeling_user:phase2_password@localhost:5432/labeling_db"
+export DATABASE_URL="postgresql://labeling_user:CHANGE_ME_PASSWORD@localhost:5432/labeling_db"
 export REDIS_URL="redis://127.0.0.1:6379/0"
 python app.py  # Will run on port 5001
 ```
