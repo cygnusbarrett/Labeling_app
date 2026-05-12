@@ -88,7 +88,6 @@ services:
       redis:
         condition: service_healthy
     volumes:
-      - ./src:/app/src
       - ${HOST_BACKUPS:-/home/cdgutierrez2/backups}/labeling_app:/app/data/backups
       - ${HOST_DOCKER_DATA:-/home/cdgutierrez2/docker_data}/transcription_projects:/app/data/transcription_projects
       - ${HOST_DOCKER_DATA:-/home/cdgutierrez2/docker_data}/logs/web_app:/app/logs

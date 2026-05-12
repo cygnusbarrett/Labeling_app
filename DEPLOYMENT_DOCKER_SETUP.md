@@ -82,6 +82,8 @@ docker compose -f docker-compose.prod.yml ps
 docker compose -f docker-compose.prod.yml config
 ```
 
+**Nota:** el código de la aplicación queda empaquetado dentro de la imagen de `web_app`. Si cambias archivos en `src/`, vuelve a ejecutar `docker compose -f docker-compose.prod.yml up -d --build` para que la prueba use exactamente ese commit.
+
 ### 5. Acceder a la aplicación
 
 ```
@@ -238,6 +240,8 @@ docker compose -f docker-compose.prod.yml up -d --build
 # Ver logs
 docker compose -f docker-compose.prod.yml logs -f web_app
 ```
+
+Ese `--build` no es opcional después de cambios de aplicación: el compose de producción ya no monta `src/` desde el host, justamente para que el contenedor ejecute el código horneado en la imagen.
 
 #### 6. Verificar que funciona
 ```bash
