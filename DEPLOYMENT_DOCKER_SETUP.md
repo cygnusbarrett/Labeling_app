@@ -142,6 +142,51 @@ Internet
 
 ## 🌐 **Configuración en Servidor Remoto**
 
+### Publicación segura de la web
+
+La aplicación Flask no debe exponerse directamente a Internet. En este repositorio, el servicio `web_app` queda ligado a `127.0.0.1:3000`, lo que obliga a publicarlo solo a través de un reverse proxy.
+
+Ruta recomendada:
+
+1. Mantener `web_app` privado en `127.0.0.1:3000`.
+2. Abrir al exterior únicamente `80/443` en el servidor.
+3. Terminar TLS en un reverse proxy del host o, si prefieres, levantar el perfil `edge` del compose.
+4. No exponer `3000`, `5432` ni `6379` a Internet.
+
+Ejemplo mínimo de Nginx del host:
+
+```nginx
+server {
+   listen 80;
+   server_name TU_DOMINIO;
+   return 301 https://$host$request_uri;
+}
+
+server {
+   listen 443 ssl http2;
+   server_name TU_DOMINIO;
+
+   ssl_certificate /etc/letsencrypt/live/TU_DOMINIO/fullchain.pem;
+   ssl_certificate_key /etc/letsencrypt/live/TU_DOMINIO/privkey.pem;
+
+   location / {
+      proxy_pass http://127.0.0.1:3000;
+      proxy_set_header Host $host;
+      proxy_set_header X-Real-IP $remote_addr;
+      proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+      proxy_set_header X-Forwarded-Proto $scheme;
+   }
+}
+```
+
+Si quieres usar el Nginx del propio repositorio como edge proxy:
+
+```bash
+docker compose -f docker-compose.prod.yml --profile edge up -d nginx
+```
+
+Ese perfil publica `80/443` y reenvía tráfico a `web_app`, pero igual debes mantener `web_app` solo en loopback y filtrar el firewall del servidor.
+
 ### AWS EC2 / DigitalOcean / Linode
 
 #### 1. SSH al servidor
@@ -198,6 +243,22 @@ docker compose -f docker-compose.prod.yml logs -f web_app
 ```bash
 curl -k https://tu-dominio.com/login
 ```
+
+### Reimportación segura de un proyecto
+
+Para limpiar y reimportar un proyecto sin volver a duplicar filas, usa el script operativo:
+
+```bash
+scripts/reimport_project_safe.sh --project-id memoria_1970_1990 --print-proxy-guide
+```
+
+Ese script:
+
+- comprueba que `postgres`, `redis` y `web_app` estén activos,
+- guarda un respaldo lógico del proyecto,
+- limpia filas previas salvo que indiques `--skip-clean`,
+- reimporta con el importador idempotente,
+- y vuelve a imprimir la guía para levantar la web pública solo detrás de reverse proxy.
 
 ---
 
