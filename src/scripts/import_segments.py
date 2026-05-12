@@ -22,6 +22,7 @@ from models.database import DatabaseManager, TranscriptionProject, Segment, Word
 from config import Config
 
 SUPPORTED_AUDIO_EXTENSIONS = ('.wav', '.mp3', '.flac', '.m4a')
+LOCKED_REVIEW_STATUSES = {'approved', 'corrected'}
 
 
 def resolve_audio_filename(project_dir: Path, json_file: Path) -> str:
@@ -36,6 +37,16 @@ def resolve_audio_filename(project_dir: Path, json_file: Path) -> str:
     raise FileNotFoundError(
         f'No se encontró audio para {json_file.name}. '
         f'Se esperaba uno de: {", ".join(base_name + ext for ext in SUPPORTED_AUDIO_EXTENSIONS)}'
+    )
+
+
+def should_preserve_review_state(segment: Segment) -> bool:
+    """Keep human review state when the segment has already been worked on."""
+    return bool(
+        segment.text_revised
+        or segment.annotator_id is not None
+        or segment.completed_at is not None
+        or segment.review_status in LOCKED_REVIEW_STATUSES
     )
 
 def import_project_segments(db_manager, project_id, project_dir):
@@ -95,20 +106,37 @@ def import_project_segments(db_manager, project_id, project_dir):
             print(f"   └─ {len(segments_data)} segmentos")
             
             for segment_idx, segment_data in enumerate(segments_data):
-                # Crear Segment
-                segment = Segment(
+                segment = session.query(Segment).filter_by(
                     project_id=project_id,
                     audio_filename=audio_filename,
                     segment_index=segment_idx,
-                    start_time=segment_data['start'],
-                    end_time=segment_data['end'],
-                    text=segment_data['text'],
-                    speaker=segment_data.get('speaker', 'UNKNOWN'),
-                    review_status='pending'
-                )
-                
-                session.add(segment)
-                session.flush()  # Para obtener el ID del segment
+                ).first()
+
+                preserve_review_state = False
+                if segment is None:
+                    segment = Segment(
+                        project_id=project_id,
+                        audio_filename=audio_filename,
+                        segment_index=segment_idx,
+                        start_time=segment_data['start'],
+                        end_time=segment_data['end'],
+                        text=segment_data['text'],
+                        speaker=segment_data.get('speaker', 'UNKNOWN'),
+                        review_status='pending'
+                    )
+                    session.add(segment)
+                    session.flush()  # Para obtener el ID del segment
+                else:
+                    preserve_review_state = should_preserve_review_state(segment)
+                    segment.start_time = segment_data['start']
+                    segment.end_time = segment_data['end']
+                    segment.text = segment_data['text']
+                    segment.speaker = segment_data.get('speaker', 'UNKNOWN')
+                    segment.audio_filename = audio_filename
+
+                    # Rebuild per-word data for this segment without creating duplicates.
+                    session.query(Word).filter_by(segment_id=segment.id).delete()
+                    session.flush()
                 
                 # Procesar palabras y detectar probabilidades bajas
                 low_prob_count = 0
@@ -135,7 +163,9 @@ def import_project_segments(db_manager, project_id, project_dir):
                 
                 # Si hay palabras con baja probabilidad, marcar segmento
                 segment.low_prob_word_count = low_prob_count
-                if low_prob_count > 0:
+                if preserve_review_state:
+                    segments_with_issues += int(segment.low_prob_word_count > 0)
+                elif low_prob_count > 0:
                     segment.review_status = 'pending'
                     segments_with_issues += 1
                 else:
