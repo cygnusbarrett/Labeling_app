@@ -157,18 +157,19 @@ class Config:
         console_handler.setFormatter(formatter)
         root_logger.addHandler(console_handler)
         
-        # Handler para archivo con rotación
-        try:
-            file_handler = RotatingFileHandler(
-                self.LOG_FILE,
-                maxBytes=self.LOG_MAX_BYTES,
-                backupCount=self.LOG_BACKUP_COUNT
-            )
-            file_handler.setLevel(level)
-            file_handler.setFormatter(formatter)
-            root_logger.addHandler(file_handler)
-        except Exception as e:
-            logging.warning(f"No se pudo configurar el logging a archivo: {e}")
+        # En contenedores conviene usar stdout/stderr y dejar la rotación al runtime.
+        if self.LOG_FILE not in {'', '-', 'stdout', 'stderr', 'none', 'NONE'}:
+            try:
+                file_handler = RotatingFileHandler(
+                    self.LOG_FILE,
+                    maxBytes=self.LOG_MAX_BYTES,
+                    backupCount=self.LOG_BACKUP_COUNT
+                )
+                file_handler.setLevel(level)
+                file_handler.setFormatter(formatter)
+                root_logger.addHandler(file_handler)
+            except Exception as e:
+                logging.warning(f"No se pudo configurar el logging a archivo: {e}")
         
         # Configurar loggers específicos
         # Reducir verbosidad de loggers externos
@@ -279,8 +280,12 @@ class Config:
             self.get_transcription_projects_path(),
             self.get_audio_files_path(),
             self.get_uploads_path(),
-            os.path.dirname(self.LOG_FILE) if not os.path.isabs(self.LOG_FILE) else self.LOG_FILE
         ]
+
+        if self.LOG_FILE not in {'', '-', 'stdout', 'stderr', 'none', 'NONE'}:
+            directories.append(
+                os.path.dirname(self.LOG_FILE) if not os.path.isabs(self.LOG_FILE) else self.LOG_FILE
+            )
         
         for directory in directories:
             try:
