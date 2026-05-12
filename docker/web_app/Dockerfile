@@ -2,7 +2,8 @@ FROM python:3.10-slim
 
 ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1 \
-    PIP_NO_CACHE_DIR=1
+    PIP_NO_CACHE_DIR=1 \
+    UV_PROJECT_ENVIRONMENT=/usr/local
 
 WORKDIR /app
 
@@ -26,12 +27,12 @@ RUN mkdir -p /app/logs /app/data/backups && \
     useradd --create-home --shell /bin/bash appuser && \
     chown -R appuser:appuser /app
 
-# Copiar requirements
-COPY src/requirements/requirements.txt /app/requirements.txt
+# Copiar metadata de dependencias administradas por uv
+COPY pyproject.toml uv.lock /app/
 
-# Actualizar pip e instalar paquetes
-RUN pip install --upgrade pip setuptools wheel && \
-    pip install --no-cache-dir -r requirements.txt gunicorn && \
+# Instalar dependencias bloqueadas
+RUN pip install --upgrade pip setuptools wheel uv && \
+    uv sync --frozen --no-dev --no-install-project && \
     rm -rf /root/.cache
 
 # Copiar código de la aplicación

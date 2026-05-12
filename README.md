@@ -28,15 +28,17 @@ Sistema web para validar y corregir transcripciones automáticas (ASR) de audio,
 git clone https://github.com/tsunayoshi21/Labeling_app.git
 cd Labeling_app
 
-# 2. Entorno virtual
-python3 -m venv .venv && source .venv/bin/activate
+# 2. Instalar uv (si no lo tienes)
+curl -LsSf https://astral.sh/uv/install.sh | sh
 
-# 3. Dependencias
-pip install -r src/requirements/requirements.txt
+# 3. Crear y sincronizar entorno con lockfile
+uv sync --dev
 
 # 4. Configurar entorno (opcional para dev, usa defaults)
 cp envs/web_app.env.example envs/web_app.env
 ```
+
+`pyproject.toml` y `uv.lock` son la fuente de verdad de dependencias. Los archivos en `src/requirements/` se conservan temporalmente por compatibilidad, pero la instalacion recomendada y el Docker de produccion ya usan `uv`.
 
 ### Preparar datos
 
