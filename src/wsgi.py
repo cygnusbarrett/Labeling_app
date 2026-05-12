@@ -13,8 +13,11 @@ PROJECT_ROOT = Path(__file__).parent
 sys.path.insert(0, str(PROJECT_ROOT))
 
 # Crear directorios de logs si no existen
-logs_dir = PROJECT_ROOT / 'logs'
-logs_dir.mkdir(exist_ok=True)
+logs_dir = Path(os.getenv('APP_LOG_DIR', '/app/logs'))
+try:
+    logs_dir.mkdir(parents=True, exist_ok=True)
+except OSError:
+    pass
 
 logger = logging.getLogger(__name__)
 
@@ -23,7 +26,7 @@ try:
     from app import create_app
     from config import Config
     from services.health_service import HealthChecker, GracefulShutdown
-    from services.database_service import DatabaseService
+    from models.database import DatabaseManager
     
     logger.info("✅ Importaciones de módulos exitosas")
     
@@ -34,7 +37,7 @@ try:
     
     # Inicializar health checker
     if config.HEALTH_CHECK_ENABLED:
-        db_service = DatabaseService(config.DATABASE_URL)
+        db_service = DatabaseManager(config.DATABASE_URL)
         health_checker = HealthChecker(config, db_service)
         
         # Agregar endpoint de health check

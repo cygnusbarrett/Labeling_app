@@ -42,8 +42,8 @@ access_log_format = (
     '%(h)s %(l)s %(u)s %(t)s "%(r)s" %(s)s %(b)s "%(f)s" "%(a)s" '
     'response_time=%(D)sμs'
 )
-errorlog = os.getenv('ERROR_LOG', 'logs/gunicorn_error.log')
-accesslog = os.getenv('ACCESS_LOG', 'logs/gunicorn_access.log')
+errorlog = os.getenv('ERROR_LOG', '-')
+accesslog = os.getenv('ACCESS_LOG', '-')
 capture_output = True  # Capturar stdout/stderr
 
 # ─────────────────────────────────────────────────────────────────
