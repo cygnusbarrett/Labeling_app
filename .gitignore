@@ -53,9 +53,12 @@ envs/*.env
 /data/
 /logs/
 /src/logs/
+/src/data/words_cropped_raw/
 /src/data/backups/
 /src/data/transcription_projects/
 /src/db_backups/
+/envs/web_app.env.backup*
+*.bak
 
 # Logs
 *.log
