@@ -12,34 +12,123 @@ let state = {
     stats: null,
     userRole: 'annotator',
     fullEditMode: false,
-    fullEditTouched: false
+    fullEditTouched: false,
+    currentAudioUrl: null,
+    audioRequestToken: 0
 };
+
+const SEGMENT_BATCH_SIZE = 30;
+
+function revokeCurrentAudioUrl() {
+    if (state.currentAudioUrl) {
+        URL.revokeObjectURL(state.currentAudioUrl);
+        state.currentAudioUrl = null;
+    }
+}
+
+function resetAudioPlayer() {
+    const audioPlayer = document.getElementById('audioPlayer');
+    if (!audioPlayer) return;
+
+    audioPlayer.pause();
+    audioPlayer.removeAttribute('src');
+    audioPlayer.load();
+    revokeCurrentAudioUrl();
+}
+
+function waitForAudioReady(audioPlayer) {
+    return new Promise((resolve, reject) => {
+        const cleanup = () => {
+            audioPlayer.removeEventListener('canplay', onReady);
+            audioPlayer.removeEventListener('loadeddata', onReady);
+            audioPlayer.removeEventListener('error', onError);
+        };
+
+        const onReady = () => {
+            cleanup();
+            resolve();
+        };
+
+        const onError = () => {
+            cleanup();
+            reject(new Error('No se pudo preparar el audio'));
+        };
+
+        audioPlayer.addEventListener('canplay', onReady, { once: true });
+        audioPlayer.addEventListener('loadeddata', onReady, { once: true });
+        audioPlayer.addEventListener('error', onError, { once: true });
+        audioPlayer.load();
+    });
+}
+
+async function loadAudioIntoPlayer(audioUrl) {
+    const audioPlayer = document.getElementById('audioPlayer');
+    if (!audioPlayer) return;
+
+    resetAudioPlayer();
+    state.currentAudioUrl = audioUrl;
+    audioPlayer.src = audioUrl;
+    await waitForAudioReady(audioPlayer);
+}
+
+function prefetchUpcomingAudio(index = state.currentWordIndex + 1) {
+    const nextSegment = state.allWords[index];
+    if (!nextSegment || !state.currentProject) return;
+
+    transcriptionService
+        .prefetchWordAudio(state.currentProject, nextSegment.id, 0.2)
+        .catch((error) => console.debug('Prefetch de audio omitido:', error));
+}
+
+async function loadSegmentAudio(segment, options = {}) {
+    const { margin = 0.2, startTime = null, endTime = null, prefetchIndex = state.currentWordIndex + 1 } = options;
+    const requestToken = ++state.audioRequestToken;
+
+    resetAudioPlayer();
+
+    let audioUrl = null;
+    try {
+        if (startTime !== null && endTime !== null) {
+            audioUrl = await transcriptionService.getExtendedAudio(
+                state.currentProject,
+                segment.id,
+                startTime,
+                endTime,
+            );
+        } else {
+            audioUrl = await transcriptionService.getWordAudio(state.currentProject, segment.id, margin);
+        }
+
+        if (requestToken !== state.audioRequestToken || !state.currentWord || state.currentWord.id !== segment.id) {
+            if (audioUrl) {
+                URL.revokeObjectURL(audioUrl);
+            }
+            return;
+        }
+
+        await loadAudioIntoPlayer(audioUrl);
+        prefetchUpcomingAudio(prefetchIndex);
+    } catch (error) {
+        if (audioUrl) {
+            URL.revokeObjectURL(audioUrl);
+        }
+        throw error;
+    }
+}
 
 /**
  * Inicializa la aplicación
  */
 async function initApp() {
-    // Si hay token, mostrar validador
-    if (transcriptionService.isAuthenticated()) {
-        try {
-            // Extraer información del usuario del token
-            const token = transcriptionService.token;
-            const tokenPayload = JSON.parse(atob(token.split('.')[1]));
-            state.user = tokenPayload;
-            state.userRole = tokenPayload.role;
-            
-            // Verificar que el token sigue siendo válido
-            const projects = await transcriptionService.getProjects();
-            showValidatorSection();
-            await loadUserData();
-        } catch (error) {
-            console.error('Error en initApp:', error);
-            // Token inválido, redirigir a login
-            transcriptionService.logout();
-            window.location.href = '/login';
-        }
-    } else {
-        // No hay token, redirigir a página de login dedicada
+    try {
+        state.user = await transcriptionService.getCurrentUser();
+        state.userRole = state.user.role;
+        await transcriptionService.getProjects();
+        showValidatorSection();
+        await loadUserData();
+    } catch (error) {
+        console.error('Error en initApp:', error);
+        transcriptionService.logout();
         window.location.href = '/login';
     }
 }
@@ -59,6 +148,14 @@ async function loadUserData() {
     try {
         // Actualizar información del usuario
         document.getElementById('currentUser').textContent = state.user.username;
+
+        if (state.userRole === 'admin') {
+            const nav = document.getElementById('topNav');
+            if (nav) {
+                nav.style.display = 'flex';
+                nav.innerHTML = '<a href="/admin/dashboard">⚙️ Administración</a><a href="/transcription/validator" class="active">📝 Mis Anotaciones</a>';
+            }
+        }
 
         // Mostrar selector de proyecto si es admin
         if (state.userRole === 'admin') {
@@ -103,6 +200,7 @@ async function selectProject(projectId) {
 
     try {
         state.currentProject = projectId;
+        transcriptionService.clearAudioCache();
         const projectData = await transcriptionService.getProject(projectId);
         document.getElementById('currentProject').textContent = projectData.project.name;
 
@@ -125,7 +223,7 @@ async function loadProjectWords() {
         const completionMsg = document.getElementById('completionMessage');
         if (completionMsg) completionMsg.style.display = 'none';
 
-        const wordsData = await transcriptionService.getWords(state.currentProject, 'pending', 100);
+        const wordsData = await transcriptionService.getWords(state.currentProject, 'pending', SEGMENT_BATCH_SIZE);
         state.allWords = wordsData.words || [];
 
         if (state.allWords.length === 0) {
@@ -172,6 +270,9 @@ async function displayWord(index) {
             showMessage('No hay más segmentos', 'info');
             return;
         }
+
+        document.getElementById('loadingState').style.display = 'block';
+        document.getElementById('wordCard').style.display = 'none';
 
         state.currentWordIndex = index;
         const segment = state.allWords[index];
@@ -221,23 +322,19 @@ async function displayWord(index) {
         // Indicador de cambios
         updateChangeIndicator();
 
-        // Cargar audio del SEGMENTO
-        try {
-            const audioUrl = await transcriptionService.getWordAudio(state.currentProject, segment.id, 0.2);
-            const audioPlayer = document.getElementById('audioPlayer');
-            audioPlayer.src = audioUrl;
-            audioPlayer.load();
-        } catch (audioError) {
-            console.error('Error al cargar audio:', audioError);
-            showMessage(`Advertencia: No se pudo cargar el audio - ${audioError.message}`, 'error');
-        }
-
         // Actualizar título
         document.title = `Segmento ${index + 1}/${state.allWords.length} - Validador`;
 
         document.getElementById('wordCard').style.display = 'block';
         document.getElementById('loadingState').style.display = 'none';
         document.getElementById('wordCard').scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+        try {
+            await loadSegmentAudio(segment);
+        } catch (audioError) {
+            console.error('Error al cargar audio:', audioError);
+            showMessage(`Advertencia: No se pudo cargar el audio - ${audioError.message}`, 'error');
+        }
 
     } catch (error) {
         showMessage(`Error mostrando segmento: ${error.message}`, 'error');
@@ -304,7 +401,7 @@ function displayHighlightedText(segment) {
                         allInputs[idx + 1].focus();
                     } else {
                         // Último input: confirmar
-                        submitWord('approved');
+                        submitWord('confirmed');
                     }
                 }
             });
@@ -358,7 +455,7 @@ function convertStaticToInput(span) {
             if (idx < allInputs.length - 1) {
                 allInputs[idx + 1].focus();
             } else {
-                submitWord('approved');
+                submitWord('confirmed');
             }
         } else if (e.key === 'Escape') {
             // Revertir a estático
@@ -466,10 +563,7 @@ async function toggleContext() {
         section.style.display = 'none';
         btn.textContent = '📖 Más contexto';
         try {
-            const audioUrl = await transcriptionService.getWordAudio(state.currentProject, state.currentWord.id, 0.2);
-            const audioPlayer = document.getElementById('audioPlayer');
-            audioPlayer.src = audioUrl;
-            audioPlayer.load();
+            await loadSegmentAudio(state.currentWord);
         } catch (e) { console.error('Error restaurando audio:', e); }
         return;
     }
@@ -505,13 +599,11 @@ async function toggleContext() {
         btn.textContent = '📖 Ocultar contexto';
 
         // Cargar audio extendido (incluye segmentos adyacentes)
-        const audioUrl = await transcriptionService.getExtendedAudio(
-            state.currentProject, state.currentWord.id,
-            ctx.extended_start, ctx.extended_end
-        );
-        const audioPlayer = document.getElementById('audioPlayer');
-        audioPlayer.src = audioUrl;
-        audioPlayer.load();
+        await loadSegmentAudio(state.currentWord, {
+            startTime: ctx.extended_start,
+            endTime: ctx.extended_end,
+            prefetchIndex: state.currentWordIndex + 1,
+        });
 
     } catch (e) {
         console.error('Error cargando contexto:', e);
@@ -546,7 +638,7 @@ function toggleFullEdit() {
 /**
  * Envía la validación de un segmento
  */
-async function submitWord(status) {
+async function submitWord(decisionType = 'confirmed') {
     try {
         if (!state.currentWord) {
             showMessage('Error: No hay segmento seleccionado', 'error');
@@ -580,34 +672,53 @@ async function submitWord(status) {
         console.log('📤 Enviando segmento:', {
             segment_id: state.currentWord.id,
             review_status: review_status,
-            text_revised: textRevised
+            text_revised: textRevised,
+            decision_type: decisionType,
         });
 
         // Enviar corrección
         await transcriptionService.submitWord(
             state.currentWord.id,
             review_status,
-            textRevised
+            textRevised,
+            decisionType,
         );
 
         // Mostrar mensaje de éxito
-        const statusText = review_status === 'approved' ? 'aprobada ✓' : 'corregida ✎';
+        const statusText = {
+            confirmed: review_status === 'approved' ? 'confirmado ✓' : 'corregido ✓',
+            doubtful: review_status === 'approved' ? 'confirmado con duda ?' : 'corregido con duda ?',
+            discarded: 'descartado 🗑️',
+        }[decisionType] || 'guardado ✓';
         showMessage(`Segmento ${statusText}`, 'success');
 
-        // Actualizar estadísticas
+        // Recargar pendientes reales desde servidor antes de avanzar
+        const previousIndex = state.currentWordIndex;
+        const wordsData = await transcriptionService.getWords(state.currentProject, 'pending', SEGMENT_BATCH_SIZE);
+        state.allWords = wordsData.words || [];
+
         await updateStats();
 
-        // Ir al siguiente segmento
-        setTimeout(() => {
-            if (state.currentWordIndex + 1 < state.allWords.length) {
-                displayWord(state.currentWordIndex + 1);
-            } else {
-                showMessage('¡Has completado todos los segmentos! 🎉', 'success');
-                document.getElementById('wordCard').style.display = 'none';
+        if (state.allWords.length === 0) {
+            document.getElementById('wordCard').style.display = 'none';
+            const msgContainer = document.getElementById('completionMessage');
+            if (msgContainer) {
+                msgContainer.style.display = 'block';
+                msgContainer.innerHTML = `
+                    <div style="text-align:center;padding:40px 20px;">
+                        <div style="font-size:64px;margin-bottom:20px;">🎉</div>
+                        <h2 style="color:#48bb78;margin-bottom:10px;">¡Felicitaciones!</h2>
+                        <p style="color:#666;margin-bottom:20px;">Has completado todos los segmentos asignados.</p>
+                        <p style="color:#999;font-size:14px;">Contacta al administrador para que te asigne más segmentos.</p>
+                    </div>
+                `;
             }
+        } else {
+            const nextIndex = Math.min(previousIndex, state.allWords.length - 1);
+            await displayWord(nextIndex);
+        }
 
-            buttons.forEach(btn => btn.disabled = false);
-        }, 500);
+        buttons.forEach(btn => btn.disabled = false);
 
     } catch (error) {
         showMessage(`Error enviando corrección: ${error.message}`, 'error');
@@ -709,21 +820,11 @@ function pauseAudio() {
     audio.pause();
 }
 
-function replayAudio() {
-    const audio = document.getElementById('audioPlayer');
-    console.log('🔄 Presionado: Repetir');
-    audio.currentTime = 0;
-    audio.play().then(() => {
-        console.log('✅ Audio reiciado');
-    }).catch(error => {
-        console.error('❌ Error al reiciar:', error);
-    });
-}
-
 /**
  * Logout
  */
 function logout() {
+    resetAudioPlayer();
     transcriptionService.logout();
     state = {
         user: null,
@@ -734,7 +835,8 @@ function logout() {
         stats: null,
         userRole: 'annotator',
         fullEditMode: false,
-        fullEditTouched: false
+        fullEditTouched: false,
+        currentAudioUrl: null
     };
     document.getElementById('messageArea').innerHTML = '';
     showLoginSection();

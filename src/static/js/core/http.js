@@ -12,7 +12,7 @@ function withTimeout(promise, ms) {
 
 function buildUrl(url) {
   // Rutas de autenticación NO llevan el prefijo de API
-  if (url === '/login' || url === '/logout' || url === '/me') {
+  if (url === '/login' || url === '/logout' || url === '/me' || url === '/refresh') {
     return url;
   }
   if (url.startsWith('/')) return `${API_PREFIX}${url.replace(/^\/api\/v2/, '')}`; // avoid double prefixes if caller passes full path
@@ -21,12 +21,10 @@ function buildUrl(url) {
 
 async function doFetch(url, options = {}) {
   const headers = new Headers(options.headers || {});
-  const token = JWT.getAccessToken();
-  if (token) headers.set('Authorization', `Bearer ${token}`);
   if (!headers.has('Content-Type') && options.body && !(options.body instanceof FormData)) {
     headers.set('Content-Type', 'application/json');
   }
-  const finalOptions = { ...options, headers };
+  const finalOptions = { ...options, credentials: 'same-origin', headers };
   const target = buildUrl(url);
   const res = await withTimeout(fetch(target, finalOptions), HTTP.defaultTimeout);
   return res;

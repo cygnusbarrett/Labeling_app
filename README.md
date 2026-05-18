@@ -86,6 +86,10 @@ cd src/
 # Crear BD e importar datos (¡borra BD existente!)
 python init_and_import.py
 
+# Definir admin inicial vía entorno antes del primer arranque
+export INITIAL_ADMIN_USERNAME=admin
+export INITIAL_ADMIN_PASSWORD=cambia-esta-clave-inicial
+
 # Crear usuarios anotadores
 python scripts/create_user.py user1 contraseña123 annotator
 python scripts/create_user.py user2 contraseña456 annotator
@@ -97,7 +101,7 @@ python scripts/list_users.py
 python app.py
 ```
 
-Abrir http://localhost:3000 — login por defecto: `admin / admin123`
+Abrir http://localhost:3000 — login con el administrador inicial definido en entorno
 
 ---
 
@@ -199,17 +203,27 @@ TranscriptionProject (1) ──→ (N) Segment (1) ──→ (N) Word
 
 ```bash
 # 1. Configurar secretos
-cp envs/web_app.env.example envs/web_app.env
+cp envs/production.env.example envs/production.env
+
+# 2. Ajustar paths y parametros operativos en un solo lugar
+nano scripts/runtime_config.sh
+
+# 3. Generar secretos si hace falta
 python3 src/scripts/generate_secrets.py  # o manualmente:
 python3 -c "import secrets; print(secrets.token_hex(64))"
 
-# 2. Levantar servicios
-docker compose -f docker-compose.prod.yml up -d
+# 4. Revisar la configuracion efectiva
+bash scripts/run_production_stack.sh summary
 
-# 3. Verificar
-docker compose -f docker-compose.prod.yml ps
-curl -k https://localhost/login
+# 5. Levantar servicios
+bash scripts/run_production_stack.sh up
+
+# 6. Verificar
+bash scripts/run_production_stack.sh ps
+curl -I http://127.0.0.1:3000/login
 ```
+
+Los inputs editables por usuario, especialmente paths del host y mounts del contenedor, quedaron centralizados en [scripts/runtime_config.sh](/Users/camilogutierrez/STEM/nuestra-memoria/Repos/Untitled/Labeling_app/scripts/runtime_config.sh). Si cambian directorios en el servidor, corrige ese archivo y reutiliza [scripts/run_production_stack.sh](/Users/camilogutierrez/STEM/nuestra-memoria/Repos/Untitled/Labeling_app/scripts/run_production_stack.sh) para `summary`, `up`, `down`, `logs`, `ps` o `config`.
 
 Ver guías detalladas:
 - [DEPLOYMENT_DOCKER_SETUP.md](DEPLOYMENT_DOCKER_SETUP.md) — Setup completo

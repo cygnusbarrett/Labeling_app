@@ -12,20 +12,16 @@ function removeItem(key) {
 }
 
 export const JWT = {
-  getAccessToken() { return getItem(STORAGE_KEYS.accessToken); },
-  getRefreshToken() { return getItem(STORAGE_KEYS.refreshToken); },
+  getAccessToken() { return null; },
+  getRefreshToken() { return null; },
   getUser() {
     const raw = getItem(STORAGE_KEYS.currentUser);
     if (!raw) return null;
     try { return JSON.parse(raw); } catch { return null; }
   },
-  setTokens(access, refresh) {
-    if (access) setItem(STORAGE_KEYS.accessToken, access);
-    if (refresh) setItem(STORAGE_KEYS.refreshToken, refresh);
-    // also update cookie for server-rendered pages if needed
-    try {
-      document.cookie = `access_token=${access || ''}; path=/; max-age=${60*60*8}; SameSite=Strict`;
-    } catch {}
+  setTokens() {
+    removeItem(STORAGE_KEYS.accessToken);
+    removeItem(STORAGE_KEYS.refreshToken);
   },
   setUser(user) {
     if (user) setItem(STORAGE_KEYS.currentUser, JSON.stringify(user));
@@ -34,24 +30,19 @@ export const JWT = {
     removeItem(STORAGE_KEYS.accessToken);
     removeItem(STORAGE_KEYS.refreshToken);
     removeItem(STORAGE_KEYS.currentUser);
-    try { document.cookie = 'access_token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT'; } catch {}
   },
-  isAuthenticated() { return !!this.getAccessToken() && !!this.getUser(); },
+  isAuthenticated() { return !!this.getUser(); },
   async refresh() {
-    const rt = this.getRefreshToken();
-    if (!rt) return null;
     try {
-      const res = await fetch(`${API_PREFIX}/refresh`, {
+      const res = await fetch('/refresh', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ refresh_token: rt }),
+        credentials: 'same-origin',
       });
       if (!res.ok) return null;
       const data = await res.json();
-      if (data && data.access_token) {
-        this.setTokens(data.access_token, data.refresh_token || rt);
+      if (data?.success) {
         if (data.user) this.setUser(data.user);
-        return data.access_token;
+        return true;
       }
     } catch {}
     return null;

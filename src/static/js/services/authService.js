@@ -7,10 +7,8 @@ export const authService = {
       method: 'POST',
       body: JSON.stringify({ username, password }),
     });
-    if (data?.access_token) {
-      JWT.setTokens(data.access_token, data.refresh_token);
-      if (data.user) JWT.setUser(data.user);
-    }
+    JWT.setTokens();
+    if (data?.user) JWT.setUser(data.user);
     return data;
   },
   async logout() {

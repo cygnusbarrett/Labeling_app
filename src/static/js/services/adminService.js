@@ -3,10 +3,6 @@
  */
 
 class AdminService {
-    constructor() {
-        this.token = localStorage.getItem('access_token');
-    }
-
     async makeRequest(endpoint, options = {}) {
         const url = endpoint.startsWith('http') ? endpoint : `/api/v1${endpoint}`;
         const headers = {
@@ -14,13 +10,10 @@ class AdminService {
             ...options.headers
         };
 
-        if (this.token) {
-            headers['Authorization'] = `Bearer ${this.token}`;
-        }
-
         try {
             const response = await fetch(url, {
                 ...options,
+                credentials: 'same-origin',
                 headers
             });
 

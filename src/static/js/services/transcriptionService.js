@@ -5,17 +5,43 @@
 class TranscriptionService {
     constructor() {
         this.apiBase = '/api/v2/transcriptions';
-        // Leer token de localStorage con la clave correcta (compatible con JWT service)
-        this.token = localStorage.getItem('access_token') || null;
+        this.audioBlobCache = new Map();
     }
 
-    /**
-     * Establece el token JWT
-     */
-    setToken(token) {
-        this.token = token;
-        // Guardar con la clave correcta para que otros servicios lo encuentren
-        localStorage.setItem('access_token', token);
+    buildAudioEndpoint(projectId, wordId, params = {}) {
+        const queryParams = new URLSearchParams(params);
+        const queryString = queryParams.toString();
+        return `${this.apiBase}/projects/${projectId}/words/${wordId}/audio${queryString ? `?${queryString}` : ''}`;
+    }
+
+    trimAudioCache(maxEntries = 24) {
+        while (this.audioBlobCache.size > maxEntries) {
+            const oldestKey = this.audioBlobCache.keys().next().value;
+            this.audioBlobCache.delete(oldestKey);
+        }
+    }
+
+    async fetchAudioBlob(url) {
+        if (!this.audioBlobCache.has(url)) {
+            const blobPromise = fetch(url, {
+                credentials: 'same-origin',
+            }).then(async (response) => {
+                if (!response.ok) {
+                    const errorText = await response.text();
+                    throw new Error(`Error ${response.status} al descargar audio: ${errorText || response.statusText}`);
+                }
+
+                return await response.blob();
+            }).catch((error) => {
+                this.audioBlobCache.delete(url);
+                throw error;
+            });
+
+            this.audioBlobCache.set(url, blobPromise);
+            this.trimAudioCache();
+        }
+
+        return await this.audioBlobCache.get(url);
     }
 
     /**
@@ -23,7 +49,6 @@ class TranscriptionService {
      */
     getAuthHeader() {
         return {
-            'Authorization': `Bearer ${this.token}`,
             'Content-Type': 'application/json'
         };
     }
@@ -43,12 +68,14 @@ class TranscriptionService {
         }
 
         try {
-            const response = await fetch(url, options);
+            const response = await fetch(url, {
+                ...options,
+                credentials: 'same-origin'
+            });
             
             if (!response.ok) {
                 if (response.status === 401) {
-                    this.token = null;
-                    localStorage.removeItem('token');
+                    localStorage.removeItem('current_user');
                     throw new Error('Token expirado. Por favor, inicia sesión nuevamente.');
                 }
                 throw new Error(`Error ${response.status}: ${response.statusText}`);
@@ -98,31 +125,14 @@ class TranscriptionService {
      * Descarga el audio de una palabra
      */
     async getWordAudio(projectId, wordId, margin = 0.2) {
-        const url = `${this.apiBase}/projects/${projectId}/words/${wordId}/audio?margin=${margin}`;
-        console.log('📥 Descargando audio de:', url);
-        
-        try {
-            const response = await fetch(url, {
-                headers: this.getAuthHeader()
-            });
+        const url = this.buildAudioEndpoint(projectId, wordId, { margin });
+        const blob = await this.fetchAudioBlob(url);
+        return URL.createObjectURL(blob);
+    }
 
-            if (!response.ok) {
-                const errorText = await response.text();
-                console.error('❌ Error en descarga de audio:', response.status, errorText);
-                throw new Error(`Error ${response.status} al descargar audio: ${response.statusText}`);
-            }
-
-            const blob = await response.blob();
-            console.log('✅ Blob de audio recibido:', blob.size, 'bytes');
-            
-            const objectUrl = URL.createObjectURL(blob);
-            console.log('✅ URL de objeto creada:', objectUrl);
-            
-            return objectUrl;
-        } catch (error) {
-            console.error('❌ Error en getWordAudio:', error);
-            throw error;
-        }
+    async prefetchWordAudio(projectId, wordId, margin = 0.2) {
+        const url = this.buildAudioEndpoint(projectId, wordId, { margin });
+        await this.fetchAudioBlob(url);
     }
 
     /**
@@ -136,21 +146,30 @@ class TranscriptionService {
      * Descarga audio con rango de tiempo personalizado (para contexto extendido)
      */
     async getExtendedAudio(projectId, wordId, startTime, endTime) {
-        const url = `${this.apiBase}/projects/${projectId}/words/${wordId}/audio?start_override=${startTime}&end_override=${endTime}&margin=0.1`;
-        const response = await fetch(url, { headers: this.getAuthHeader() });
-        if (!response.ok) throw new Error(`Error ${response.status}`);
-        const blob = await response.blob();
+        const url = this.buildAudioEndpoint(projectId, wordId, {
+            start_override: startTime,
+            end_override: endTime,
+            margin: 0.1,
+        });
+        const blob = await this.fetchAudioBlob(url);
         return URL.createObjectURL(blob);
+    }
+
+    clearAudioCache() {
+        this.audioBlobCache.clear();
     }
 
     /**
      * Envía una corrección de segmento (antes "palabra")
      */
-    async submitWord(wordId, status, correctedText = null) {
+    async submitWord(wordId, status, correctedText = null, decisionType = null) {
         const data = {
             review_status: status,  // Usar review_status para segmentos
             status: status  // Para backward compatibility
         };
+        if (decisionType) {
+            data.decision_type = decisionType;
+        }
         if (correctedText) {
             data.text_revised = correctedText;  // Usar text_revised para segmentos
             data.corrected_text = correctedText;  // Para backward compatibility
@@ -165,21 +184,36 @@ class TranscriptionService {
         return await this.apiCall('GET', `/projects/${projectId}/stats`);
     }
 
+    async getCurrentUser() {
+        const response = await fetch('/me', {
+            method: 'GET',
+            credentials: 'same-origin',
+        });
+
+        if (!response.ok) {
+            throw new Error('Sesión inválida');
+        }
+
+        const data = await response.json();
+        if (data?.user) {
+            localStorage.setItem('current_user', JSON.stringify(data.user));
+            return data.user;
+        }
+
+        throw new Error('Usuario no autenticado');
+    }
+
     /**
      * Verifica si el token es válido
      */
     isAuthenticated() {
-        return this.token !== null;
+        return localStorage.getItem('current_user') !== null;
     }
 
     /**
      * Limpia la sesión
      */
     logout() {
-        this.token = null;
-        // Limpiar con la clave correcta
-        localStorage.removeItem('access_token');
-        localStorage.removeItem('refresh_token');
         localStorage.removeItem('current_user');
     }
 }

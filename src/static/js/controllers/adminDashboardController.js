@@ -9,22 +9,32 @@ let currentProject = null;
 async function initAdminDashboard() {
     try {
         adminService = new AdminService();
-        
-        // Verificar que sea admin
-        const token = localStorage.getItem('access_token');
-        if (!token) {
+
+        const response = await fetch('/me', {
+            method: 'GET',
+            credentials: 'same-origin',
+        });
+
+        if (!response.ok) {
             window.location.href = '/login';
             return;
         }
 
-        // Extraer info del token
-        const tokenPayload = JSON.parse(atob(token.split('.')[1]));
-        if (tokenPayload.role !== 'admin') {
+        const data = await response.json();
+        const user = data?.user;
+        if (!user) {
+            window.location.href = '/login';
+            return;
+        }
+
+        localStorage.setItem('current_user', JSON.stringify(user));
+
+        if (user.role !== 'admin') {
             window.location.href = '/transcription/validator';
             return;
         }
 
-        currentUser = tokenPayload;
+        currentUser = user;
         document.getElementById('currentAdmin').textContent = currentUser.username;
 
         // Cargar datos iniciales
@@ -531,9 +541,8 @@ function closeAnnotationsModal() {
 
 async function downloadAnnotationsExcel() {
     try {
-        const token = localStorage.getItem('access_token');
         const response = await fetch('/api/v1/admin/annotations/export', {
-            headers: { 'Authorization': `Bearer ${token}` }
+            credentials: 'same-origin'
         });
         if (!response.ok) throw new Error('Error al descargar');
         const blob = await response.blob();
@@ -667,7 +676,16 @@ function showMessage(text, type = 'info', tabName = 'overview') {
     }, 5000);
 }
 
-function logout() {
-    localStorage.removeItem('access_token');
+async function logout() {
+    try {
+        await fetch('/logout', {
+            method: 'POST',
+            credentials: 'same-origin'
+        });
+    } catch (error) {
+        console.error('Error cerrando sesión:', error);
+    }
+
+    localStorage.removeItem('current_user');
     window.location.href = '/login';
 }

@@ -14,12 +14,9 @@ BLUE='\033[0;34m'
 NC='\033[0m' # No Color
 
 # Configuración
-PROJECT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-ENV_FILE="$PROJECT_DIR/.env"
-DOCKER_COMPOSE="docker-compose -f $PROJECT_DIR/docker-compose.prod.yml"
-HOST_DOCKER_PROJECTS="${HOST_DOCKER_PROJECTS:-/home/cdgutierrez2/docker_projects}"
-HOST_DOCKER_DATA="${HOST_DOCKER_DATA:-/home/cdgutierrez2/docker_data}"
-HOST_BACKUPS="${HOST_BACKUPS:-/home/cdgutierrez2/backups}"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+source "$SCRIPT_DIR/runtime_config.sh"
+DOCKER_COMPOSE="docker compose --env-file $ENV_FILE -f $COMPOSE_FILE"
 
 # Funciones
 print_header() {
@@ -53,11 +50,11 @@ if ! command -v docker &> /dev/null; then
 fi
 print_success "Docker instalado"
 
-if ! command -v docker-compose &> /dev/null; then
-    print_error "Docker Compose no está instalado"
+if ! command -v docker &> /dev/null; then
+    print_error "Docker no está instalado"
     exit 1
 fi
-print_success "Docker Compose instalado"
+print_success "Docker disponible"
 
 # Paso 2: Verificar directorios y permisos
 print_header "Step 2: Verificar directorios"
@@ -78,18 +75,18 @@ print_success "Directorios verificados/creados"
 print_header "Step 3: Configuración de entorno"
 
 if [ ! -f "$ENV_FILE" ]; then
-    print_warning ".env no encontrado, copiando desde .env.production"
-    cp "$PROJECT_DIR/.env.production" "$ENV_FILE"
-    print_warning "⚠  IMPORTANTE: Edita .env con valores seguros antes de continuar"
+    print_warning "Archivo de entorno no encontrado: $ENV_FILE"
+    cp "$PROJECT_DIR/envs/production.env.example" "$ENV_FILE"
+    print_warning "⚠  IMPORTANTE: Edita $ENV_FILE con valores seguros antes de continuar"
     
     read -p "¿Has editado .env con valores de producción? (s/n): " -n 1 -r
     echo
     if [[ ! $REPLY =~ ^[Ss]$ ]]; then
-        print_error "Por favor edita .env primero"
+        print_error "Por favor edita $ENV_FILE primero"
         exit 1
     fi
 fi
-print_success ".env configurado"
+    print_success "Archivo de entorno configurado"
 
 # Paso 4: Verificar SSL certificates
 print_header "Step 4: Verificar certificados SSL"
@@ -208,13 +205,14 @@ echo "  Ver status:         docker-compose -f docker-compose.prod.yml ps"
 echo "  Escalar Flask:      docker-compose -f docker-compose.prod.yml up --scale web_app=3"
 echo ""
 echo "🔐 CONFIGURACIÓN:"
-echo "  Archivo .env actualizado: $ENV_FILE"
+echo "  Archivo runtime: $SCRIPT_DIR/runtime_config.sh"
+echo "  Archivo de secretos: $ENV_FILE"
 echo "  Puerto HTTP: 80 → HTTPS 443 → Flask 3000"
 echo "  Certificados: $PROJECT_DIR/certs/"
 echo ""
 echo "📖 VER DOCUMENTACIÓN:"
 echo "  • DEPLOYMENT_DOCKER_SETUP.md - Guía completa"
-echo "  • DEPLOYMENT_PRODUCTION.md - Detalles adicionales"
+echo "  • PRODUCTION_CHECKLIST.md - Checklist operativo"
 echo "  • KEY_MANAGEMENT.md - Gestión de secretos"
 echo ""
 

@@ -265,6 +265,7 @@
             display: flex;
             gap: 10px;
             justify-content: center;
+            flex-wrap: wrap;
         }
 
         .audio-controls button {
@@ -329,10 +330,11 @@
             display: flex;
             gap: 10px;
             margin-top: 15px;
+            flex-wrap: wrap;
         }
 
         .form-actions button {
-            flex: 1;
+            flex: 1 1 180px;
             padding: 12px;
             border: none;
             border-radius: 6px;
@@ -360,8 +362,28 @@
             background: #dd6b20;
         }
 
+        .btn-doubtful {
+            background: #d69e2e;
+            color: white;
+        }
+
+        .btn-doubtful:hover {
+            background: #b7791f;
+        }
+
+        .btn-discard {
+            background: #e53e3e;
+            color: white;
+        }
+
+        .btn-discard:hover {
+            background: #c53030;
+        }
+
         .btn-approve:disabled,
-        .btn-correct:disabled {
+        .btn-correct:disabled,
+        .btn-doubtful:disabled,
+        .btn-discard:disabled {
             background: #cbd5e0;
             cursor: not-allowed;
         }
@@ -673,35 +695,6 @@
                         <div id="probabilityBadge"></div>
                     </div>
 
-                    <!-- Audio Player -->
-                    <div class="audio-player">
-                        <audio id="audioPlayer" controls style="width: 100%;"></audio>
-                        <div class="audio-controls">
-                            <button onclick="playAudio()">▶ Reproducir</button>
-                            <button onclick="pauseAudio()">⏸ Pausar</button>
-                            <button onclick="replayAudio()">🔄 Repetir</button>
-                            <button id="contextBtn" onclick="toggleContext()">📖 Más contexto</button>
-                        </div>
-                    </div>
-
-                    <!-- Context Display (hidden by default) -->
-                    <div id="contextSection" style="display:none; margin-bottom: 16px;">
-                        <div style="background: #f0f4f8; border: 1px solid #d2dae2; border-radius: 8px; padding: 14px 16px;">
-                            <div id="prevContext" style="display:none; margin-bottom: 10px;">
-                                <span style="font-size: 11px; color: #718096; text-transform: uppercase; letter-spacing: 0.5px;">Segmento anterior</span>
-                                <p style="color: #4a5568; font-style: italic; margin-top: 4px;" id="prevContextText"></p>
-                            </div>
-                            <div style="border-left: 3px solid #667eea; padding-left: 12px; margin: 8px 0;">
-                                <span style="font-size: 11px; color: #667eea; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600;">Segmento actual</span>
-                                <p style="color: #2d3748; font-weight: 500; margin-top: 4px;" id="currentContextText"></p>
-                            </div>
-                            <div id="nextContext" style="display:none; margin-top: 10px;">
-                                <span style="font-size: 11px; color: #718096; text-transform: uppercase; letter-spacing: 0.5px;">Segmento siguiente</span>
-                                <p style="color: #4a5568; font-style: italic; margin-top: 4px;" id="nextContextText"></p>
-                            </div>
-                        </div>
-                    </div>
-
                     <!-- Correction Form -->
                     <div class="correction-form">
                         <div class="form-group">
@@ -719,12 +712,43 @@
                             </div>
                         </div>
 
+                        <!-- Audio Player -->
+                        <div class="audio-player">
+                            <audio id="audioPlayer" controls style="width: 100%;"></audio>
+                            <div class="audio-controls">
+                                <button onclick="playAudio()">▶ Reproducir</button>
+                                <button onclick="pauseAudio()">⏸ Pausar</button>
+                                <button id="contextBtn" onclick="toggleContext()">📖 Más contexto</button>
+                            </div>
+                        </div>
+
+                        <!-- Context Display (hidden by default) -->
+                        <div id="contextSection" style="display:none; margin-bottom: 16px;">
+                            <div style="background: #f0f4f8; border: 1px solid #d2dae2; border-radius: 8px; padding: 14px 16px;">
+                                <div id="prevContext" style="display:none; margin-bottom: 10px;">
+                                    <span style="font-size: 11px; color: #718096; text-transform: uppercase; letter-spacing: 0.5px;">Segmento anterior</span>
+                                    <p style="color: #4a5568; font-style: italic; margin-top: 4px;" id="prevContextText"></p>
+                                </div>
+                                <div style="border-left: 3px solid #667eea; padding-left: 12px; margin: 8px 0;">
+                                    <span style="font-size: 11px; color: #667eea; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600;">Segmento actual</span>
+                                    <p style="color: #2d3748; font-weight: 500; margin-top: 4px;" id="currentContextText"></p>
+                                </div>
+                                <div id="nextContext" style="display:none; margin-top: 10px;">
+                                    <span style="font-size: 11px; color: #718096; text-transform: uppercase; letter-spacing: 0.5px;">Segmento siguiente</span>
+                                    <p style="color: #4a5568; font-style: italic; margin-top: 4px;" id="nextContextText"></p>
+                                </div>
+                            </div>
+                        </div>
+
                         <div class="form-actions">
-                            <button type="button" class="btn-approve" onclick="submitWord('approved')">
+                            <button type="button" class="btn-approve" onclick="submitWord('confirmed')">
                                 ✓ Confirmar
                             </button>
-                            <button type="button" class="btn-correct" onclick="submitWord('corrected')" style="display:none;">
-                                ✎ Corregida
+                            <button type="button" class="btn-doubtful" onclick="submitWord('doubtful')">
+                                ? Confirmar con duda
+                            </button>
+                            <button type="button" class="btn-discard" onclick="submitWord('discarded')">
+                                🗑️ Descartar
                             </button>
                         </div>
                     </div>
@@ -760,18 +784,6 @@
     <script>
         // Inicializar la aplicación
         document.addEventListener('DOMContentLoaded', function() {
-            // Mostrar nav de admin si el usuario es admin
-            const token = localStorage.getItem('access_token');
-            if (token) {
-                try {
-                    const payload = JSON.parse(atob(token.split('.')[1]));
-                    if (payload.role === 'admin') {
-                        const nav = document.getElementById('topNav');
-                        nav.style.display = 'flex';
-                        nav.innerHTML = '<a href="/admin/dashboard">⚙️ Administración</a><a href="/transcription/validator" class="active">📝 Mis Anotaciones</a>';
-                    }
-                } catch(e) {}
-            }
             initApp();
         });
     </script>

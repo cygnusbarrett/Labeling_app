@@ -38,17 +38,18 @@ function bindLoginForm() {
 (async function init() {
   bindLoginForm();
   // Validar sesión existente realmente con el backend antes de redirigir
-  if (JWT.getAccessToken() && JWT.getUser()) {
-    try {
-      const data = await authService.me();
-      const role = data?.user?.role || JWT.getUser()?.role;
-      if (role) {
-        window.location.href = role === 'admin' ? ROUTES.admin : ROUTES.home;
-        return;
-      }
-    } catch (e) {
-      // Token inválido / expirado: limpiar y permanecer en login
-      JWT.clear();
+  try {
+    const data = await authService.me();
+    const role = data?.user?.role;
+    if (data?.user) {
+      JWT.setUser(data.user);
     }
+    if (role) {
+      window.location.href = role === 'admin' ? ROUTES.admin : ROUTES.home;
+      return;
+    }
+  } catch (e) {
+    // Token inválido / expirado: limpiar y permanecer en login
+    JWT.clear();
   }
 })();
