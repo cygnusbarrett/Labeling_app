@@ -41,6 +41,10 @@ def get_reconstructed_service():
     return _reconstructed_service
 
 
+def serialize_user(user):
+    return {"id": user.id, "username": user.username, "role": user.role}
+
+
 # ==================== DECORADORES ====================
 
 
@@ -84,10 +88,7 @@ def list_users():
         return (
             jsonify(
                 {
-                    "users": [
-                        {"id": u.id, "username": u.username, "role": u.role}
-                        for u in users
-                    ]
+                    "users": [serialize_user(u) for u in users]
                 }
             ),
             200,
@@ -131,7 +132,7 @@ def create_user():
         session.add(user)
         session.commit()
 
-        user_data = {"id": user.id, "username": user.username, "role": user.role}
+        user_data = serialize_user(user)
         session.close()
 
         return jsonify({"message": f"User {username} created", "user": user_data}), 201
@@ -141,12 +142,77 @@ def create_user():
         return jsonify({"error": str(e)}), 500
 
 
+@admin_bp.route("/users/<int:user_id>", methods=["PUT"])
+@admin_required
+def update_user(user_id):
+    """Actualiza username, password y/o rol de un usuario."""
+    session = None
+    try:
+        data = request.get_json() or {}
+        username = (data.get("username") or "").strip()
+        password = data.get("password")
+        role = data.get("role")
+
+        if not username and password is None and role is None:
+            return jsonify({"error": "No changes provided"}), 400
+
+        if username and len(username) < 3:
+            return jsonify({"error": "Username must be at least 3 characters"}), 400
+
+        if password is not None and len(password) < 6:
+            return jsonify({"error": "Password must be at least 6 characters"}), 400
+
+        if role is not None and role not in ["admin", "annotator"]:
+            return jsonify({"error": "Invalid role"}), 400
+
+        db_manager = get_db_manager()
+        session = db_manager.get_session()
+
+        user = session.query(User).filter_by(id=user_id).first()
+        if not user:
+            return jsonify({"error": "User not found"}), 404
+
+        if username and username != user.username:
+            existing = session.query(User).filter(User.username == username, User.id != user_id).first()
+            if existing:
+                return jsonify({"error": "User already exists"}), 409
+            user.username = username
+
+        if password:
+            user.set_password(password)
+
+        if role and role != user.role:
+            if user_id == request.current_user["user_id"] and role != "admin":
+                return jsonify({"error": "Cannot remove your own admin role"}), 403
+
+            if user.role == "admin" and role != "admin":
+                admin_count = session.query(User).filter_by(role="admin").count()
+                if admin_count <= 1:
+                    return jsonify({"error": "Cannot demote the last admin"}), 403
+
+            user.role = role
+
+        session.commit()
+        user_data = serialize_user(user)
+        return jsonify({"message": f"User {user.username} updated", "user": user_data}), 200
+
+    except Exception as e:
+        if session is not None:
+            session.rollback()
+        logger.error(f"Error updating user: {e}")
+        return jsonify({"error": str(e)}), 500
+    finally:
+        if session is not None:
+            session.close()
+
+
 @admin_bp.route("/users/<int:user_id>", methods=["DELETE"])
 @admin_required
 def delete_user(user_id):
     """Elimina un usuario"""
+    session = None
     try:
-        if user_id == request.current_user["id"]:
+        if user_id == request.current_user["user_id"]:
             return jsonify({"error": "Cannot delete yourself"}), 403
 
         db_manager = get_db_manager()
@@ -154,19 +220,43 @@ def delete_user(user_id):
 
         user = session.query(User).filter_by(id=user_id).first()
         if not user:
-            session.close()
             return jsonify({"error": "User not found"}), 404
+
+        if user.role == "admin":
+            admin_count = session.query(User).filter_by(role="admin").count()
+            if admin_count <= 1:
+                return jsonify({"error": "Cannot delete the last admin"}), 403
+
+        affected_segments = session.query(Segment).filter_by(annotator_id=user_id).all()
+        for segment in affected_segments:
+            segment.annotator_id = None
+            if segment.review_status == "pending":
+                segment.text_revised = None
+                segment.completed_at = None
+            segment.updated_at = datetime.now(timezone.utc)
 
         username = user.username
         session.delete(user)
         session.commit()
-        session.close()
 
-        return jsonify({"message": f"User {username} deleted"}), 200
+        return (
+            jsonify(
+                {
+                    "message": f"User {username} deleted",
+                    "released_segments": len(affected_segments),
+                }
+            ),
+            200,
+        )
 
     except Exception as e:
+        if session is not None:
+            session.rollback()
         logger.error(f"Error deleting user: {e}")
         return jsonify({"error": str(e)}), 500
+    finally:
+        if session is not None:
+            session.close()
 
 
 @admin_bp.route("/users/<int:user_id>/stats", methods=["GET"])
@@ -403,6 +493,74 @@ def assign_segment(project_id, segment_id):
     except Exception as e:
         logger.error(f"Error assigning segment: {e}")
         return jsonify({"error": str(e)}), 500
+
+
+@admin_bp.route("/projects/<project_id>/assign-by-count", methods=["POST"])
+@admin_required
+def assign_segments_by_count(project_id):
+    """Asigna una cantidad de segmentos pendientes a un anotador."""
+    session = None
+    try:
+        data = request.get_json() or {}
+        annotator_id = data.get("annotator_id")
+        segment_count = data.get("segment_count")
+
+        if not annotator_id:
+            return jsonify({"error": "annotator_id required"}), 400
+
+        try:
+            segment_count = int(segment_count)
+        except (TypeError, ValueError):
+            return jsonify({"error": "segment_count must be an integer"}), 400
+
+        if segment_count <= 0:
+            return jsonify({"error": "segment_count must be greater than 0"}), 400
+
+        db_manager = get_db_manager()
+        session = db_manager.get_session()
+
+        annotator = session.query(User).filter_by(id=annotator_id).first()
+        if not annotator:
+            return jsonify({"error": "Annotator not found"}), 404
+
+        segments = (
+            session.query(Segment)
+            .filter_by(project_id=project_id, review_status="pending", annotator_id=None)
+            .order_by(Segment.audio_filename.asc(), Segment.segment_index.asc())
+            .limit(segment_count)
+            .all()
+        )
+
+        if not segments:
+            return jsonify({"error": "No pending segments available"}), 404
+
+        assigned_ids = []
+        for segment in segments:
+            segment.annotator_id = annotator_id
+            segment.updated_at = datetime.now(timezone.utc)
+            assigned_ids.append(segment.id)
+
+        session.commit()
+
+        return (
+            jsonify(
+                {
+                    "message": f"Assigned {len(assigned_ids)} segment(s)",
+                    "annotator_id": annotator_id,
+                    "segment_ids": assigned_ids,
+                }
+            ),
+            200,
+        )
+
+    except Exception as e:
+        if session is not None:
+            session.rollback()
+        logger.error(f"Error assigning segments by count: {e}")
+        return jsonify({"error": str(e)}), 500
+    finally:
+        if session is not None:
+            session.close()
 
 
 @admin_bp.route(

@@ -524,15 +524,15 @@
             </div>
             <div class="user-info">
                 <p>👤 <span id="currentAdmin">Admin</span></p>
-                <button class="logout-btn" onclick="logout()">Cerrar Sesión</button>
+                <button class="logout-btn" type="button" onclick="logout()">Cerrar Sesión</button>
             </div>
         </div>
 
         <div class="nav-tabs">
-            <button class="nav-tab active" data-tab="overview" onclick="switchTab('overview')">📊 Resumen</button>
-            <button class="nav-tab" data-tab="users" onclick="switchTab('users')">👥 Usuarios</button>
-            <button class="nav-tab" data-tab="assignments" onclick="switchTab('assignments')">📋 Asignaciones</button>
-            <button class="nav-tab" data-tab="quality" onclick="switchTab('quality')">🔍 Control Calidad</button>
+            <button class="nav-tab active" type="button" data-tab="overview" onclick="switchTab('overview', this)">📊 Resumen</button>
+            <button class="nav-tab" type="button" data-tab="users" onclick="switchTab('users', this)">👥 Usuarios</button>
+            <button class="nav-tab" type="button" data-tab="assignments" onclick="switchTab('assignments', this)">📋 Asignaciones</button>
+            <button class="nav-tab" type="button" data-tab="quality" onclick="switchTab('quality', this)">🔍 Control Calidad</button>
         </div>
 
         <div class="content">
@@ -548,7 +548,7 @@
 
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 40px;">
                     <div class="section-title" style="margin: 0;">Progreso por Usuario</div>
-                    <button class="btn btn-success" style="font-size: 13px; padding: 6px 16px;" onclick="downloadAnnotationsExcel()">📥 Descargar Excel de Anotaciones</button>
+                    <button class="btn btn-success" type="button" style="font-size: 13px; padding: 6px 16px;" onclick="downloadAnnotationsExcel()">📥 Descargar Excel de Anotaciones</button>
                 </div>
                 <table class="users-table">
                     <thead>
@@ -570,7 +570,7 @@
             <div id="users" class="tab-content">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
                     <h2 class="section-title">Gestión de Usuarios</h2>
-                    <button class="btn btn-success" onclick="openCreateUserModal()">+ Crear Usuario</button>
+                    <button class="btn btn-success" type="button" onclick="openCreateUserModal()">+ Crear Usuario</button>
                 </div>
 
                 <div id="messageArea2"></div>
@@ -612,6 +612,17 @@
                     </div>
 
                     <div class="form-group">
+                        <label>Asignación rápida por cantidad</label>
+                        <div style="display:flex; gap:12px; align-items:center; flex-wrap:wrap;">
+                            <input id="segmentCount" type="number" min="1" step="1" value="10" style="max-width: 180px;" />
+                            <button class="btn btn-success" type="button" onclick="assignSegmentsByCount()">
+                                ⚡ Asignar Cantidad
+                            </button>
+                        </div>
+                        <small style="color: #999;">Toma los primeros segmentos pendientes y sin asignar del proyecto seleccionado.</small>
+                    </div>
+
+                    <div class="form-group">
                         <label>Palabras Sin Asignar</label>
                         <select id="segmentsSelect" multiple style="height: 200px;">
                             <option value="">Cargando segmentos...</option>
@@ -619,7 +630,7 @@
                         <small style="color: #999;">Mantén Ctrl/Cmd presionado para seleccionar múltiples</small>
                     </div>
 
-                    <button class="btn btn-primary" onclick="assignSegments()" style="width: 100%;">
+                    <button class="btn btn-primary" type="button" onclick="assignSegments()" style="width: 100%;">
                         📤 Asignar Seleccionados
                     </button>
                 </div>
@@ -686,7 +697,7 @@
                 </select>
             </div>
 
-            <button class="btn btn-success" onclick="createUser()" style="width: 100%;">
+                <button class="btn btn-success" type="button" onclick="createUser()" style="width: 100%;">
                 ✓ Crear Usuario
             </button>
         </div>
@@ -735,7 +746,7 @@
                         <option value="corrected">Corregida</option>
                     </select>
                 </div>
-                <button class="btn btn-success" onclick="saveAnnotationEdit()" style="width: 100%;">
+                <button class="btn btn-success" type="button" onclick="saveAnnotationEdit()" style="width: 100%;">
                     💾 Guardar cambios
                 </button>
             </div>

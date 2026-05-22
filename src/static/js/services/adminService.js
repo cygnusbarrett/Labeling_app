@@ -45,6 +45,13 @@ class AdminService {
         });
     }
 
+    async updateUser(userId, updates) {
+        return this.makeRequest(`/admin/users/${userId}`, {
+            method: 'PUT',
+            body: JSON.stringify(updates)
+        });
+    }
+
     async deleteUser(userId) {
         return this.makeRequest(`/admin/users/${userId}`, {
             method: 'DELETE'
@@ -82,6 +89,13 @@ class AdminService {
             this.assignSegment(projectId, segId, annotatorId)
         );
         return Promise.all(promises);
+    }
+
+    async assignSegmentsByCount(projectId, annotatorId, segmentCount) {
+        return this.makeRequest(`/admin/projects/${projectId}/assign-by-count`, {
+            method: 'POST',
+            body: JSON.stringify({ annotator_id: annotatorId, segment_count: segmentCount })
+        });
     }
 
     async unassignSegment(projectId, segmentId) {

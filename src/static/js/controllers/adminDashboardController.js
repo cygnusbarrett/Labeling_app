@@ -51,7 +51,7 @@ async function initAdminDashboard() {
 
 // ==================== NAVEGACIÓN ====================
 
-function switchTab(tabName) {
+function switchTab(tabName, clickedTab = null) {
     document.querySelectorAll('.tab-content').forEach(tab => {
         tab.classList.remove('active');
     });
@@ -60,7 +60,9 @@ function switchTab(tabName) {
     });
 
     document.getElementById(tabName).classList.add('active');
-    event.target.classList.add('active');
+    if (clickedTab) {
+        clickedTab.classList.add('active');
+    }
 
     // Recargar datos si es necesario
     if (tabName === 'users') loadUsersTab();
@@ -213,10 +215,10 @@ async function loadAssignmentsTab() {
         const annotatorSelect = document.getElementById('annotatorSelect');
         annotatorSelect.innerHTML = '<option value="">Selecciona un anotador</option>';
         
-        users.forEach(user => {
+        users.filter(user => user.role !== 'admin').forEach(user => {
             const option = document.createElement('option');
             option.value = user.id;
-            option.textContent = user.role === 'admin' ? `${user.username} (admin)` : user.username;
+            option.textContent = user.username;
             annotatorSelect.appendChild(option);
         });
 
@@ -281,6 +283,33 @@ async function assignSegments() {
 
     } catch (error) {
         console.error('Error asignando segmentos:', error);
+        showMessage(`Error: ${error.message}`, 'error', 'assignments');
+    }
+}
+
+async function assignSegmentsByCount() {
+    try {
+        const projectId = document.getElementById('projectSelect').value;
+        const annotatorId = document.getElementById('annotatorSelect').value;
+        const segmentCountValue = document.getElementById('segmentCount').value;
+        const segmentCount = parseInt(segmentCountValue, 10);
+
+        if (!projectId || !annotatorId) {
+            showMessage('Selecciona proyecto y anotador', 'info', 'assignments');
+            return;
+        }
+
+        if (!Number.isInteger(segmentCount) || segmentCount <= 0) {
+            showMessage('Ingresa una cantidad válida de segmentos', 'info', 'assignments');
+            return;
+        }
+
+        const result = await adminService.assignSegmentsByCount(projectId, annotatorId, segmentCount);
+        showMessage(`✅ ${result.segment_ids.length} segmento(s) asignado(s) automáticamente`, 'success', 'assignments');
+        await loadSegments();
+        await loadAssignedSegments();
+    } catch (error) {
+        console.error('Error asignando segmentos por cantidad:', error);
         showMessage(`Error: ${error.message}`, 'error', 'assignments');
     }
 }
@@ -544,7 +573,15 @@ async function downloadAnnotationsExcel() {
         const response = await fetch('/api/v1/admin/annotations/export', {
             credentials: 'same-origin'
         });
-        if (!response.ok) throw new Error('Error al descargar');
+        if (!response.ok) {
+            let message = 'Error al descargar';
+            const contentType = response.headers.get('Content-Type') || '';
+            if (contentType.includes('application/json')) {
+                const data = await response.json();
+                message = data.error || message;
+            }
+            throw new Error(message);
+        }
         const blob = await response.blob();
         const url = window.URL.createObjectURL(blob);
         const a = document.createElement('a');
@@ -678,10 +715,13 @@ function showMessage(text, type = 'info', tabName = 'overview') {
 
 async function logout() {
     try {
-        await fetch('/logout', {
+        const response = await fetch('/logout', {
             method: 'POST',
             credentials: 'same-origin'
         });
+        if (!response.ok) {
+            throw new Error(`Logout falló con estado ${response.status}`);
+        }
     } catch (error) {
         console.error('Error cerrando sesión:', error);
     }
